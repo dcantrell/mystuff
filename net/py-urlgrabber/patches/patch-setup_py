@@ -1,0 +1,12 @@
+$OpenBSD$
+--- setup.py.orig	Mon Feb 23 11:37:16 2009
++++ setup.py	Fri Mar 18 21:29:15 2011
+@@ -15,7 +15,7 @@ url = _urlgrabber.__url__
+ packages = ['urlgrabber']
+ package_dir = {'urlgrabber':'urlgrabber'}
+ scripts = ['scripts/urlgrabber']
+-data_files = [('share/doc/' + name + '-' + version,
++data_files = [('share/doc/py-urlgrabber',
+                ['README','LICENSE', 'TODO', 'ChangeLog'])]
+ options = { 'clean' : { 'all' : 1 } }
+ classifiers = [

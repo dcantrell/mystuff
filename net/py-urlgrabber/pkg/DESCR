@@ -1,0 +1,3 @@
+A high-level cross-protocol url retriever for Python supporting HTTP,
+FTP and file locations.  Features include keepalive, byte ranges,
+throttling, authentication, proxies and more.

@@ -1,0 +1,9 @@
+$OpenBSD$
+--- scripts/urlgrabber.orig	Fri May 15 09:46:04 2009
++++ scripts/urlgrabber	Fri Mar 18 21:28:17 2011
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python -t
++#!/usr/bin/env python -t
+ 
+ #   This library is free software; you can redistribute it and/or
+ #   modify it under the terms of the GNU Lesser General Public
