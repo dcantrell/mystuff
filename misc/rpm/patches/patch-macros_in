@@ -1,0 +1,21 @@
+$OpenBSD$
+--- macros.in.orig	Tue Nov 24 20:59:55 2009
++++ macros.in	Thu Mar 10 08:18:24 2011
+@@ -155,7 +155,7 @@
+ %_bzip2bin		%{__bzip2}
+ 
+ #	The location of the rpm database file(s).
+-%_dbpath		%{_var}/lib/rpm
++%_dbpath		%{_var}/db/rpm
+ 
+ #	The location of the rpm database file(s) after "rpm --rebuilddb".
+ %_dbpath_rebuild	%{_dbpath}
+@@ -785,7 +785,7 @@ print (t)\
+ # some rpmdb operations.
+ #
+ # XXX Note: the file name is chosen as __db.000 to expedite
+-# support issues, many users are doing "rm -f /var/lib/rpm/__db*"
++# support issues, many users are doing "rm -f /var/db/rpm/__db*"
+ # these days.
+ %_rpmlock_path	%{_dbpath}/__db.000
+ 
