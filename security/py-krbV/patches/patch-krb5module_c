@@ -1,0 +1,488 @@
+$OpenBSD$
+--- krb5module.c.orig	Mon May 24 08:57:11 2010
++++ krb5module.c	Fri Mar 18 16:58:09 2011
+@@ -14,7 +14,6 @@
+ #include "krb5err.h"
+ #include "krb5util.h"
+ 
+-#include <alloca.h>
+ #include <netdb.h>
+ #include <unistd.h>
+ #include <sys/socket.h>
+@@ -118,7 +117,7 @@ Context_getattr(PyObject *unself __UNUSED, PyObject *a
+       if(rc)
+ 	return pk_error(rc);
+       retval = PyString_FromString(realm);
+-      krb5_free_default_realm(kctx, realm);
++      krb5_free_host_realm(kctx, realm);
+     }
+   else
+     {
+@@ -538,7 +537,7 @@ Context_mk_req(PyObject *unself, PyObject *args, PyObj
+ 
+       if(!PyArg_ParseTuple(credso, "OO(iz#)(iiii)OOOz#z#O",
+ 			   &client, &server,
+-			   &creds.keyblock.enctype, &creds.keyblock.contents, &creds.keyblock.length,
++			   &creds.session.keytype, &creds.session.keyvalue.data, &creds.session.keyvalue.length,
+ 			   &creds.times.authtime, &creds.times.starttime, &creds.times.endtime,
+ 			   &creds.times.renew_till, &tmp, &tmp, &tmp,
+ 			   &creds.ticket.data,
+@@ -694,7 +693,7 @@ make_principal(PyObject *ctx_obj, krb5_context ctx, kr
+ }
+ 
+ static PyObject *
+-make_ticket_times(krb5_ticket_times *times)
++make_ticket_times(krb5_times *times)
+ {
+   if(!times)
+     {
+@@ -710,7 +709,7 @@ make_ticket_times(krb5_ticket_times *times)
+ }
+ 
+ static PyObject *
+-make_transited(krb5_transited *transited)
++make_transited(TransitedEncoding *transited)
+ {
+   if(!transited)
+     {
+@@ -720,8 +719,8 @@ make_transited(krb5_transited *transited)
+ 
+   return Py_BuildValue("(iz#)",
+ 		       transited->tr_type,
+-		       transited->tr_contents.data,
+-		       transited->tr_contents.length);
++		       transited->contents.data,
++		       transited->contents.length);
+ }
+ 
+ static PyObject *
+@@ -734,60 +733,57 @@ make_keyblock(krb5_keyblock *keyblock)
+     }
+ 
+   return Py_BuildValue("(iz#)",
+-		       keyblock->enctype,
+-		       keyblock->contents,
+-		       keyblock->length);
++		       keyblock->keytype,
++		       keyblock->keyvalue.data,
++		       keyblock->keyvalue.length);
+ }
+ 
+ static PyObject *
+-make_authdata_list(krb5_authdata **authdata)
++make_authdata_list(krb5_authdata *authdata)
+ {
+   int i, n;
+   PyObject *adlist;
+ 
+-  if(!authdata)
++  if(authdata->len <= 0)
+     {
+       Py_INCREF(Py_None);
+       return Py_None;
+     }
+-  for(n = 0; authdata[n]; n++) /* */;
+-  adlist = PyTuple_New(n);
+-  for(i = 0; i < n; i++)
++  adlist = PyTuple_New(authdata->len - 1);
++  for(i = 0; i < authdata->len - 1; i++)
+     PyTuple_SetItem(adlist, i,
+-		    Py_BuildValue("(iz#)", authdata[i]->ad_type, authdata[i]->contents,
+-				  authdata[i]->length));
++		    Py_BuildValue("(iz#)", authdata->val[i].ad_type, authdata->val[i].ad_data.data, authdata->val[i].ad_data.length));
+   return adlist;
+ }
+ 
+ static PyObject *
+-make_address_list(krb5_address **caddrs, int readable)
++make_address_list(krb5_addresses *caddrs, int readable)
+ {
+   PyObject *retval;
+   int i, n, outlen;
+   char out[INET6_ADDRSTRLEN];
+ 
+-  if (!caddrs) {
++  if (caddrs->len <= 0) {
+     Py_INCREF(Py_None);
+     return Py_None;
+   }
+ 
+-  for (n = 0; caddrs[n]; n++) /* */;
+-  retval = PyTuple_New(n);
+-  for (i = 0; i < n; i++) {
++  retval = PyTuple_New(caddrs->len - 1);
++  for (i = 0; i < caddrs->len; i++) {
+     memset(out, 0, INET6_ADDRSTRLEN);
+     if (readable) {
+-      if (caddrs[i]->addrtype == ADDRTYPE_INET) {
+-	inet_ntop(AF_INET, caddrs[i]->contents, out, INET6_ADDRSTRLEN);
+-      } else if (caddrs[i]->addrtype == ADDRTYPE_INET6) {
+-	inet_ntop(AF_INET6, caddrs[i]->contents, out, INET6_ADDRSTRLEN);
++      if (caddrs->val[i].addr_type == KRB5_ADDRESS_INET) {
++	inet_ntop(AF_INET, caddrs->val[i].address.data, out, INET6_ADDRSTRLEN);
++      } else if (caddrs->val[i].addr_type == KRB5_ADDRESS_INET6) {
++	inet_ntop(AF_INET6, caddrs->val[i].address.data, out, INET6_ADDRSTRLEN);
+       }
+       outlen = strlen(out);
+     } else {
+-      memcpy(out, caddrs[i]->contents, caddrs[i]->length);
+-      outlen = caddrs[i]->length;
++      memcpy(out, caddrs->val[i].address.data, caddrs->val[i].address.length);
++      outlen = caddrs->val[i].address.length;
+     }
+     PyTuple_SetItem(retval, i,
+-		    Py_BuildValue("(iz#)", caddrs[i]->addrtype, out, strlen(out)));
++		    Py_BuildValue("(iz#)", caddrs->val[i].addr_type, out, strlen(out)));
+   }
+ 
+   return retval;
+@@ -928,7 +924,7 @@ Context_rd_req(PyObject *unself, PyObject *args, PyObj
+   if(rc)
+     return pk_error(rc);
+ 
+-  retval = PyTuple_New(ticket->enc_part2?4:3);
++  retval = PyTuple_New(ticket->ticket.key.keytype ? 4 : 3);
+   if(auth_context)
+     {
+       Py_INCREF(auth_context);
+@@ -960,25 +956,31 @@ Context_rd_req(PyObject *unself, PyObject *args, PyObj
+   
+   PyTuple_SetItem(retval, 2, tmp);
+ 
+-  if(ticket->enc_part2)
++  if(ticket->ticket.key.keytype)
+     {
+       PyObject *princtmp;
+ 
+-      if(!(princtmp = make_principal(self, kctx, ticket->enc_part2->client)))
++      if(!(princtmp = make_principal(self, kctx, ticket->client)))
+ 	{
+ 	  Py_DECREF(retval);
+ 	  krb5_free_ticket(kctx, ticket);
+ 	  return NULL;
+ 	}
+ 
++      krb5_times times;
++      times.authtime = ticket->ticket.authtime;
++      times.starttime = *ticket->ticket.starttime;
++      times.endtime = ticket->ticket.endtime;
++      times.renew_till = *ticket->ticket.renew_till;
++
+       tmp = Py_BuildValue("(iOOOOOO)",
+-			  ticket->enc_part2->flags,
+-			  make_keyblock(ticket->enc_part2->session),
++			  ticket->ticket.flags,
++			  make_keyblock(&ticket->ticket.key),
+ 			  princtmp,
+-			  make_transited(&ticket->enc_part2->transited),
+-			  make_ticket_times(&ticket->enc_part2->times),
+-			  make_address_list(ticket->enc_part2->caddrs, 0),
+-			  make_authdata_list(ticket->enc_part2->authorization_data));
++			  make_transited(&ticket->ticket.transited),
++			  make_ticket_times(&times),
++			  make_address_list(ticket->ticket.caddr, 0),
++			  make_authdata_list(ticket->ticket.authorization_data));
+       PyTuple_SetItem(retval, 3, tmp);
+     }
+   krb5_free_ticket(kctx, ticket);
+@@ -1317,11 +1319,11 @@ Context_recvauth(PyObject *unself, PyObject *args, PyO
+ 
+   retval = PyTuple_New(2);
+ 
+-  if (cticket->enc_part2)
++  if (cticket)
+     {
+       PyObject *cprinc;
+ 
+-      if (!(cprinc = make_principal(self, kctx, cticket->enc_part2->client)))
++      if (!(cprinc = make_principal(self, kctx, cticket->client)))
+ 	{
+ 	  Py_DECREF(retval);
+ 	  krb5_free_ticket(kctx, cticket);
+@@ -1555,14 +1557,14 @@ str_to_addr(const char* address, krb5_address *krb5add
+ 
+   /* First try ipv4, and if that fails, try ipv6 */
+   if (inet_pton(AF_INET, address, &ipv4addr)) {
+-    krb5addr->addrtype = ADDRTYPE_INET;
+-    krb5addr->length = sizeof(ipv4addr.s_addr);
+-    memcpy(krb5addr->contents, &ipv4addr.s_addr, sizeof(ipv4addr.s_addr));
++    krb5addr->addr_type = KRB5_ADDRESS_INET;
++    krb5addr->address.length = sizeof(ipv4addr.s_addr);
++    memcpy(krb5addr->address.data, &ipv4addr.s_addr, sizeof(ipv4addr.s_addr));
+     return 1;
+   } else if (inet_pton(AF_INET6, address, &ipv6addr)) {
+-    krb5addr->addrtype = ADDRTYPE_INET6;
+-    krb5addr->length = sizeof(ipv6addr.s6_addr);
+-    memcpy(krb5addr->contents, &ipv6addr.s6_addr, sizeof(ipv6addr.s6_addr));
++    krb5addr->addr_type = KRB5_ADDRESS_INET6;
++    krb5addr->address.length = sizeof(ipv6addr.s6_addr);
++    memcpy(krb5addr->address.data, &ipv6addr.s6_addr, sizeof(ipv6addr.s6_addr));
+     return 1;
+   }
+ 
+@@ -1618,20 +1620,22 @@ AuthContext_getattr(PyObject *unself __UNUSED, PyObjec
+   PyErr_Clear();
+   
+   if (!strcmp(name, "flags")) {
+-    krb5_int32 flags;
++    int32_t flags;
+     rc = krb5_auth_con_getflags(ctx, ac, &flags);
+     if (rc)
+       return pk_error(rc);
+     retval = PyInt_FromLong(flags);
+   } else if (!strcmp(name, "addrs")) {
+-    krb5_address **addrs = calloc(3, sizeof(krb5_address *));
+-    rc = krb5_auth_con_getaddrs(ctx, ac, &addrs[0], &addrs[1]);
++    krb5_addresses addrs;
++    addrs.len = 2;
++    addrs.val = calloc(2, sizeof(krb5_address *));
++    rc = krb5_auth_con_getaddrs(ctx, ac, &addrs.val[0], &addrs.val[1]);
+     if (rc)
+       return pk_error(rc);
+ 
+-    retval = make_address_list(addrs, 1);
++    retval = make_address_list(&addrs, 1);
+       
+-    krb5_free_addresses(ctx, addrs);
++    krb5_free_addresses(ctx, &addrs);
+   } else if (!strcmp(name, "key")) {
+     krb5_keyblock *key = NULL;
+     rc = krb5_auth_con_getkey(ctx, ac, &key);
+@@ -1643,19 +1647,12 @@ AuthContext_getattr(PyObject *unself __UNUSED, PyObjec
+     if (key)
+       krb5_free_keyblock(ctx, key);
+   } else if (!strcmp(name, "localseqnumber")) {
+-    krb5_int32 seqnum;
++    int32_t seqnum;
+     rc = krb5_auth_con_getlocalseqnumber(ctx, ac, &seqnum);
+     if (rc)
+       return pk_error(rc);
+ 
+     retval = PyInt_FromLong(seqnum);
+-  } else if (!strcmp(name, "remoteseqnumber")) {
+-    krb5_int32 seqnum;
+-    rc = krb5_auth_con_getremoteseqnumber(ctx, ac, &seqnum);
+-    if (rc)
+-      return pk_error(rc);
+-
+-    retval = PyInt_FromLong(seqnum);
+   } else {
+     PyErr_Format(PyExc_AttributeError, "%.50s instance has no attribute '%.400s'",
+ 		 PyString_AS_STRING(((PyInstanceObject *)self)->in_class->cl_name), name);
+@@ -1725,7 +1722,7 @@ AuthContext_setattr(PyObject *unself __UNUSED, PyObjec
+   
+   if(!strcmp(name, "flags"))
+     {
+-      krb5_int32 flags;
++      int32_t flags;
+       if(PyInt_Check(value))
+ 	flags = PyInt_AsLong(value);
+       else if(PyLong_Check(value))
+@@ -1755,9 +1752,9 @@ AuthContext_setattr(PyObject *unself __UNUSED, PyObjec
+       krb5_keyblock kb;
+ 
+       memset(&kb, 0, sizeof(kb));
+-      if(!PyArg_ParseTuple(value, "iz#", &kb.enctype, &kb.contents, &kb.length))
++      if(!PyArg_ParseTuple(value, "iz#", &kb.keytype, &kb.keyvalue.data, &kb.keyvalue.length))
+ 	return NULL;
+-      rc = krb5_auth_con_setuseruserkey(ctx, ac, &kb);
++      rc = krb5_auth_con_setuserkey(ctx, ac, &kb);
+       if(rc)
+ 	return pk_error(rc);
+     }
+@@ -1773,7 +1770,7 @@ AuthContext_setattr(PyObject *unself __UNUSED, PyObjec
+       if (laddr) {
+ 	localaddr = alloca(sizeof(krb5_address));
+ 	memset(localaddr, 0, sizeof(krb5_address));
+-	localaddr->contents = (krb5_octet *) alloca(sizeof(struct in6_addr));
++	localaddr->address.data = (void *) alloca(sizeof(struct in6_addr));
+         if (!str_to_addr(laddr, localaddr)) {
+           PyErr_Format(PyExc_AttributeError, "invalid address: %.400s", laddr);
+           return NULL;         
+@@ -1783,7 +1780,7 @@ AuthContext_setattr(PyObject *unself __UNUSED, PyObjec
+       if (raddr) {
+ 	remoteaddr = alloca(sizeof(krb5_address));
+ 	memset(remoteaddr, 0, sizeof(krb5_address));
+-	remoteaddr->contents = (krb5_octet *) alloca(sizeof(struct in6_addr));
++	remoteaddr->address.data = (void *) alloca(sizeof(struct in6_addr));
+         if (!str_to_addr(raddr, remoteaddr)) {
+           PyErr_Format(PyExc_AttributeError, "invalid address: %.400s", raddr);
+           return NULL;          
+@@ -1798,26 +1795,22 @@ AuthContext_setattr(PyObject *unself __UNUSED, PyObjec
+       if (lport > 0) {
+ 	localport = alloca(sizeof(krb5_address));
+ 	memset(localport, 0, sizeof(krb5_address));
+-	localport->addrtype = ADDRTYPE_IPPORT;
+-	localport->length = sizeof(lport);
+-	localport->contents = (krb5_octet *) &lport;
++	localport->addr_type = KRB5_ADDRESS_IPPORT;
++	localport->address.length = sizeof(lport);
++	localport->address.data = (void *) &lport;
+       }
+ 
+       if (rport > 0) {
+ 	remoteport = alloca(sizeof(krb5_address));
+ 	memset(remoteport, 0, sizeof(krb5_address));
+-	remoteport->addrtype = ADDRTYPE_IPPORT;
+-	remoteport->length = sizeof(rport);
+-	remoteport->contents = (krb5_octet *) &rport;
++	remoteport->addr_type = KRB5_ADDRESS_IPPORT;
++	remoteport->address.length = sizeof(rport);
++	remoteport->address.data = (void *) &rport;
+       }
+ 
+       rc = krb5_auth_con_setaddrs(ctx, ac, localaddr, remoteaddr);
+       if (rc)
+         return pk_error(rc);
+-
+-      rc = krb5_auth_con_setports(ctx, ac, localport, remoteport);
+-      if (rc)
+-        return pk_error(rc);
+     }
+   else if((!strcmp(name, "context") && ctx) || 
+           (!strcmp(name, "_ac") && ac))
+@@ -2190,10 +2183,10 @@ Principal_getattr(PyObject *unself __UNUSED, PyObject 
+ 
+   if(!strcmp(name, "realm"))
+     {
+-      krb5_data *realm;
++      krb5_realm *realm;
+ 
+       realm = krb5_princ_realm(ctx, princ);
+-      retval = PyString_FromStringAndSize(realm->data, realm->length);
++      retval = PyString_FromStringAndSize((char *) realm, strlen((char *) realm));
+     }
+   else if(!strcmp(name, "name"))
+     {
+@@ -2398,7 +2391,7 @@ Principal_getitem(PyObject *unself __UNUSED, PyObject 
+   krb5_context ctx = NULL;
+   krb5_principal princ = NULL;
+   int index;
+-  krb5_data *d;
++  const char *d;
+ 
+   if(!PyArg_ParseTuple(args, "Oi:__getitem__", &self, &index))
+     return NULL;
+@@ -2420,15 +2413,14 @@ Principal_getitem(PyObject *unself __UNUSED, PyObject 
+   else
+     return NULL;
+ 
+-  if(index >= krb5_princ_size(ctx, princ))
++  d = krb5_principal_get_comp_string(ctx, princ, index);
++  if (d == NULL)
+     {
+       PyErr_Format(PyExc_IndexError, "index out of range");
+       return NULL;
+     }
++  retval = PyString_FromStringAndSize(d, strlen(d));
+ 
+-  d = krb5_princ_component(ctx, princ, index);
+-  retval = PyString_FromStringAndSize(d->data, d->length);
+-
+   return retval;
+ } /* KrbV.Principal.__getitem__() */
+ 
+@@ -2469,7 +2461,7 @@ Principal_itemlen(PyObject *unself __UNUSED, PyObject 
+   if(tmp)
+     princ = PyCObject_AsVoidPtr(tmp);
+ 
+-  return PyInt_FromLong(krb5_princ_size(ctx, princ));
++  return PyInt_FromLong(princ->name.name_string.len);
+ } /* KrbV.Principal.__len__() */
+ 
+ PyDoc_STRVAR(Principal_eq__doc__,
+@@ -3131,7 +3123,7 @@ CCache_get_credentials(PyObject *unself __UNUSED, PyOb
+   krb5_error_code rc;
+   krb5_creds in_creds, *out_creds = NULL;
+   int basepid = 0;
+-  krb5_authdata *adata, **adata_ptrs = NULL;
++  krb5_authdata *adata = NULL;
+ 
+   static const char *kwlist[]={"self", "in_creds", "options", "basepid", NULL };
+ 
+@@ -3143,7 +3135,7 @@ CCache_get_credentials(PyObject *unself __UNUSED, PyOb
+   memset(&in_creds, 0, sizeof(in_creds));
+   if(!PyArg_ParseTuple(subtmp, "OO(iz#)(iiii)OOOz#z#O",
+ 		       &client, &server,
+-		       &in_creds.keyblock.enctype, &in_creds.keyblock.contents, &in_creds.keyblock.length,
++		       &in_creds.session.keytype, &in_creds.session.keyvalue.data, &in_creds.session.keyvalue.length,
+ 		       &in_creds.times.authtime,   &in_creds.times.starttime,   &in_creds.times.endtime,
+ 		       &in_creds.times.renew_till, &tmp, &tmp, &tmp,
+ 		       &in_creds.ticket.data,
+@@ -3159,11 +3151,8 @@ CCache_get_credentials(PyObject *unself __UNUSED, PyOb
+ 	{
+ 	  adata = alloca(sizeof(krb5_authdata));
+ 	  memset(adata, 0, sizeof(krb5_authdata));
+-	  adata_ptrs = alloca(sizeof(krb5_authdata *) * 2);
+-	  adata_ptrs[0] = &adata[0];
+-	  adata_ptrs[1] = NULL;
+-	  adata[0].length = PyString_GET_SIZE(authdata_tmp);
+-	  adata[0].contents = (krb5_octet *) PyString_AS_STRING(authdata_tmp);
++	  adata[0].len = PyString_GET_SIZE(authdata_tmp);
++	  adata[0].val->ad_data.data = (void *) PyString_AS_STRING(authdata_tmp);
+ 	}
+       else  if(PySequence_Check(authdata_tmp))
+ 	{
+@@ -3172,18 +3161,17 @@ CCache_get_credentials(PyObject *unself __UNUSED, PyOb
+ 	  n = PySequence_Length(authdata_tmp);
+ 	  adata = alloca(sizeof(krb5_authdata) * n);
+ 	  memset(adata, 0, sizeof(krb5_authdata) * n);
+-	  adata_ptrs = alloca(sizeof(krb5_authdata *) * (n+1));
+ 	  for(i = 0; i < n; i++)
+ 	    {
+ 	      PyObject *otmp = PySequence_GetItem(authdata_tmp, i);
+ 	      if(PyString_Check(otmp))
+ 		{
+-		  adata[i].length = PyString_GET_SIZE(otmp);
+-		  adata[i].contents = (krb5_octet *) PyString_AS_STRING(otmp);
++		  adata[i].len = PyString_GET_SIZE(otmp);
++		  adata[i].val->ad_data.data = (void *) PyString_AS_STRING(otmp);
+ 		}
+ 	      else if(PySequence_Check(otmp))
+ 		{
+-		  if(!PyArg_ParseTuple(otmp, "z#i", &adata[i].contents, &adata[i].length, &adata[i].ad_type))
++		  if(!PyArg_ParseTuple(otmp, "z#i", &adata[i].val->ad_data.data, &adata[i].len, &adata[i].val->ad_type))
+ 		    return NULL;
+ 		}
+ 	      else
+@@ -3191,10 +3179,7 @@ CCache_get_credentials(PyObject *unself __UNUSED, PyOb
+ 		  PyErr_Format(PyExc_TypeError, "authdata must be a sequence or string");
+ 		  return NULL;
+ 		}
+-
+-	      adata_ptrs[i] = &adata[i];
+ 	    }
+-	  adata_ptrs[i] = NULL;
+ 	}
+       else
+ 	{
+@@ -3202,7 +3187,7 @@ CCache_get_credentials(PyObject *unself __UNUSED, PyOb
+ 	  return NULL;
+ 	}
+ 
+-      in_creds.authdata = adata_ptrs;
++      memcpy(adata, &in_creds.authdata, sizeof(adata));
+     }
+ 
+   tmp = PyObject_GetAttrString(client, "_princ");
+@@ -3253,15 +3238,15 @@ CCache_get_credentials(PyObject *unself __UNUSED, PyOb
+   else
+     Py_INCREF(client);
+ 
+-  addrlist = make_address_list(out_creds->addresses, 0);
++  addrlist = make_address_list(&out_creds->addresses, 0);
+ 
+-  adlist = make_authdata_list(out_creds->authdata);
++  adlist = make_authdata_list(&out_creds->authdata);
+ 
+-  retval = Py_BuildValue("(NN(iz#)(iiii)iiNz#z#N)", client, server, out_creds->keyblock.enctype,
+-			 out_creds->keyblock.contents, out_creds->keyblock.length,
++  retval = Py_BuildValue("(NN(iz#)(iiii)iiNz#z#N)", client, server, out_creds->session.keytype,
++			 out_creds->session.keyvalue.data, out_creds->session.keyvalue.length,
+ 			 out_creds->times.authtime, out_creds->times.starttime,
+ 			 out_creds->times.endtime, out_creds->times.renew_till,
+-			 out_creds->is_skey, out_creds->ticket_flags, addrlist,
++			 0, out_creds->flags, addrlist,
+ 			 out_creds->ticket.data, out_creds->ticket.length,
+ 			 out_creds->second_ticket.data, out_creds->second_ticket.length,
+ 			 adlist);

@@ -1,0 +1,11 @@
+@comment $OpenBSD$
+lib/python${MODPY_VERSION}/site-packages/krbVmodule.a
+lib/python${MODPY_VERSION}/site-packages/krbVmodule.la
+lib/python${MODPY_VERSION}/site-packages/krbVmodule.so
+share/doc/py-krbV/
+share/doc/py-krbV/AUTHORS
+share/doc/py-krbV/COPYING
+share/doc/py-krbV/ChangeLog
+share/doc/py-krbV/NEWS
+share/doc/py-krbV/README
+share/doc/py-krbV/krbV-code-snippets.py

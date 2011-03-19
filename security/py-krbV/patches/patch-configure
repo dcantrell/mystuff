@@ -1,0 +1,21 @@
+$OpenBSD$
+--- configure.orig	Mon May 24 09:44:15 2010
++++ configure	Fri Mar 11 01:28:56 2011
+@@ -2500,7 +2500,7 @@ fi
+ 
+ # Define the identity of the package.
+  PACKAGE=python-krbV
+- VERSION=$(/bin/awk '/^Version:/ { print $2 }' python-krbV.spec)
++ VERSION=$(awk '/^Version:/ { print $2 }' ${WRKSRC}/python-krbV.spec)
+ 
+ 
+ cat >>confdefs.h <<_ACEOF
+@@ -11335,7 +11335,7 @@ test -z "$LIBNAME" && LIBNAME=lib
+ krb5_prefix=
+ krb5_includedir=
+ for I in /usr /usr/kerberos /usr/athena; do
+-	for J in include/krb5 include; do
++	for J in include/kerberosV include/krb5 include; do
+ 		if test -f ${I}/${J}/krb5.h; then
+ 			krb5_prefix=$I
+ 			krb5_includedir=$J
