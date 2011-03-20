@@ -1,0 +1,9 @@
+@comment $OpenBSD$
+lib/python${MODPY_VERSION}/site-packages/_sqlitecache.so
+lib/python${MODPY_VERSION}/site-packages/sqlitecachec.py
+lib/python${MODPY_VERSION}/site-packages/sqlitecachec.pyc
+lib/python${MODPY_VERSION}/site-packages/yum_metadata_parser-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info
+share/doc/py-yum-metadata-parser/
+share/doc/py-yum-metadata-parser/AUTHORS
+share/doc/py-yum-metadata-parser/ChangeLog
+share/doc/py-yum-metadata-parser/README
