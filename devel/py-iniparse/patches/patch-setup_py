@@ -1,0 +1,20 @@
+$OpenBSD$
+--- setup.py.orig	Sat Jun 12 06:15:40 2010
++++ setup.py	Mon Mar 21 09:56:26 2011
+@@ -31,11 +31,11 @@ use.''',
+       ],
+       packages = ['iniparse'],
+       data_files = [
+-        ('share/doc/iniparse-%s' % VERSION, ['README', 'LICENSE-PSF',
+-                                             'LICENSE', 'Changelog',
+-                                             'html/index.html',
+-                                             'html/style.css',
+-                                             ]),
++        ('share/doc/py-iniparse', ['README', 'LICENSE-PSF',
++                                   'LICENSE', 'Changelog',
++                                   'html/index.html',
++                                   'html/style.css',
++                                  ]),
+       ],
+ )
+ 
