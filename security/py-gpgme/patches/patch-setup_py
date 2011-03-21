@@ -1,0 +1,14 @@
+$OpenBSD$
+--- setup.py.orig	Mon Mar 27 01:34:26 2006
++++ setup.py	Mon Mar 21 11:00:31 2011
+@@ -14,7 +14,9 @@ gpgme = Extension(
+      'src/pygpgme-keyiter.c',
+      'src/pygpgme-constants.c',
+      ],
+-    libraries=['gpgme'])
++    libraries=['gpgme'],
++    library_dirs=['/usr/local/lib'],
++    include_dirs=['/usr/local/include'])
+ 
+ setup(name='pygpgme',
+       version='0.1',
