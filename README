@@ -1,0 +1,11 @@
+/usr/port/mystuff
+
+This is my local collection of ports for my OpenBSD systems.  Patches
+welcome that fix bugs, upgrade ports, and so on.
+
+The tree is kept on github:
+    https://github.com/dcantrell/mystuff
+
+I also post built packages as well as gzipped tar files of the port
+source here:
+    http://www.burdell.org/openbsd/mystuff
