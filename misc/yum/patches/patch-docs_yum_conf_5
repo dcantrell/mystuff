@@ -1,0 +1,21 @@
+$OpenBSD$
+--- docs/yum.conf.5.orig	Fri Jan  7 10:42:36 2011
++++ docs/yum.conf.5	Tue Mar 22 08:44:47 2011
+@@ -30,7 +30,7 @@ Directory where yum should store its cache and db file
+ .IP
+ \fBpersistdir\fR
+ Directory where yum should store information that should persist over multiple
+-runs. The default is `/var/lib/yum'.
++runs. The default is `/var/db/yum'.
+ 
+ .IP
+ \fBkeepcache\fR
+@@ -850,7 +850,7 @@ your $arch is i686 your $basearch will be i386.
+ .IP
+ \fB$uuid\fR
+ This will be replaced with a unique but persistent uuid for this machine. 
+-The value that is first generated will be stored in /var/lib/yum/uuid and
++The value that is first generated will be stored in /var/db/yum/uuid and
+ reused until this file is deleted.
+ 
+ .IP

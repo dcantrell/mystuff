@@ -1,0 +1,9 @@
+$OpenBSD$
+--- yum/mdparser.py.orig	Mon Sep 20 04:37:36 2010
++++ yum/mdparser.py	Sat Mar 19 13:25:35 2011
+@@ -1,4 +1,4 @@
+-#! /usr/bin/python -tt
++#! /usr/bin/env python -tt
+ 
+ # This program is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by

@@ -1,0 +1,18 @@
+$OpenBSD$
+--- yum/history.py.orig	Wed Oct 20 06:26:30 2010
++++ yum/history.py	Tue Mar 22 08:43:03 2011
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python -t
++#!/usr/bin/env python -t
+ # This program is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation; either version 2 of the License, or
+@@ -31,7 +31,7 @@ from yum.i18n import to_unicode, to_utf8
+ 
+ from rpmUtils.arch import getBaseArch
+ 
+-_history_dir = '/var/lib/yum/history'
++_history_dir = '/var/db/yum/history'
+ 
+ # NOTE: That we don't list TS_FAILED, because pkgs shouldn't go into the
+ #       transaction with that. And if they come out with that we don't want to

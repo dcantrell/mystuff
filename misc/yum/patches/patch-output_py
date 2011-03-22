@@ -1,0 +1,9 @@
+$OpenBSD$
+--- output.py.orig	Fri Dec 10 19:16:00 2010
++++ output.py	Sat Mar 19 13:21:36 2011
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python -t
++#!/usr/bin/env python -t
+ 
+ """This handles actual output from the cli"""
+ 

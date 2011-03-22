@@ -1,0 +1,39 @@
+$OpenBSD$
+--- po/Makefile.orig	Thu May  6 04:54:46 2010
++++ po/Makefile	Tue Mar 22 08:06:22 2011
+@@ -1,7 +1,7 @@
+ INSTALL= /usr/bin/install -c
+ INSTALL_PROGRAM= ${INSTALL}
+ INSTALL_DATA= ${INSTALL} -m 644
+-INSTALLNLSDIR=$(DESTDIR)/usr/share/locale
++INSTALLNLSDIR=$(DESTDIR)/usr/local/share/locale
+ top_srcdir = "."
+ 
+ 
+@@ -57,15 +57,15 @@ distclean: clean
+ depend:
+ 
+ install:	all
+-	mkdir -p $(PREFIX)/$(INSTALLNLSDIR)
++	mkdir -p $(INSTALLNLSDIR)
+ 	for n in $(CATALOGS); do \
+ 	    l=`basename $$n .po`; \
+ 	    mo=$$l.mo; \
+ 	    if [ ! -f $$mo ]; then continue; fi; \
+-	    $(INSTALL) -m 755 -d $(PREFIX)/$(INSTALLNLSDIR)/$$l; \
+-	    $(INSTALL) -m 755 -d $(PREFIX)/$(INSTALLNLSDIR)/$$l/LC_MESSAGES; \
++	    $(INSTALL) -m 755 -d $(INSTALLNLSDIR)/$$l; \
++	    $(INSTALL) -m 755 -d $(INSTALLNLSDIR)/$$l/LC_MESSAGES; \
+ 	    $(INSTALL) -m 644 $$mo \
+-		$(PREFIX)/$(INSTALLNLSDIR)/$$l/LC_MESSAGES/$(NLSPACKAGE).mo; \
++		$(INSTALLNLSDIR)/$$l/LC_MESSAGES/$(NLSPACKAGE).mo; \
+ 	done
+ 
+ %.mo: %.po
+@@ -77,4 +77,4 @@ test:
+ 	msgfmt -c $$n; \
+ 	done
+ 
+- 
+\ No newline at end of file
++ 

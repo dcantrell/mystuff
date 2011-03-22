@@ -1,0 +1,9 @@
+$OpenBSD$
+--- rpmUtils/miscutils.py.orig	Tue Jun 15 08:51:38 2010
++++ rpmUtils/miscutils.py	Sat Mar 19 13:32:59 2011
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python -tt
++#!/usr/bin/env python -tt
+ 
+ # This program is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by

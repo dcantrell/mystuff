@@ -1,0 +1,12 @@
+$OpenBSD$
+--- test/yum-release-test.sh.orig	Thu May  6 04:54:35 2010
++++ test/yum-release-test.sh	Tue Mar 22 08:44:21 2011
+@@ -44,7 +44,7 @@ if [ `whoami` != root ] ; then
+ fi
+ 
+ mkdir -p $WORKDIR/var/cache/yum
+-mkdir -p $WORKDIR/var/lib/yum
++mkdir -p $WORKDIR/var/db/yum
+ mkdir -p $WORKDIR/var/log
+ mkdir -p $WORKDIR/tmp
+ mkdir -p $WORKDIR/etc/yum.repos.d

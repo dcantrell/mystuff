@@ -1,0 +1,9 @@
+$OpenBSD$
+--- yum/pgpmsg.py.orig	Mon Sep 20 04:37:36 2010
++++ yum/pgpmsg.py	Sat Mar 19 13:24:10 2011
+@@ -1,4 +1,4 @@
+-#! /usr/bin/python -tt
++#! /usr/bin/env python -tt
+ ##Copyright (C) 2003,2005,2009  Jens B. Jorgensen <jbj1@ultraemail.net>
+ ##
+ ##This program is free software; you can redistribute it and/or

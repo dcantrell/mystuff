@@ -1,0 +1,3 @@
+A utility that can check for and automatically download and install
+updated RPM packages.  Dependencies are obtained and downloaded
+automatically, prompting the user for permission as necessary.

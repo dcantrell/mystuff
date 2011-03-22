@@ -1,0 +1,9 @@
+$OpenBSD$
+--- test/rpmdb-cache.py.orig	Thu May  6 04:54:46 2010
++++ test/rpmdb-cache.py	Sat Mar 19 13:34:14 2011
+@@ -1,4 +1,4 @@
+-#! /usr/bin/python -tt
++#! /usr/bin/env python -tt
+ 
+ import sys
+ import yum

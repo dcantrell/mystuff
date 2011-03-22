@@ -1,0 +1,18 @@
+$OpenBSD$
+--- bin/yum.py.orig	Thu May  6 04:54:46 2010
++++ bin/yum.py	Sat Mar 19 13:35:34 2011
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/env python
+ import sys
+ try:
+     import yum
+@@ -23,7 +23,7 @@ the yum faq at:
+ """ % (sys.exc_value, sys.version)
+     sys.exit(1)
+ 
+-sys.path.insert(0, '/usr/share/yum-cli')
++sys.path.insert(0, '/usr/local/share/yum-cli')
+ try:
+     import yummain
+     yummain.user_main(sys.argv[1:], exit_code=True)

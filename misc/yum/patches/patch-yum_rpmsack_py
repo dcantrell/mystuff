@@ -1,0 +1,33 @@
+$OpenBSD$
+--- yum/rpmsack.py.orig	Thu Dec 23 09:47:23 2010
++++ yum/rpmsack.py	Tue Mar 22 08:43:28 2011
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python -tt
++#!/usr/bin/env python -tt
+ # This program is free software; you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation; either version 2 of the License, or
+@@ -180,7 +180,7 @@ class RPMDBPackageSack(PackageSackBase):
+     __cache_rpmdb__ = True
+ 
+     def __init__(self, root='/', releasever=None, cachedir=None,
+-                 persistdir='/var/lib/yum'):
++                 persistdir='/var/db/yum'):
+         self.root = root
+         self._idx2pkg = {}
+         self._name2pkg = {}
+@@ -1573,12 +1573,12 @@ def _sanitize(path):
+ class RPMDBAdditionalData(object):
+     """class for access to the additional data not able to be stored in the
+        rpmdb"""
+-    # dir: /var/lib/yum/yumdb/
++    # dir: /var/db/yum/yumdb/
+     # pkgs stored in name[0]/name[1]/pkgid-name-ver-rel-arch dirs
+     # dirs have files per piece of info we're keeping
+     #    repoid, install reason, status, blah, (group installed for?), notes?
+     
+-    def __init__(self, db_path='/var/lib/yum/yumdb', version_path=None):
++    def __init__(self, db_path='/var/db/yum/yumdb', version_path=None):
+         self.conf = misc.GenericHolder()
+         self.conf.db_path = db_path
+         self.conf.version_path = version_path
