@@ -1,0 +1,3 @@
+Client software for interacting with a koji build system.  Koji is a
+system for building and managing RPMs used to create Linux
+distributions.

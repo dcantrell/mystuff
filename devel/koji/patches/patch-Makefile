@@ -1,0 +1,70 @@
+$OpenBSD$
+--- Makefile.orig	Thu Dec 16 11:13:17 2010
++++ Makefile	Tue Mar 22 11:40:58 2011
+@@ -1,19 +1,10 @@
+ NAME=koji
+-SPECFILE = $(firstword $(wildcard *.spec))
+-SUBDIRS = hub builder koji cli docs util www plugins vm
++SUBDIRS = koji cli
+ 
+ ifdef DIST
+ DIST_DEFINES := --define "dist $(DIST)"
+ endif
+ 
+-ifndef VERSION
+-VERSION := $(shell rpm $(RPM_DEFINES) $(DIST_DEFINES) -q --qf "%{VERSION}\n" --specfile $(SPECFILE)| head -1)
+-endif
+-# the release of the package
+-ifndef RELEASE
+-RELEASE := $(shell rpm $(RPM_DEFINES) $(DIST_DEFINES) -q --qf "%{RELEASE}\n" --specfile $(SPECFILE)| head -1)
+-endif
+-
+ ifndef WORKDIR
+ WORKDIR := $(shell pwd)
+ endif
+@@ -52,19 +43,19 @@ ifndef TAG
+ TAG=$(NAME)-$(VERSION)-$(RELEASE)
+ endif
+ 
+-_default:
++all:
+ 	@echo "read the makefile"
+ 
+ clean:
+ 	rm -f *.o *.so *.pyc *~ koji*.bz2 koji*.src.rpm
+ 	rm -rf koji-$(VERSION)
+-	for d in $(SUBDIRS); do make -s -C $$d clean; done
++	for d in $(SUBDIRS); do $(MAKE) -s -C $$d clean; done
+ 
+ git-clean:
+ 	@git clean -d -q -x
+ 
+ subdirs:
+-	for d in $(SUBDIRS); do make -C $$d; [ $$? = 0 ] || exit 1; done
++	for d in $(SUBDIRS); do $(MAKE) -C $$d; [ $$? = 0 ] || exit 1; done
+ 
+ test-tarball:
+ 	@rm -rf .koji-$(VERSION)
+@@ -80,15 +71,6 @@ tarball: clean
+ 
+ sources: tarball
+ 
+-srpm: tarball
+-	$(RPM_WITH_DIRS) $(DIST_DEFINES) -bs $(SPECFILE)
+-
+-rpm: tarball
+-	$(RPM_WITH_DIRS) $(DIST_DEFINES) -bb $(SPECFILE)
+-
+-test-rpm: tarball
+-	$(RPM_WITH_DIRS) $(DIST_DEFINES) --define "testbuild 1" -bb $(SPECFILE)
+-
+ tag::
+ 	git tag -a $(TAG)
+ 	@echo "Tagged with: $(TAG)"
+@@ -114,5 +96,5 @@ install:
+ 
+ 	mkdir -p $(DESTDIR)
+ 
+-	for d in $(SUBDIRS); do make DESTDIR=`cd $(DESTDIR); pwd` \
++	for d in $(SUBDIRS); do $(MAKE) DESTDIR=`cd $(DESTDIR); pwd` \
+ 		-C $$d install; [ $$? = 0 ] || exit 1; done

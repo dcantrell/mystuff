@@ -1,0 +1,26 @@
+$OpenBSD$
+--- koji/Makefile.orig	Thu Dec 16 11:13:17 2010
++++ koji/Makefile	Tue Mar 22 11:44:58 2011
+@@ -1,6 +1,5 @@
+ SUBDIRS = ssl
+ 
+-PYTHON=python
+ PACKAGE = $(shell basename `pwd`)
+ PYFILES = $(wildcard *.py)
+ PYSCRIPTS = context.py
+@@ -14,7 +13,7 @@ _default:
+ 
+ clean:
+ 	rm -f *.o *.so *.pyc *~
+-	for d in $(SUBDIRS); do make -s -C $$d clean; done
++	for d in $(SUBDIRS); do $(MAKE) -s -C $$d clean; done
+ 
+ install:
+ 	mkdir -p $(DESTDIR)/$(PKGDIR)
+@@ -26,5 +25,5 @@ install:
+ 	done
+ 	$(PYTHON) -c "import compileall; compileall.compile_dir('$(DESTDIR)/$(PKGDIR)', 1, '$(PYDIR)', 1)"
+ 
+-	for d in $(SUBDIRS); do make DESTDIR=$(DESTDIR)/$(PKGDIR)/$$d \
++	for d in $(SUBDIRS); do $(MAKE) DESTDIR=$(DESTDIR)/$(PKGDIR)/$$d \
+ 		-C $$d install; [ $$? = 0 ] || exit 1; done

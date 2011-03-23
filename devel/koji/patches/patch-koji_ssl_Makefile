@@ -1,0 +1,11 @@
+$OpenBSD$
+--- koji/ssl/Makefile.orig	Thu Dec 16 11:13:17 2010
++++ koji/ssl/Makefile	Tue Mar 22 11:42:43 2011
+@@ -1,7 +1,5 @@
+ FILES = $(wildcard *.py)
+ 
+-PYTHON=python
+-
+ _default:
+ 	@echo "nothing to make.  try make install"
+ 
