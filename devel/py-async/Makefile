@@ -9,6 +9,7 @@ MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
 
 MASTER_SITES =      http://pypi.python.org/packages/source/a/async/
 
+WANTLIB +=          z
 MODULES =           lang/python
 
 # BSD

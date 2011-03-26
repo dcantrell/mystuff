@@ -1,9 +1,13 @@
 $OpenBSD$
 --- setup.py.orig	Sun Nov 21 02:03:47 2010
-+++ setup.py	Fri Mar 25 12:55:23 2011
-@@ -79,6 +79,5 @@ setup(cmdclass={'build_ext':build_ext_nofail},
++++ setup.py	Fri Mar 25 15:54:40 2011
+@@ -77,8 +77,8 @@ setup(cmdclass={'build_ext':build_ext_nofail},
+       packages = ('async', 'async.mod', 'async.test', 'async.test.mod'),
+       package_data={'async' : ['AUTHORS', 'README']},
        package_dir = {'async':''},
-       ext_modules=[Extension('async.mod.zlib', ['mod/zlibmodule.c'])],
+-      ext_modules=[Extension('async.mod.zlib', ['mod/zlibmodule.c'])],
++      ext_modules=[Extension('async.mod.zlib', ['mod/zlibmodule.c'],
++                             libraries=['z'])],
        license = "BSD License",
 -      zip_safe=False,
        long_description = """Async is a framework to process interdependent tasks in a pool of workers"""

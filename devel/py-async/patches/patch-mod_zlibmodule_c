@@ -1,6 +1,6 @@
 $OpenBSD$
 --- mod/zlibmodule.c.orig	Tue Nov  9 01:11:30 2010
-+++ mod/zlibmodule.c	Fri Mar 25 13:05:17 2011
++++ mod/zlibmodule.c	Fri Mar 25 16:06:49 2011
 @@ -1006,35 +1006,19 @@ static PyMethodDef zlib_methods[] =
  };
  
@@ -47,25 +47,12 @@ $OpenBSD$
  };
  
  PyDoc_STRVAR(zlib_module_documentation,
-@@ -1056,8 +1040,19 @@ PyMODINIT_FUNC
+@@ -1056,8 +1040,6 @@ PyMODINIT_FUNC
  PyInit_zlib(void)
  {
      PyObject *m, *ver;
 -    Py_TYPE(&Comptype) = &PyType_Type;
 -    Py_TYPE(&Decomptype) = &PyType_Type;
-+
-+    if (PyType_Ready(&Comptype) < 0)
-+        return;
-+
-+    Py_INCREF(&Comptype);
-+    PyModule_AddObject(m, "Compress", (PyObject *) &Comptype);
-+
-+    if (PyType_Ready(&Decomptype) < 0)
-+        return;
-+
-+    Py_INCREF(&Decomptype);
-+    PyModule_AddObject(m, "Decompress", (PyObject *) &Decomptype);
-+
      m = Py_InitModule4("zlib", zlib_methods,
  		       zlib_module_documentation,
  		       (PyObject*)NULL,PYTHON_API_VERSION);
