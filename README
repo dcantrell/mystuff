@@ -26,6 +26,9 @@ Policies I'm trying to follow:
    follow the #6 convention.
 8) Replace #!/usr/bin/python with '#!/usr/bin/env python' since there is
    no /usr/bin/python on an OpenBSD system.
+9) When I update a port but the version remains the same, I increment
+   the REVISION number.  I leave old builds on the download site (for no
+   particular reason other than for historical purposes).
 
 -- 
 David Cantrell <david.l.cantrell@gmail.com>
