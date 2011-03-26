@@ -1,7 +1,15 @@
-PORTS = security/py-krbV \
-        net/py-urlgrabber \
+PORTS = devel/koji \
+        devel/py-async \
+        devel/py-git \
+        devel/py-gitdb \
+        devel/py-iniparse \
+        devel/py-offtrac \
+        misc/py-yum-metadata-parser \
         misc/rpm \
-        misc/py-yum-metadata-parser
+        misc/yum \
+        net/py-urlgrabber \
+        security/py-gpgme \
+        security/py-krbV
 
 PORTSROOT = /usr/ports/mystuff
 PKGSROOT  = /usr/ports/packages
@@ -17,6 +25,7 @@ all:
 	@echo "    SHA1              Generate new SHA1 files on ${SITEHOST}."
 
 publish: publish-source publish-packages
+	@scp README ${SITEHOST}:${SITEROOT}
 
 publish-source:
 	@tmpdir="$$(mktemp -d -p $$(pwd))" ; \
