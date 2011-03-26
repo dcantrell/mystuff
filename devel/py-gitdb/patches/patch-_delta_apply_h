@@ -1,0 +1,12 @@
+$OpenBSD$
+--- _delta_apply.h.orig	Sun Nov 21 00:52:15 2010
++++ _delta_apply.h	Fri Mar 25 16:11:59 2011
+@@ -1,6 +1,6 @@
+ #include <Python.h>
+ 
+-static PyObject* connect_deltas(PyObject *self, PyObject *dstreams);
+-static PyObject* apply_delta(PyObject* self, PyObject* args);
++PyObject* connect_deltas(PyObject *self, PyObject *dstreams);
++PyObject* apply_delta(PyObject* self, PyObject* args);
+ 
+ static PyTypeObject DeltaChunkListType;
