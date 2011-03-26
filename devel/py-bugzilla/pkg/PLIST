@@ -1,0 +1,24 @@
+@comment $OpenBSD$
+bin/bugzilla
+lib/python${MODPY_VERSION}/site-packages/bugzilla/
+lib/python${MODPY_VERSION}/site-packages/bugzilla/__init__.py
+lib/python${MODPY_VERSION}/site-packages/bugzilla/__init__.pyc
+lib/python${MODPY_VERSION}/site-packages/bugzilla/base.py
+lib/python${MODPY_VERSION}/site-packages/bugzilla/base.pyc
+lib/python${MODPY_VERSION}/site-packages/bugzilla/bugzilla3.py
+lib/python${MODPY_VERSION}/site-packages/bugzilla/bugzilla3.pyc
+lib/python${MODPY_VERSION}/site-packages/bugzilla/nvlbugzilla.py
+lib/python${MODPY_VERSION}/site-packages/bugzilla/nvlbugzilla.pyc
+lib/python${MODPY_VERSION}/site-packages/bugzilla/rhbugzilla.py
+lib/python${MODPY_VERSION}/site-packages/bugzilla/rhbugzilla.pyc
+lib/python${MODPY_VERSION}/site-packages/bugzilla/util.py
+lib/python${MODPY_VERSION}/site-packages/bugzilla/util.pyc
+lib/python${MODPY_VERSION}/site-packages/python_bugzilla-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info
+share/doc/py-bugzilla/
+share/doc/py-bugzilla/COPYING
+share/doc/py-bugzilla/README
+share/doc/py-bugzilla/THANKS
+share/doc/py-bugzilla/TODO
+share/man/
+share/man/man1/
+@man share/man/man1/bugzilla.1
