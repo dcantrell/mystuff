@@ -1,0 +1,7 @@
+@comment $OpenBSD$
+lib/python${MODPY_VERSION}/site-packages/argparse-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info
+lib/python${MODPY_VERSION}/site-packages/argparse.py
+lib/python${MODPY_VERSION}/site-packages/argparse.pyc
+share/doc/py-argparse/
+share/doc/py-argparse/NEWS.txt
+share/doc/py-argparse/README.txt
