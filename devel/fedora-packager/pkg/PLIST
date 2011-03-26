@@ -1,0 +1,33 @@
+@comment $OpenBSD$
+bin/arm-koji
+bin/fedora-burn-yubikey
+bin/fedora-cert
+bin/fedora-cvs
+bin/fedora-getsvn
+bin/fedora-hosted
+bin/fedora-packager-setup
+bin/fedoradev-pkgowners
+bin/fedpkg
+bin/ppc-koji
+bin/rpmbuild-md5
+bin/s390-koji
+bin/sparc-koji
+lib/python${MODPY_VERSION}/site-packages/fedora_cert/
+lib/python${MODPY_VERSION}/site-packages/fedora_cert/__init__.py
+lib/python${MODPY_VERSION}/site-packages/fedora_cert/__init__.pyc
+lib/python${MODPY_VERSION}/site-packages/fedora_packager-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info
+lib/python${MODPY_VERSION}/site-packages/pyfedpkg/
+lib/python${MODPY_VERSION}/site-packages/pyfedpkg/__init__.py
+lib/python${MODPY_VERSION}/site-packages/pyfedpkg/__init__.pyc
+share/doc/fedora-packager/
+share/doc/fedora-packager/AUTHORS
+share/doc/fedora-packager/COPYING
+share/doc/fedora-packager/ChangeLog
+share/doc/fedora-packager/NEWS
+share/doc/fedora-packager/README
+share/doc/fedora-packager/TODO
+share/examples/fedora-packager/
+share/examples/fedora-packager/bash_completion.d/
+@sample ${SYSCONFDIR}/bash_completion.d/
+share/examples/fedora-packager/bash_completion.d/fedpkg.bash
+@sample ${SYSCONFDIR}/bash_completion.d/fedpkg.bash

@@ -1,0 +1,9 @@
+$OpenBSD$
+--- src/fedora-cert.py.orig	Thu Jul 29 09:50:39 2010
++++ src/fedora-cert.py	Mon Mar 21 11:40:49 2011
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/env python
+ # fedora-cert - a command line tool to manage your fedora SSL user certificates
+ #
+ # Copyright (C) 2009-2010 Red Hat Inc.

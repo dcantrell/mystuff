@@ -1,0 +1,9 @@
+$OpenBSD$
+--- src/fedora-burn-yubikey.py.orig	Fri Sep 24 06:37:09 2010
++++ src/fedora-burn-yubikey.py	Mon Mar 21 11:40:36 2011
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/env python
+ 
+ # Copyright (C) 2010 Red Hat Inc.
+ # Author: Mike McGrath <mmcgrath@redhat.com>

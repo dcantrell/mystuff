@@ -1,0 +1,9 @@
+$OpenBSD$
+--- src/fedora-cvs.py.orig	Fri Sep 24 06:17:40 2010
++++ src/fedora-cvs.py	Mon Mar 21 11:41:02 2011
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/env python
+ 
+ import commands
+ import optparse

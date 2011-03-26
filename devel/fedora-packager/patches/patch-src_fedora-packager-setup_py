@@ -1,0 +1,9 @@
+$OpenBSD$
+--- src/fedora-packager-setup.py.orig	Thu Jul 29 09:50:39 2010
++++ src/fedora-packager-setup.py	Mon Mar 21 11:41:21 2011
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/env python
+ #  Copyright (C) 2007, 2008, 2009, 2010 Dennis Gilmore
+ #  Copyright (C) 2009 Stewart Adam
+ #  This file is part of fedora-packager.

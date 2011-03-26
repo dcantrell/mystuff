@@ -1,0 +1,9 @@
+$OpenBSD$
+--- src/fedora-hosted.py.orig	Tue Jan  5 07:23:36 2010
++++ src/fedora-hosted.py	Mon Mar 21 11:41:11 2011
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python
++#!/usr/bin/env python
+ # fedora-hosted - a commandline frontend for the Fedora Hosted Projects Trac
+ #
+ # Copyright (C) 2008 Red Hat Inc.

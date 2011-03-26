@@ -1,0 +1,27 @@
+$OpenBSD$
+--- setup.py.orig	Fri Mar 25 12:16:24 2011
++++ setup.py	Fri Mar 25 12:16:55 2011
+@@ -0,0 +1,23 @@
++from distutils.core import setup
++from distutils.core import Extension
++
++setup(name='fedora-packager',
++      version='0.5.2.0',
++      license='GPLv2+',
++      packages=['pyfedpkg', 'fedora_cert'],
++      package_dir={'pyfedpkg': 'src/pyfedpkg',
++                   'fedora_cert': 'src/fedora_cert'},
++      scripts=['src/fedora-burn-yubikey',
++               'src/fedora-cvs',
++               'src/fedora-packager-setup',
++               'src/fedoradev-pkgowners',
++               'src/fedora-cert',
++               'src/fedora-getsvn',
++               'src/fedora-hosted',
++               'src/rpmbuild-md5',
++               'src/fedpkg',
++               'src/sparc-koji',
++               'src/s390-koji',
++               'src/arm-koji',
++               'src/ppc-koji']
++     )
