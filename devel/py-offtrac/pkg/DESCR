@@ -1,0 +1,4 @@
+A python based xmlrpc client library for trac instances.
+
+There is the offtrac python library which offers the !TracServer class.
+This object is how one interacts with a Trac instance via xmlrpc.

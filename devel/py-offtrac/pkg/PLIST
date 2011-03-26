@@ -1,0 +1,9 @@
+@comment $OpenBSD$
+lib/python${MODPY_VERSION}/site-packages/offtrac/
+lib/python${MODPY_VERSION}/site-packages/offtrac-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info
+lib/python${MODPY_VERSION}/site-packages/offtrac/__init__.py
+lib/python${MODPY_VERSION}/site-packages/offtrac/__init__.pyc
+share/doc/py-offtrac/
+share/doc/py-offtrac/COPYING
+share/doc/py-offtrac/LICENSE
+share/doc/py-offtrac/README
