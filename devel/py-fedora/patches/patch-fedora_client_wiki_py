@@ -1,0 +1,9 @@
+$OpenBSD$
+--- fedora/client/wiki.py.orig	Thu Apr 22 20:46:06 2010
++++ fedora/client/wiki.py	Fri Mar 25 15:08:06 2011
+@@ -1,4 +1,4 @@
+-#!/usr/bin/python -tt
++#!/usr/bin/env python -tt
+ # -*- coding: utf-8 -*-
+ #
+ # Copyright 2008-2009  Red Hat, Inc.
