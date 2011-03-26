@@ -1,0 +1,71 @@
+$OpenBSD$
+--- mod/zlibmodule.c.orig	Tue Nov  9 01:11:30 2010
++++ mod/zlibmodule.c	Fri Mar 25 13:05:17 2011
+@@ -1006,35 +1006,19 @@ static PyMethodDef zlib_methods[] =
+ };
+ 
+ static PyTypeObject Comptype = {
+-    PyVarObject_HEAD_INIT(0, 0)
+-    "zlib.Compress",
+-    sizeof(compobject),
+-    0,
+-    (destructor)Comp_dealloc,       /*tp_dealloc*/
+-    0,                              /*tp_print*/
+-    (getattrfunc)Comp_getattr,      /*tp_getattr*/
+-    0,                              /*tp_setattr*/
+-    0,                              /*tp_compare*/
+-    0,                              /*tp_repr*/
+-    0,                              /*tp_as_number*/
+-    0,                              /*tp_as_sequence*/
+-    0,                              /*tp_as_mapping*/
++    PyObject_HEAD_INIT(&PyType_Type)
++    .tp_name = "zlib.Compress",
++    .tp_basicsize = sizeof(compobject),
++    .tp_dealloc = (destructor)Comp_dealloc,       /*tp_dealloc*/
++    .tp_getattr = (getattrfunc)Comp_getattr,      /*tp_getattr*/
+ };
+ 
+ static PyTypeObject Decomptype = {
+-    PyVarObject_HEAD_INIT(0, 0)
+-    "zlib.Decompress",
+-    sizeof(compobject),
+-    0,
+-    (destructor)Decomp_dealloc,     /*tp_dealloc*/
+-    0,                              /*tp_print*/
+-    (getattrfunc)Decomp_getattr,    /*tp_getattr*/
+-    0,                              /*tp_setattr*/
+-    0,                              /*tp_compare*/
+-    0,                              /*tp_repr*/
+-    0,                              /*tp_as_number*/
+-    0,                              /*tp_as_sequence*/
+-    0,                              /*tp_as_mapping*/
++    PyObject_HEAD_INIT(&PyType_Type)
++    .tp_name = "zlib.Decompress",
++    .tp_basicsize = sizeof(compobject),
++    .tp_dealloc = (destructor)Decomp_dealloc,     /*tp_dealloc*/
++    .tp_getattr = (getattrfunc)Decomp_getattr,    /*tp_getattr*/
+ };
+ 
+ PyDoc_STRVAR(zlib_module_documentation,
+@@ -1056,8 +1040,19 @@ PyMODINIT_FUNC
+ PyInit_zlib(void)
+ {
+     PyObject *m, *ver;
+-    Py_TYPE(&Comptype) = &PyType_Type;
+-    Py_TYPE(&Decomptype) = &PyType_Type;
++
++    if (PyType_Ready(&Comptype) < 0)
++        return;
++
++    Py_INCREF(&Comptype);
++    PyModule_AddObject(m, "Compress", (PyObject *) &Comptype);
++
++    if (PyType_Ready(&Decomptype) < 0)
++        return;
++
++    Py_INCREF(&Decomptype);
++    PyModule_AddObject(m, "Decompress", (PyObject *) &Decomptype);
++
+     m = Py_InitModule4("zlib", zlib_methods,
+ 		       zlib_module_documentation,
+ 		       (PyObject*)NULL,PYTHON_API_VERSION);
