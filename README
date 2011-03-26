@@ -9,3 +9,20 @@ The tree is kept on github:
 I also post built packages as well as gzipped tar files of the port
 source here:
     http://www.burdell.org/openbsd/mystuff
+
+Packaging policies I'm trying to follow:
+1) Ports should be compatible with the latest stable release of OpenBSD.
+2) Python ports should favor the preferred Python package as installed
+   with the latest stable release's ports collection (e.g., in the case
+   of OpenBSD 4.8, this is Python 2.5).
+3) Whenever possible, use the ports provided by the official ports tree.
+4) Basic porting policies stated in the porter's guide (e.g., no files
+   in /usr/local/etc).
+5) Docs are installed to /usr/local/share/doc/PORTNAME
+6) Python module ports are named py-NAME even if the upstream name is
+   pyNAME or python-NAME.  This is for consistency with the official
+   ports tree which uses the py-* naming convention.
+7) Python ports that include a module and some end user programs do not
+   follow the #6 convention.
+8) Replace #!/usr/bin/python with '#!/usr/bin/env python' since there is
+   not /usr/bin/python on an OpenBSD system.
