@@ -1,0 +1,9 @@
+$OpenBSD$
+--- distutils_scripts/paver.orig	Sun Dec 12 06:40:29 2010
++++ distutils_scripts/paver	Fri Mar 25 15:04:36 2011
+@@ -1,4 +1,4 @@
+-#!/bin/env python
++#!/usr/bin/env python
+ 
+ from paver.tasks import main
+ 
