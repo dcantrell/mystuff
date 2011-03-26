@@ -1,15 +1,21 @@
-PORTS = devel/koji \
+PORTS = devel/fedora-packager \
+        devel/koji \
+        devel/py-argparse \
         devel/py-async \
+        devel/py-bugzilla \
+        devel/py-fedora \
         devel/py-git \
         devel/py-gitdb \
         devel/py-iniparse \
         devel/py-offtrac \
+        devel/py-paver \
         misc/py-yum-metadata-parser \
         misc/rpm \
         misc/yum \
         net/py-urlgrabber \
         security/py-gpgme \
-        security/py-krbV
+        security/py-krbV \
+        textproc/transifex-client
 
 PORTSROOT = /usr/ports/mystuff
 PKGSROOT  = /usr/ports/packages
