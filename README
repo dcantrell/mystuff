@@ -1,4 +1,4 @@
-/usr/port/mystuff
+/usr/ports/mystuff
 
 This is my local collection of ports for my OpenBSD systems.  Patches
 welcome that fix bugs, upgrade ports, and so on.
