@@ -1,0 +1,5 @@
+kitchen includes functions to make gettext easier to use, handling
+unicode text easier (conversion with bytes, outputting xml, and
+calculating how many columns a string takes), and compatibility modules
+for writing code that uses python-2.7 modules but needs to run on
+python-2.3.
