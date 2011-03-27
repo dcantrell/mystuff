@@ -1,0 +1,2 @@
+@comment $OpenBSD$
+@lib lib/libykpers-1.so.${LIBykpers-1_VERSION}

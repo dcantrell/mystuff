@@ -1,0 +1,2 @@
+Yubico's YubiKey can be re-programmed with a new AES key. This is a
+library that makes this an easy task.

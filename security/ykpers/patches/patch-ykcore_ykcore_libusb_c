@@ -1,0 +1,12 @@
+$OpenBSD$
+--- ykcore/ykcore_libusb.c.orig	Mon Jan 17 03:35:07 2011
++++ ykcore/ykcore_libusb.c	Sun Mar 27 00:22:51 2011
+@@ -159,8 +159,6 @@ void *_ykusb_open_device(int vendor_id, int product_id
+ 			    && dev->descriptor.idProduct == YUBIKEY_PID) {
+ 				rc = YK_EUSBERR;
+ 				h = usb_open(dev);
+-				if (h != NULL)
+-					usb_detach_kernel_driver_np(h, 0);
+ 				goto done;
+ 			}
+ 	}
