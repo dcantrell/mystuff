@@ -1,5 +1,6 @@
 PORTS = devel/fedora-packager \
         devel/koji \
+        devel/libyubikey \
         devel/py-argparse \
         devel/py-async \
         devel/py-bugzilla \
@@ -7,14 +8,17 @@ PORTS = devel/fedora-packager \
         devel/py-git \
         devel/py-gitdb \
         devel/py-iniparse \
+        devel/py-kitchen \
         devel/py-offtrac \
         devel/py-paver \
+        devel/py-turbomail \
         misc/py-yum-metadata-parser \
         misc/rpm \
         misc/yum \
         net/py-urlgrabber \
         security/py-gpgme \
         security/py-krbV \
+        security/ykpers \
         textproc/transifex-client
 
 PORTSROOT = /usr/ports/mystuff
