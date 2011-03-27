@@ -1,6 +1,7 @@
 COMMENT =           Fedora and RHEL build system tools
 
 MODPY_EGG_VERSION = 1.6.0
+REVISION =          0
 DISTNAME =          koji-${MODPY_EGG_VERSION}
 EXTRACT_SUFX =      .tar.bz2
 CATEGORIES =        devel
@@ -14,6 +15,8 @@ RUN_DEPENDS +=      :rpm->=4.7.2:misc/rpm \
                     ::net/py-urlgrabber \
                     ::security/py-krbV \
                     ::security/py-openssl
+
+PKG_ARCH =          *
 
 MODPY_SETUPTOOLS =  No
 CONFIGURE_STYLE =   simple

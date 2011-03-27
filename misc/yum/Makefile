@@ -1,6 +1,7 @@
 COMMENT =          RPM package installer/updater/manager
 
 DISTNAME =         yum-3.2.29
+REVISION =         0
 CATEGORIES =       misc
 HOMEPAGE =         http://yum.baseurl.org/
 MAINTAINER =       David Cantrell <david.l.cantrell@gmail.com>
@@ -21,6 +22,8 @@ MODPY_SETUPTOOLS = No
 CONFIGURE_STYLE =  simple
 USE_GMAKE =        Yes
 MAKE_ENV =         PYTHON=${MODPY_BIN}
+
+PKG_ARCH =         *
 
 REGRESS_TARGET =   test
 

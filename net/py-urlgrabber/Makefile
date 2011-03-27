@@ -1,6 +1,7 @@
 COMMENT =           high-level cross-protocol url retriever
 
 MODPY_EGG_VERSION = 3.9.1
+REVISION =          0
 DISTNAME =          urlgrabber-3.9.1
 PKGNAME =           py-urlgrabber-${MODPY_EGG_VERSION}
 CATEGORIES =        net
@@ -12,6 +13,8 @@ MASTER_SITES =      http://urlgrabber.baseurl.org/download/
 MODULES =           lang/python
 BUILD_DEPENDS =     ::net/py-curl
 RUN_DEPENDS =       ::net/py-curl
+
+PKG_ARCH =          *
 
 # LGPLv2.1+
 PERMIT_PACKAGE_CDROM = Yes
