@@ -1,0 +1,2 @@
+@comment $OpenBSD$
+@lib lib/libyubikey.so.${LIByubikey_VERSION}

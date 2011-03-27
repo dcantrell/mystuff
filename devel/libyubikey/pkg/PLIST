@@ -1,0 +1,15 @@
+@comment $OpenBSD$
+%%SHARED%%
+@bin bin/modhex
+@bin bin/ykgenerate
+@bin bin/ykparse
+include/yubikey.h
+lib/libyubikey.a
+lib/libyubikey.la
+share/doc/libyubikey/
+share/doc/libyubikey/AUTHORS
+share/doc/libyubikey/COPYING
+share/doc/libyubikey/ChangeLog
+share/doc/libyubikey/NEWS
+share/doc/libyubikey/README
+share/doc/libyubikey/THANKS
