@@ -1,0 +1,4 @@
+TurboMail is a multi-threaded mail delivery subsystem and MIME message
+generation framework for Python. TurboMail uses built-in Python modules
+for SMTP communication and MIME e-mail creation, but greatly simplifies
+these tasks by performing the grunt-work for you.
