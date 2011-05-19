@@ -5,14 +5,14 @@ REVISION =          0
 DISTNAME =          urlgrabber-3.9.1
 PKGNAME =           py-urlgrabber-${MODPY_EGG_VERSION}
 CATEGORIES =        net
-HOMEPAGE =          https://fedorahosted.org/python-krbV/
+HOMEPAGE =          http://urlgrabber.baseurl.org/
 MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
 
 MASTER_SITES =      http://urlgrabber.baseurl.org/download/
 
 MODULES =           lang/python
-BUILD_DEPENDS =     ::net/py-curl
-RUN_DEPENDS =       ::net/py-curl
+BUILD_DEPENDS =     net/py-curl
+RUN_DEPENDS =       net/py-curl
 
 PKG_ARCH =          *
 
