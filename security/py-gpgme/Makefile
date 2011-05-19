@@ -10,7 +10,7 @@ MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
 MASTER_SITES =      http://pypi.python.org/packages/source/p/pygpgme/
 
 MODULES =           lang/python
-BUILD_DEPENDS +=    ::security/gpgme
+BUILD_DEPENDS +=    security/gpgme
 
 CONFIGURE_ENV +=    CFLAGS=-I/usr/local/include
 
