@@ -8,19 +8,21 @@ MAINTAINER =      David Cantrell <david.l.cantrell@gmail.com>
 
 MASTER_SITES =    http://rpm.org/releases/rpm-4.7.x/
 
-WANTLIB =         bz2 c m pthread util z
+WANTLIB +=        bz2 c db lua lzma m magic nspr4 nss3 nssutil3 plc4 \
+                  plds4 popt pthread python2.6 util z
+
 MODULES =         devel/gettext \
                   lang/python
-BUILD_DEPENDS =   :autoconf-2.61:devel/autoconf/2.61 \
-                  :automake-1.10.3:devel/automake/1.10
-RUN_DEPENDS =     ::security/gnupg
+BUILD_DEPENDS =   devel/autoconf/2.61 \
+                  devel/automake/1.10
+RUN_DEPENDS =     security/gnupg
 LIB_DEPENDS =     ${MODPY_LIB_DEPENDS} \
-                  ::archivers/xz \
-                  ::databases/db/v4 \
-                  ::devel/libmagic \
-                  ::devel/popt \
-                  ::lang/lua \
-                  ::security/nss
+                  archivers/xz \
+                  databases/db/v4 \
+                  devel/libmagic \
+                  devel/popt \
+                  lang/lua \
+                  security/nss
 
 MAKE_ENV +=       AUTOCONF_VERSION=2.61 \
                   AUTOMAKE_VERSION=1.10
