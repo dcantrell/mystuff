@@ -11,9 +11,9 @@ MASTER_SITES =      http://yum.baseurl.org/download/yum-metadata-parser/
 
 MODULES =           lang/python
 WANTLIB +=          sqlite3
-BUILD_DEPENDS =     ::devel/glib2 \
-                    ::textproc/libxml \
-                    ::databases/sqlite3
+BUILD_DEPENDS =     devel/glib2 \
+                    textproc/libxml \
+                    databases/sqlite3
 
 SEPARATE_BUILD =    simple
 NO_REGRESS =        Yes
