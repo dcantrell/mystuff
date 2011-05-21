@@ -9,7 +9,7 @@ HOMEPAGE =          https://fedorahosted.org/offtrac/
 MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
 
 MODULES =           lang/python
-BUILD_DEPENDS =     ::devel/git
+BUILD_DEPENDS =     devel/git
 
 PKG_ARCH =          *
 
