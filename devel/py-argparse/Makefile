@@ -1,9 +1,8 @@
 COMMENT =           Python module for parsing command line arguments
 
-MODPY_EGG_VERSION = 1.1
+MODPY_EGG_VERSION = 1.2.1
 DISTNAME =          argparse-${MODPY_EGG_VERSION}
 PKGNAME =           py-argparse-${MODPY_EGG_VERSION}
-EXTRACT_SUFX =      .zip
 CATEGORIES =        devel
 HOMEPAGE =          https://code.google.com/p/argparse/
 MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
@@ -12,6 +11,8 @@ MASTER_SITES =      http://argparse.googlecode.com/files/
 
 MODULES =           devel/gettext \
                     lang/python
+
+MODPY_SETUPTOOLS =  Yes
 
 PKG_ARCH =          *
 
