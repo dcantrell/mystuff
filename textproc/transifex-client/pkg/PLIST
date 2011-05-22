@@ -5,7 +5,6 @@ lib/python${MODPY_VERSION}/site-packages/transifex_client-${MODPY_EGG_VERSION}-p
 lib/python${MODPY_VERSION}/site-packages/transifex_client-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/SOURCES.txt
 lib/python${MODPY_VERSION}/site-packages/transifex_client-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/dependency_links.txt
 lib/python${MODPY_VERSION}/site-packages/transifex_client-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/not-zip-safe
-lib/python${MODPY_VERSION}/site-packages/transifex_client-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/requires.txt
 lib/python${MODPY_VERSION}/site-packages/transifex_client-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/top_level.txt
 lib/python${MODPY_VERSION}/site-packages/txclib/
 lib/python${MODPY_VERSION}/site-packages/txclib/__init__.py
@@ -23,4 +22,5 @@ lib/python${MODPY_VERSION}/site-packages/txclib/utils.pyc
 lib/python${MODPY_VERSION}/site-packages/txclib/web.py
 lib/python${MODPY_VERSION}/site-packages/txclib/web.pyc
 share/doc/transifex-client/
-share/doc/transifex-client/README
+share/doc/transifex-client/LICENSE
+share/doc/transifex-client/README.rst

@@ -1,6 +1,6 @@
 COMMENT =           Transifex translation management client tool
 
-MODPY_EGG_VERSION = 0.4.1
+MODPY_EGG_VERSION = 0.5
 DISTNAME =          transifex-client-${MODPY_EGG_VERSION}
 CATEGORIES =        textproc
 HOMEPAGE =          http://www.indifex.com/
@@ -9,7 +9,8 @@ MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
 MASTER_SITES =      http://pypi.python.org/packages/source/t/transifex-client/
 
 MODULES =           lang/python
-BUILD_DEPENDS +=    ::devel/py-setuptools
+
+MODPY_SETUPTOOLS =  Yes
 
 PKG_ARCH =          *
 
@@ -21,6 +22,7 @@ PERMIT_DISTFILES_FTP = Yes
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/transifex-client
-	${INSTALL_DATA} ${WRKSRC}/README ${PREFIX}/share/doc/transifex-client/README
+	${INSTALL_DATA} ${WRKSRC}/README.rst ${WRKSRC}/LICENSE \
+		${PREFIX}/share/doc/transifex-client
 
 .include <bsd.port.mk>
