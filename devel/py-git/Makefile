@@ -12,7 +12,9 @@ DISTFILES =         GitPython-${MODPY_EGG_VERSION}-beta2.tar.gz
 MASTER_SITES =      http://pypi.python.org/packages/source/G/GitPython/
 
 MODULES =           lang/python
-RUN_DEPENDS +=      ::devel/git
+RUN_DEPENDS +=      devel/git
+
+MODPY_SETUPTOOLS =  Yes
 
 PKG_ARCH =          *
 
