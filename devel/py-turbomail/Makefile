@@ -1,6 +1,6 @@
 COMMENT =           Multi-threaded mail queue manager for TurboGears
 
-MODPY_EGG_VERSION = 3.0
+MODPY_EGG_VERSION = 3.0.3
 DISTNAME =          TurboMail-${MODPY_EGG_VERSION}
 PKGNAME =           py-turbomail-${MODPY_EGG_VERSION}
 CATEGORIES =        devel
@@ -10,7 +10,8 @@ MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
 MASTER_SITES =      http://pypi.python.org/packages/source/T/TurboMail/
 
 MODULES =           lang/python
-BUILD_REQUIRES +=   ::devel/py-setuptools
+
+MODPY_SETUPTOOLS =  Yes
 
 PKG_ARCH =          *
 

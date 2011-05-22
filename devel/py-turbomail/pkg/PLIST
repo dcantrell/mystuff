@@ -1,5 +1,6 @@
 @comment $OpenBSD$
 lib/python${MODPY_VERSION}/site-packages/TurboMail-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/
+lib/python${MODPY_VERSION}/site-packages/TurboMail-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/._PKG-INFO
 lib/python${MODPY_VERSION}/site-packages/TurboMail-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/PKG-INFO
 lib/python${MODPY_VERSION}/site-packages/TurboMail-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/SOURCES.txt
 lib/python${MODPY_VERSION}/site-packages/TurboMail-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info/dependency_links.txt
@@ -51,6 +52,8 @@ lib/python${MODPY_VERSION}/site-packages/turbomail/exceptions.pyc
 lib/python${MODPY_VERSION}/site-packages/turbomail/extensions/
 lib/python${MODPY_VERSION}/site-packages/turbomail/extensions/__init__.py
 lib/python${MODPY_VERSION}/site-packages/turbomail/extensions/__init__.pyc
+lib/python${MODPY_VERSION}/site-packages/turbomail/extensions/maillog.py
+lib/python${MODPY_VERSION}/site-packages/turbomail/extensions/maillog.pyc
 lib/python${MODPY_VERSION}/site-packages/turbomail/extensions/utf8qp.py
 lib/python${MODPY_VERSION}/site-packages/turbomail/extensions/utf8qp.pyc
 lib/python${MODPY_VERSION}/site-packages/turbomail/managers/
