@@ -10,10 +10,10 @@ MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
 MASTER_SITES =      http://pypi.python.org/packages/source/P/Paver/
 
 MODULES =           lang/python
-BUILD_DEPENDS +=    ::devel/py-nose \
-                    ::devel/py-setuptools \
-                    ::textproc/py-sphinx
-RUN_DEPENDS +=      ::devel/py-setuptools
+BUILD_DEPENDS +=    devel/py-nose \
+                    devel/py-setuptools \
+                    textproc/py-sphinx
+RUN_DEPENDS +=      devel/py-setuptools
 
 PKG_ARCH =          *
 
