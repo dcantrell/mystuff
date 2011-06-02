@@ -1,7 +1,7 @@
 COMMENT =           high-level cross-protocol url retriever
 
 MODPY_EGG_VERSION = 3.9.1
-REVISION =          0
+REVISION =          1
 DISTNAME =          urlgrabber-3.9.1
 PKGNAME =           py-urlgrabber-${MODPY_EGG_VERSION}
 CATEGORIES =        net

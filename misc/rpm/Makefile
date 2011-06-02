@@ -1,6 +1,7 @@
 COMMENT =         linux package manager
 
 DISTNAME =        rpm-4.7.2
+REVISION =        0
 EXTRACT_SUFX =    .tar.bz2
 CATEGORIES =      misc
 HOMEPAGE =        http://www.rpm.org/

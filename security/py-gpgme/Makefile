@@ -2,6 +2,7 @@ COMMENT =           Python module for working with OpenPGP messages
 
 MODPY_EGG_VERSION = 0.1
 DISTNAME =          pygpgme-${MODPY_EGG_VERSION}
+REVISION =          0
 PKGNAME =           py-gpgme-${MODPY_EGG_VERSION}
 CATEGORIES =        security
 HOMEPAGE =          http://pypi.python.org/pypi/pygpgme/0.1/

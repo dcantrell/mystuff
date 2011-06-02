@@ -1,7 +1,7 @@
 COMMENT =           Python xmlrpc client library for trac instances
 
 MODPY_EGG_VERSION = 0.0.3
-REVISION =          0
+REVISION =          1
 DISTNAME =          offtrac-${MODPY_EGG_VERSION}
 PKGNAME =           py-offtrac-${MODPY_EGG_VERSION}
 CATEGORIES =        devel
