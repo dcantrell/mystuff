@@ -1,15 +1,15 @@
 $OpenBSD$
---- rpmio/fts.c.orig	Tue Jun 23 01:40:59 2009
-+++ rpmio/fts.c	Mon Feb  7 16:34:38 2011
-@@ -64,6 +64,7 @@ static char sccsid[] = "@(#)fts.c	8.6 (Berkeley) 8/14/
- #include "rpmio/fts.h"
- #include <rpm/rpmio.h>
- #include <rpm/rpmurl.h>
-+#   define __errno_location()	(&errno)
+--- misc/fts.c.orig	Fri Dec  3 07:11:57 2010
++++ misc/fts.c	Sun Jun 26 18:59:46 2011
+@@ -66,6 +66,7 @@ static char sccsid[] = "@(#)fts.c	8.6 (Berkeley) 8/14/
+ #include <string.h>
+ #include <errno.h>
+ #include "misc/fts.h"
++#   define __errno_location() (&errno)
  #   define __set_errno(val) (*__errno_location ()) = (val)
  #   define __open	open
  #   define __close	close
-@@ -1126,14 +1127,14 @@ static int
+@@ -1111,14 +1112,14 @@ static int
  fts_safe_changedir(FTS * sp, FTSENT * p, int fd, const char * path)
  {
  	int ret, oerrno, newfd;

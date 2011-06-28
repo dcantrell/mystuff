@@ -1,17 +1,19 @@
 @comment $OpenBSD$
+%%SHARED%%
 bin/gendiff
 @bin bin/rpm
 @bin bin/rpm2cpio
 @bin bin/rpmbuild
-bin/rpmdb
+@bin bin/rpmdb
 @bin bin/rpmgraph
+@bin bin/rpmkeys
 bin/rpmquery
-bin/rpmsign
+@bin bin/rpmsign
+@bin bin/rpmspec
 bin/rpmverify
 include/rpm/
 include/rpm/argv.h
 include/rpm/header.h
-include/rpm/rpmal.h
 include/rpm/rpmbuild.h
 include/rpm/rpmcallback.h
 include/rpm/rpmcli.h
@@ -20,7 +22,6 @@ include/rpm/rpmds.h
 include/rpm/rpmfc.h
 include/rpm/rpmfi.h
 include/rpm/rpmfileutil.h
-include/rpm/rpmgi.h
 include/rpm/rpmio.h
 include/rpm/rpmkeyring.h
 include/rpm/rpmlegacy.h
@@ -28,7 +29,10 @@ include/rpm/rpmlib.h
 include/rpm/rpmlog.h
 include/rpm/rpmmacro.h
 include/rpm/rpmpgp.h
+include/rpm/rpmpol.h
+include/rpm/rpmprob.h
 include/rpm/rpmps.h
+include/rpm/rpmsign.h
 include/rpm/rpmspec.h
 include/rpm/rpmsq.h
 include/rpm/rpmstring.h
@@ -47,16 +51,33 @@ lib/librpmbuild.a
 lib/librpmbuild.la
 lib/librpmio.a
 lib/librpmio.la
+lib/librpmsign.a
+lib/librpmsign.la
 lib/pkgconfig/rpm.pc
 lib/python${MODPY_VERSION}/site-packages/rpm/
 lib/python${MODPY_VERSION}/site-packages/rpm/__init__.py
+lib/python${MODPY_VERSION}/site-packages/rpm/_rpmbmodule.a
+lib/python${MODPY_VERSION}/site-packages/rpm/_rpmbmodule.la
+lib/python${MODPY_VERSION}/site-packages/rpm/_rpmbmodule.so
 lib/python${MODPY_VERSION}/site-packages/rpm/_rpmmodule.a
 lib/python${MODPY_VERSION}/site-packages/rpm/_rpmmodule.la
 lib/python${MODPY_VERSION}/site-packages/rpm/_rpmmodule.so
+lib/python${MODPY_VERSION}/site-packages/rpm/_rpmsmodule.a
+lib/python${MODPY_VERSION}/site-packages/rpm/_rpmsmodule.la
+lib/python${MODPY_VERSION}/site-packages/rpm/_rpmsmodule.so
+lib/python${MODPY_VERSION}/site-packages/rpm/transaction.py
 lib/rpm/
+lib/rpm-plugins/
+lib/rpm-plugins/exec.a
+lib/rpm-plugins/exec.la
+lib/rpm-plugins/exec.so
+lib/rpm-plugins/sepolicy.a
+lib/rpm-plugins/sepolicy.la
+lib/rpm-plugins/sepolicy.so
 lib/rpm/brp-compress
 lib/rpm/brp-java-gcjcompile
 lib/rpm/brp-python-bytecompile
+lib/rpm/brp-python-hardlink
 lib/rpm/brp-strip
 lib/rpm/brp-strip-comment-note
 lib/rpm/brp-strip-shared
@@ -68,9 +89,23 @@ lib/rpm/check-rpaths
 lib/rpm/check-rpaths-worker
 lib/rpm/config.guess
 lib/rpm/config.sub
+lib/rpm/desktop-file.prov
+lib/rpm/fileattrs/
+lib/rpm/fileattrs/desktop.attr
+lib/rpm/fileattrs/elf.attr
+lib/rpm/fileattrs/font.attr
+lib/rpm/fileattrs/libtool.attr
+lib/rpm/fileattrs/mono.attr
+lib/rpm/fileattrs/ocaml.attr
+lib/rpm/fileattrs/perl.attr
+lib/rpm/fileattrs/perllib.attr
+lib/rpm/fileattrs/pkgconfig.attr
+lib/rpm/fileattrs/python.attr
+lib/rpm/fileattrs/script.attr
 lib/rpm/find-lang.sh
 lib/rpm/find-provides
 lib/rpm/find-requires
+lib/rpm/fontconfig.prov
 @bin lib/rpm/javadeps
 lib/rpm/libtooldeps.sh
 lib/rpm/macros
@@ -80,6 +115,8 @@ lib/rpm/macros.python
 lib/rpm/mkinstalldirs
 lib/rpm/mono-find-provides
 lib/rpm/mono-find-requires
+lib/rpm/ocaml-find-provides.sh
+lib/rpm/ocaml-find-requires.sh
 lib/rpm/osgideps.pl
 lib/rpm/perl.prov
 lib/rpm/perl.req
@@ -88,14 +125,12 @@ lib/rpm/pkgconfigdeps.sh
 lib/rpm/pythondeps.sh
 lib/rpm/rpm.daily
 lib/rpm/rpm.log
-lib/rpm/rpm.xinetd
 lib/rpm/rpm2cpio.sh
 lib/rpm/rpmdb_loadcvt
 @bin lib/rpm/rpmdeps
-lib/rpm/rpmdiff
-lib/rpm/rpmdiff.cgi
-lib/rpm/rpmpopt-4.7.2
+lib/rpm/rpmpopt-4.9.0
 lib/rpm/rpmrc
+lib/rpm/script.req
 lib/rpm/tcl.req
 lib/rpm/tgpg
 man/fr/
@@ -115,8 +150,12 @@ man/ko/man8/
 @man man/man8/rpm.8
 @man man/man8/rpm2cpio.8
 @man man/man8/rpmbuild.8
+@man man/man8/rpmdb.8
 @man man/man8/rpmdeps.8
 @man man/man8/rpmgraph.8
+@man man/man8/rpmkeys.8
+@man man/man8/rpmsign.8
+@man man/man8/rpmspec.8
 man/pl/
 man/pl/man1/
 @man man/pl/man1/gendiff.1
@@ -140,7 +179,6 @@ share/doc/rpm/CREDITS
 share/doc/rpm/ChangeLog
 share/doc/rpm/GROUPS
 share/doc/rpm/README
-share/doc/rpm/TODO
 share/locale/ca/LC_MESSAGES/rpm.mo
 share/locale/cs/LC_MESSAGES/rpm.mo
 share/locale/da/LC_MESSAGES/rpm.mo
@@ -152,6 +190,8 @@ share/locale/is/LC_MESSAGES/rpm.mo
 share/locale/it/LC_MESSAGES/rpm.mo
 share/locale/ja/LC_MESSAGES/rpm.mo
 share/locale/ko/LC_MESSAGES/rpm.mo
+share/locale/ms/
+share/locale/ms/LC_MESSAGES/
 share/locale/ms/LC_MESSAGES/rpm.mo
 share/locale/nb/LC_MESSAGES/rpm.mo
 share/locale/nl/LC_MESSAGES/rpm.mo
@@ -162,9 +202,9 @@ share/locale/ru/LC_MESSAGES/rpm.mo
 share/locale/sk/LC_MESSAGES/rpm.mo
 share/locale/sl/LC_MESSAGES/rpm.mo
 share/locale/sr/LC_MESSAGES/rpm.mo
+share/locale/sr@latin/
+share/locale/sr@latin/LC_MESSAGES/
 share/locale/sr@latin/LC_MESSAGES/rpm.mo
 share/locale/sv/LC_MESSAGES/rpm.mo
 share/locale/tr/LC_MESSAGES/rpm.mo
 share/locale/zh_TW/LC_MESSAGES/rpm.mo
-%%SHARED%%
-@unexec rm -rf /var/db/rpm

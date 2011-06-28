@@ -1,7 +1,7 @@
 $OpenBSD$
---- configure.ac.orig	Tue Nov 24 21:19:30 2009
-+++ configure.ac	Wed Mar  9 19:34:40 2011
-@@ -684,9 +684,8 @@ AS_IF([test "$enable_python" = yes],[
+--- configure.ac.orig	Wed Mar  2 01:46:20 2011
++++ configure.ac	Sun Jun 26 18:49:05 2011
+@@ -530,9 +530,8 @@ AS_IF([test "$enable_python" = yes],[
      CPPFLAGS="$save_CPPFLAGS"
      save_LIBS="$LIBS"
      AC_SEARCH_LIBS([Py_Main],[python${PYTHON_VERSION} python],[

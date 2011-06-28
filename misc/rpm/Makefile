@@ -1,13 +1,12 @@
 COMMENT =         linux package manager
 
-DISTNAME =        rpm-4.7.2
-REVISION =        0
+DISTNAME =        rpm-4.9.0
 EXTRACT_SUFX =    .tar.bz2
 CATEGORIES =      misc
 HOMEPAGE =        http://www.rpm.org/
 MAINTAINER =      David Cantrell <david.l.cantrell@gmail.com>
 
-MASTER_SITES =    http://rpm.org/releases/rpm-4.7.x/
+MASTER_SITES =    http://rpm.org/releases/rpm-4.9.x/
 
 WANTLIB +=        bz2 c db lua lzma m magic nspr4 nss3 nssutil3 plc4 \
                   plds4 popt pthread python2.6 util z
@@ -33,9 +32,9 @@ USE_LIBTOOL =     Yes
 CONFIGURE_STYLE = gnu
 CONFIGURE_ARGS += --localstatedir=/var \
                   --with-external-db \
-                  --with-libintl-prefix=${LOCALBASE} \
                   --enable-python \
-                  --with-lua
+                  --with-lua \
+                  --enable-static=no
 
 RPM_CPPFLAGS =    -I${LOCALBASE}/include \
                   -I${LOCALBASE}/include/db4 \
@@ -51,9 +50,10 @@ CONFIGURE_ENV +=  varprefix=/usr \
                   LDFLAGS="${RPM_LDFLAGS}"
 
 # See pkg/PFRAG.list
-SHARED_LIBS += rpm             0.0     # 0.0
-SHARED_LIBS += rpmbuild        0.0     # 0.0
-SHARED_LIBS += rpmio           0.0     # 0.0
+SHARED_LIBS += rpm                       0.0 # 0.0
+SHARED_LIBS += rpmbuild                  0.0 # 0.0
+SHARED_LIBS += rpmio                     0.0 # 0.0
+SHARED_LIBS += rpmsign                   0.0 # 0.0
 
 # GPLv2+
 PERMIT_PACKAGE_CDROM = Yes
@@ -68,7 +68,7 @@ pre-configure:
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/rpm
-	@for d in CHANGES COPYING CREDITS ChangeLog GROUPS README TODO ; do \
+	@for d in CHANGES COPYING CREDITS ChangeLog GROUPS README ; do \
 		${INSTALL_DATA} ${WRKSRC}/$$d ${PREFIX}/share/doc/rpm/$$d ; \
 	done
 
