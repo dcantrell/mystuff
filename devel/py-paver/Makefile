@@ -1,6 +1,7 @@
 COMMENT =           Python-based project scripting like make
 
 MODPY_EGG_VERSION = 1.0.4
+REVISION =          0
 DISTNAME =          Paver-${MODPY_EGG_VERSION}
 PKGNAME =           py-paver-${MODPY_EGG_VERSION}
 CATEGORIES =        devel
@@ -14,6 +15,8 @@ BUILD_DEPENDS +=    devel/py-nose \
                     devel/py-setuptools \
                     textproc/py-sphinx
 RUN_DEPENDS +=      devel/py-setuptools
+
+CHECK_LIB_DEPENDS = Yes
 
 PKG_ARCH =          *
 
