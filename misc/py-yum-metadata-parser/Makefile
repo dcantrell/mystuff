@@ -2,7 +2,7 @@ COMMENT =           C-based xml to sqlite metadata parser
 
 MODPY_EGG_VERSION = 1.1.4
 DISTNAME =          yum-metadata-parser-${MODPY_EGG_VERSION}
-REVISION =          0
+REVISION =          1
 PKGNAME =           py-yum-metadata-parser-${MODPY_EGG_VERSION}
 CATEGORIES =        misc
 HOMEPAGE =          http://yum.baseurl.org/
