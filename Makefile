@@ -1,10 +1,13 @@
-PORTS = devel/fedora-packager \
-        devel/koji \
-        devel/libyubikey \
+# misc/yum
+# devel/koji
+# devel/fedora-packager
+# devel/py-fedora
+# www/bodhi
+
+PORTS = devel/libyubikey \
         devel/py-argparse \
         devel/py-async \
         devel/py-bugzilla \
-        devel/py-fedora \
         devel/py-git \
         devel/py-gitdb \
         devel/py-iniparse \
@@ -14,7 +17,6 @@ PORTS = devel/fedora-packager \
         devel/py-turbomail \
         misc/py-yum-metadata-parser \
         misc/rpm \
-        misc/yum \
         net/py-urlgrabber \
         security/py-gpgme \
         security/py-krbV \
