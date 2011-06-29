@@ -88,14 +88,19 @@ publish-packages:
 			exit 1 ; \
 		fi ; \
 		cd ${PORTSROOT}/$$port ; \
-		fullpkgname="$$(make show=FULLPKGNAME)" ; \
-		pkgfile="${PKGSROOT}/$$(machine -a)/ftp/$$fullpkgname.tgz" ; \
-		if [ -f "$$pkgfile" ]; then \
-			${RSYNC} $$pkgfile ${SITEHOST}:$$sitedir ; \
-		else \
-			echo "*** Missing $$pkgfile" ; \
-			exit 1 ; \
-		fi ; \
+		pkglist="$$(make show=FULLPKGNAME)" ; \
+		for flavor in $$(make show=FLAVORS) ; do \
+			pkglist="$${pkglist} $$(env FLAVOR=$${flavor} make show=FULLPKGNAME)" ; \
+		done ; \
+		for pkg in $${pkglist} ; do \
+			pkgfile="${PKGSROOT}/$$(machine -a)/ftp/$$pkg.tgz" ; \
+			if [ -f "$$pkgfile" ]; then \
+				${RSYNC} $$pkgfile ${SITEHOST}:$$sitedir ; \
+			else \
+				echo "*** Missing $$pkgfile" ; \
+				exit 1 ; \
+			fi ; \
+		done ; \
 		cd $$cwd ; \
 	done
 
