@@ -1,7 +1,7 @@
 COMMENT =           Python module for git version control
 
 MODPY_EGG_VERSION = 0.3.1
-REVISION =          0
+REVISION =          2
 DISTNAME =          GitPython-${MODPY_EGG_VERSION}
 PKGNAME =           py-git-${MODPY_EGG_VERSION}
 CATEGORIES =        devel
@@ -15,6 +15,8 @@ MODULES =           lang/python
 RUN_DEPENDS +=      devel/git
 
 MODPY_SETUPTOOLS =  Yes
+
+CHECK_LIB_DEPENDS = Yes
 
 PKG_ARCH =          *
 
