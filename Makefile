@@ -1,6 +1,8 @@
+# security/py-gpgme
+# security/ykpers
 # misc/yum
-# devel/koji
 # devel/fedora-packager
+# devel/koji
 # devel/py-fedora
 # www/bodhi
 
@@ -18,9 +20,8 @@ PORTS = devel/libyubikey \
         misc/py-yum-metadata-parser \
         misc/rpm \
         net/py-urlgrabber \
-        security/py-gpgme \
         security/py-krbV \
-        security/ykpers \
+        sysutils/conky \
         textproc/transifex-client
 
 PORTSROOT = /usr/ports/mystuff
