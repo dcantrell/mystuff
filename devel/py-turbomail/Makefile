@@ -1,6 +1,7 @@
 COMMENT =           Multi-threaded mail queue manager for TurboGears
 
 MODPY_EGG_VERSION = 3.0.3
+REVISION =          0
 DISTNAME =          TurboMail-${MODPY_EGG_VERSION}
 PKGNAME =           py-turbomail-${MODPY_EGG_VERSION}
 CATEGORIES =        devel
@@ -14,6 +15,8 @@ MODULES =           lang/python
 MODPY_SETUPTOOLS =  Yes
 
 PKG_ARCH =          *
+
+CHECK_LIB_DEPENDS = Yes
 
 # MIT
 PERMIT_PACKAGE_CDROM = Yes
