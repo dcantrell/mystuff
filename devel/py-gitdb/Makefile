@@ -1,6 +1,7 @@
 COMMENT =           pure-Python git object database
 
 MODPY_EGG_VERSION = 0.5.2
+REVISION =          0
 DISTNAME =          gitdb-${MODPY_EGG_VERSION}
 PKGNAME =           py-gitdb-${MODPY_EGG_VERSION}
 CATEGORIES =        devel
@@ -10,8 +11,10 @@ MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
 MASTER_SITES =      http://pypi.python.org/packages/source/g/gitdb/
 
 MODULES =           lang/python
-RUN_DEPENDS +=      ::devel/py-async \
-                    ::devel/py-git
+RUN_DEPENDS +=      devel/py-async \
+                    devel/py-git
+
+CHECK_LIB_DEPENDS = Yes
 
 # BSD
 PERMIT_PACKAGE_CDROM = Yes
