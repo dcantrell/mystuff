@@ -1,6 +1,6 @@
 COMMENT =           Python module to talk to Bugzilla via XMLRPC
 
-MODPY_EGG_VERSION = 0.6.1
+MODPY_EGG_VERSION = 0.6.2
 DISTNAME =          python-bugzilla-${MODPY_EGG_VERSION}
 PKGNAME =           py-bugzilla-${MODPY_EGG_VERSION}
 EXTRACT_SUFX =      .tar.bz2
@@ -11,6 +11,8 @@ MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
 MASTER_SITES =      https://fedorahosted.org/releases/p/y/python-bugzilla/
 
 MODULES =           lang/python
+
+CHECK_LIB_DEPENDS = Yes
 
 PKG_ARCH =          *
 
