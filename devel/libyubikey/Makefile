@@ -1,19 +1,22 @@
-COMMENT =         Yubikey development kit
+COMMENT =           Yubikey development kit
 
-DISTNAME =        libyubikey-1.7
-CATEGORIES =      devel
-HOMEPAGE =        http://code.google.com/p/yubico-c/
-MAINTAINER =      David Cantrell <david.l.cantrell@gmail.com>
+DISTNAME =          libyubikey-1.7
+REVISION =          0
+CATEGORIES =        devel
+HOMEPAGE =          http://code.google.com/p/yubico-c/
+MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
 
-MASTER_SITES =    http://yubico-c.googlecode.com/files/
+MASTER_SITES =      http://yubico-c.googlecode.com/files/
 
-WANTLIB +=        c
+WANTLIB +=          c
 
-SEPARATE_BUILD =  simple
-CONFIGURE_STYLE = gnu
+SEPARATE_BUILD =    simple
+CONFIGURE_STYLE =   gnu
+
+CHECK_LIB_DEPENDS = Yes
 
 # See pkg/PFRAG.share
-SHARED_LIBS +=    yubikey                   1.2 # 1.2
+SHARED_LIBS +=      yubikey                   1.2 # 1.2
 
 # BSD
 PERMIT_PACKAGE_CDROM = Yes
