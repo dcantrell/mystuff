@@ -1,7 +1,7 @@
 COMMENT =           Python module for using INI-style files
 
 MODPY_EGG_VERSION = 0.4
-REVISION =          0
+REVISION =          1
 DISTNAME =          iniparse-${MODPY_EGG_VERSION}
 PKGNAME =           py-iniparse-${MODPY_EGG_VERSION}
 CATEGORIES =        devel
@@ -11,6 +11,8 @@ MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
 MASTER_SITES =      http://iniparse.googlecode.com/files/
 
 MODULES =           lang/python
+
+CHECK_LIB_DEPENDS = Yes
 
 PKG_ARCH =          *
 
