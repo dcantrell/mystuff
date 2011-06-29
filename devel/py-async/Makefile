@@ -1,6 +1,7 @@
 COMMENT =           Python module to process interdependent tasks
 
 MODPY_EGG_VERSION = 0.6.1
+REVISION =          0
 DISTNAME =          async-${MODPY_EGG_VERSION}
 PKGNAME =           py-async-${MODPY_EGG_VERSION}
 CATEGORIES =        devel
@@ -10,7 +11,10 @@ MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
 MASTER_SITES =      http://pypi.python.org/packages/source/a/async/
 
 WANTLIB +=          z
+
 MODULES =           lang/python
+
+CHECK_LIB_DEPENDS = Yes
 
 # BSD
 PERMIT_PACKAGE_CDROM = Yes
