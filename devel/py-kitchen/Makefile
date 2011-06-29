@@ -1,6 +1,7 @@
 COMMENT =           Small, useful pieces of code to make Python coding easier
 
 MODPY_EGG_VERSION = 1.0.0
+REVISION =          0
 DISTNAME =          kitchen-${MODPY_EGG_VERSION}
 PKGNAME =           py-kitchen-${MODPY_EGG_VERSION}
 CATEGORIES =        devel
@@ -16,6 +17,8 @@ BUILD_REQUIRES +=   devel/py-nose \
 RUN_DEPENDS +=      textproc/py-chardet
 
 MODPY_SETUPTOOLS =  Yes
+
+CHECK_LIB_DEPENDS = Yes
 
 PKG_ARCH =          *
 
