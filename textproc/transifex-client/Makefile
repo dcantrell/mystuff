@@ -1,6 +1,6 @@
 COMMENT =           Transifex translation management client tool
 
-MODPY_EGG_VERSION = 0.5
+MODPY_EGG_VERSION = 0.5.2
 DISTNAME =          transifex-client-${MODPY_EGG_VERSION}
 CATEGORIES =        textproc
 HOMEPAGE =          http://www.indifex.com/
@@ -11,6 +11,8 @@ MASTER_SITES =      http://pypi.python.org/packages/source/t/transifex-client/
 MODULES =           lang/python
 
 MODPY_SETUPTOOLS =  Yes
+
+CHECK_LIB_DEPENDS = Yes
 
 PKG_ARCH =          *
 
