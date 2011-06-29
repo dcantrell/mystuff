@@ -1,7 +1,7 @@
 COMMENT =           Python xmlrpc client library for trac instances
 
 MODPY_EGG_VERSION = 0.0.3
-REVISION =          1
+REVISION =          2
 DISTNAME =          offtrac-${MODPY_EGG_VERSION}
 PKGNAME =           py-offtrac-${MODPY_EGG_VERSION}
 CATEGORIES =        devel
@@ -10,6 +10,8 @@ MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
 
 MODULES =           lang/python
 BUILD_DEPENDS =     devel/git
+
+CHECK_LIB_DEPENDS = Yes
 
 PKG_ARCH =          *
 
