@@ -1,0 +1,13 @@
+Package bodhi
+
+Do security audits of each with C code.
+    py-async
+    py-gitdb
+    py-yum-metadata-parser
+    rpm
+    py-gpgme
+    py-krbV
+    libyubikey
+    ykpers
+
+Figure out how to security-audit the Python code and do it.
