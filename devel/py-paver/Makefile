@@ -1,7 +1,7 @@
 COMMENT =           Python-based project scripting like make
 
 MODPY_EGG_VERSION = 1.0.4
-REVISION =          0
+REVISION =          1
 DISTNAME =          Paver-${MODPY_EGG_VERSION}
 PKGNAME =           py-paver-${MODPY_EGG_VERSION}
 CATEGORIES =        devel
@@ -27,6 +27,8 @@ PERMIT_DISTFILES_CDROM = Yes
 PERMIT_DISTFILES_FTP = Yes
 
 post-install:
+	${INSTALL_SCRIPT_DIR} ${PREFIX}/bin
+	${INSTALL_SCRIPT} ${WRKSRC}/distutils_scripts/paver ${PREFIX}/bin/paver
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/py-paver
 	for f in LICENSE.txt README.txt ; do \
 		${INSTALL_DATA} ${WRKSRC}/$$f ${PREFIX}/share/doc/py-paver/$$f ; \
