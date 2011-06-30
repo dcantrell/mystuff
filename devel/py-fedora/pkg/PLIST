@@ -27,8 +27,6 @@ lib/python${MODPY_VERSION}/site-packages/fedora/client/wiki.pyc
 lib/python${MODPY_VERSION}/site-packages/fedora/compat25/
 lib/python${MODPY_VERSION}/site-packages/fedora/compat25/__init__.py
 lib/python${MODPY_VERSION}/site-packages/fedora/compat25/__init__.pyc
-lib/python${MODPY_VERSION}/site-packages/fedora/compat25/defaultdict.py
-lib/python${MODPY_VERSION}/site-packages/fedora/compat25/defaultdict.pyc
 lib/python${MODPY_VERSION}/site-packages/fedora/django/
 lib/python${MODPY_VERSION}/site-packages/fedora/django/__init__.py
 lib/python${MODPY_VERSION}/site-packages/fedora/django/__init__.pyc

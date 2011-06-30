@@ -1,7 +1,16 @@
 $OpenBSD$
---- pavement.py.orig	Thu Apr 22 20:46:06 2010
-+++ pavement.py	Fri Mar 25 15:15:09 2011
-@@ -95,7 +95,7 @@ options(
+--- pavement.py.orig	Tue Apr  5 15:41:16 2011
++++ pavement.py	Sun May 22 10:48:13 2011
+@@ -17,7 +17,7 @@ except ImportError:
+ import sys, os
+ import glob
+ import paver.doctools
+-from setuptools import find_packages, command
++from setuptools import find_packages
+ 
+ sys.path.insert(0, str(paver_path.getcwd()))
+ 
+@@ -100,7 +100,7 @@ options(
          ),
      i18n=Bunch(
          builddir='locale',
