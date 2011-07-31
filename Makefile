@@ -21,7 +21,6 @@ PORTS = devel/libyubikey \
         misc/rpm \
         net/py-urlgrabber \
         security/py-krbV \
-        sysutils/conky \
         textproc/transifex-client
 
 PORTSROOT = /usr/ports/mystuff
