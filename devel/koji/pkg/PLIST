@@ -1,5 +1,7 @@
 @comment $OpenBSD$
 bin/koji
+lib/python${MODPY_VERSION}/
+lib/python${MODPY_VERSION}/site-packages/
 lib/python${MODPY_VERSION}/site-packages/koji/
 lib/python${MODPY_VERSION}/site-packages/koji/__init__.py
 lib/python${MODPY_VERSION}/site-packages/koji/__init__.pyc
