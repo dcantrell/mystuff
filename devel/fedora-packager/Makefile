@@ -1,6 +1,6 @@
 COMMENT =           Tools for a Fedora maintainer environment
 
-MODPY_EGG_VERSION = 0.5.2.0
+MODPY_EGG_VERSION = 0.5.9.1
 DISTNAME =          fedora-packager-${MODPY_EGG_VERSION}
 EXTRACT_SUFX =      .tar.bz2
 CATEGORIES =        devel
@@ -10,14 +10,14 @@ MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
 MASTER_SITES =      https://fedorahosted.org/releases/f/e/fedora-packager/
 
 MODULES =           lang/python
-RUN_DEPENDS +=      ::devel/koji \
-                    ::devel/py-argparse \
-                    ::devel/py-fedora \
-                    ::devel/py-gitdb \
-                    ::devel/py-offtrac \
-                    :rpm->=4.7.2:misc/rpm \
-                    ::net/py-urlgrabber \
-                    ::security/py-openssl
+RUN_DEPENDS +=      devel/koji \
+                    devel/py-argparse \
+                    devel/py-fedora \
+                    devel/py-gitdb \
+                    devel/py-offtrac \
+                    rpm->=4.7.2:mystuff/misc/rpm \
+                    net/py-urlgrabber \
+                    security/py-openssl
 
 PKG_ARCH =          *
 

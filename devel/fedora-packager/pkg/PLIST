@@ -12,10 +12,12 @@ bin/ppc-koji
 bin/rpmbuild-md5
 bin/s390-koji
 bin/sparc-koji
+lib/python${MODPY_VERSION}/
+lib/python${MODPY_VERSION}/site-packages/
 lib/python${MODPY_VERSION}/site-packages/fedora_cert/
 lib/python${MODPY_VERSION}/site-packages/fedora_cert/__init__.py
 lib/python${MODPY_VERSION}/site-packages/fedora_cert/__init__.pyc
-lib/python${MODPY_VERSION}/site-packages/fedora_packager-${MODPY_EGG_VERSION}-py${MODPY_VERSION}.egg-info
+lib/python${MODPY_VERSION}/site-packages/fedora_packager-0.5.2.0-py${MODPY_VERSION}.egg-info
 lib/python${MODPY_VERSION}/site-packages/pyfedpkg/
 lib/python${MODPY_VERSION}/site-packages/pyfedpkg/__init__.py
 lib/python${MODPY_VERSION}/site-packages/pyfedpkg/__init__.pyc
