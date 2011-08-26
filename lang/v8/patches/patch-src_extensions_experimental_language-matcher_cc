@@ -1,0 +1,12 @@
+$OpenBSD$
+--- src/extensions/experimental/language-matcher.cc.orig	Tue Aug 23 10:16:48 2011
++++ src/extensions/experimental/language-matcher.cc	Tue Aug 23 13:59:53 2011
+@@ -43,7 +43,7 @@ namespace internal {
+ const unsigned int LanguageMatcher::kLanguageWeight = 75;
+ const unsigned int LanguageMatcher::kScriptWeight = 20;
+ const unsigned int LanguageMatcher::kRegionWeight = 5;
+-const unsigned int LanguageMatcher::kThreshold = 50;
++const int LanguageMatcher::kThreshold = 50;
+ const unsigned int LanguageMatcher::kPositionBonus = 1;
+ const char* const LanguageMatcher::kDefaultLocale = "root";
+ 

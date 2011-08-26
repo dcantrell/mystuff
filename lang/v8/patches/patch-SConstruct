@@ -1,0 +1,126 @@
+$OpenBSD$
+--- SConstruct.orig	Tue Aug 23 10:16:52 2011
++++ SConstruct	Wed Aug 24 12:57:09 2011
+@@ -30,6 +30,7 @@ import re
+ import subprocess
+ import sys
+ import os
++import commands
+ from os.path import join, dirname, abspath
+ from types import DictType, StringTypes
+ root_dir = dirname(File('SConstruct').rfile().abspath)
+@@ -53,7 +54,9 @@ GCC_DTOA_EXTRA_CCFLAGS = []
+ 
+ LIBRARY_FLAGS = {
+   'all': {
+-    'CPPPATH': [join(root_dir, 'src')],
++    'CPPPATH': [root_dir,
++                os.path.realpath(root_dir + '/src'),
++                os.path.realpath(root_dir + '/include')],
+     'regexp:interpreted': {
+       'CPPDEFINES': ['V8_INTERPRETED_REGEXP']
+     },
+@@ -120,6 +123,7 @@ LIBRARY_FLAGS = {
+       'CPPPATH' : ['/usr/local/include'],
+       'LIBPATH' : ['/usr/local/lib'],
+       'CCFLAGS':      ['-ansi'],
++      'LIBS': ['execinfo']
+     },
+     'os:solaris': {
+       # On Solaris, to get isinf, INFINITY, fpclassify and other macros one
+@@ -304,6 +308,13 @@ V8_EXTRA_FLAGS = {
+         }
+       }
+     },
++    'os:openbsd': {
++      'library:shared': {
++        'soname:on': {
++          'LINKFLAGS': ['-Wl,-soname,${SONAME}']
++        }
++      }
++    },
+     'os:macos': {
+       'WARNINGFLAGS': ['-pedantic']
+     },
+@@ -342,6 +353,7 @@ V8_EXTRA_FLAGS = {
+   }
+ }
+ 
++iculibs = commands.getoutput('icu-config --ldflags-libsonly').replace('-l', '').split()
+ 
+ MKSNAPSHOT_EXTRA_FLAGS = {
+   'gcc': {
+@@ -359,7 +371,7 @@ MKSNAPSHOT_EXTRA_FLAGS = {
+       'LINKFLAGS': ['-mt']
+     },
+     'os:openbsd': {
+-      'LIBS': ['execinfo', 'pthread']
++      'LIBS': ['execinfo', 'pthread'] + iculibs
+     },
+     'os:win32': {
+       'LIBS': ['winmm', 'ws2_32'],
+@@ -797,7 +809,7 @@ D8_FLAGS = {
+       'LINKFLAGS': ['$CCFLAGS'],
+     },
+     'console:readline': {
+-      'LIBS': ['readline']
++      'LIBS': ['curses', 'ereadline']
+     },
+     'os:linux': {
+       'LIBS': ['pthread'],
+@@ -813,7 +825,7 @@ D8_FLAGS = {
+       'LINKFLAGS': ['-mt']
+     },
+     'os:openbsd': {
+-      'LIBS': ['pthread'],
++      'LIBS': ['pthread'] + iculibs,
+     },
+     'os:win32': {
+       'LIBS': ['winmm', 'ws2_32'],
+@@ -1397,15 +1409,12 @@ def BuildSpecific(env, mode, env_overrides, tools):
+   library_name = 'v8' + suffix
+   preparser_library_name = 'v8preparser' + suffix
+   version = GetVersion()
+-  if context.options['soname'] == 'on':
+-    # When building shared object with SONAME version the library name.
+-    library_name += '-' + version
+ 
+   # Generate library SONAME if required by the build.
+   if context.options['soname'] == 'on':
+     soname = GetSpecificSONAME()
+     if soname == '':
+-      soname = 'lib' + library_name + '.so'
++      soname = 'lib' + library_name + '.so.' + version
+     env['SONAME'] = soname
+ 
+   # Build the object files by invoking SCons recursively.
+@@ -1429,17 +1438,27 @@ def BuildSpecific(env, mode, env_overrides, tools):
+     preparser_library = env.StaticLibrary(preparser_library_name,
+                                           preparser_files)
+   else:
++    oldshlibsuffix = env['SHLIBSUFFIX'] 
++    env['SHLIBSUFFIX'] += '.' + version
++
+     # There seems to be a glitch in the way scons decides where to put
+     # PDB files when compiling using MSVC so we specify it manually.
+     # This should not affect any other platforms.
+     pdb_name = library_name + '.dll.pdb'
+-    library = env.SharedLibrary(library_name, object_files, PDB=pdb_name)
++    library_soname = 'lib' + library_name + '.so.' + version;
++    library = env.SharedLibrary(library_name,
++                                object_files,
++                                PDB=pdb_name,
++                                SONAME=library_soname)
+     preparser_pdb_name = preparser_library_name + '.dll.pdb';
+-    preparser_soname = 'lib' + preparser_library_name + '.so';
++    preparser_soname = 'lib' + preparser_library_name + '.so.' + version;
+     preparser_library = env.SharedLibrary(preparser_library_name,
+                                           preparser_files,
+                                           PDB=preparser_pdb_name,
+                                           SONAME=preparser_soname)
++
++    env['SHLIBSUFFIX'] = oldshlibsuffix
++
+   context.library_targets.append(library)
+   context.library_targets.append(preparser_library)
+ 
