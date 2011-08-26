@@ -10,13 +10,14 @@ MASTER_SITES =     http://yum.baseurl.org/download/3.2/
 
 MODULES =          devel/gettext \
                    lang/python
-RUN_DEPENDS +=     :py-gobject->=2.20.0:devel/py-gobject \
-                   ::devel/py-iniparse \
-                   :py-yum-metadata-parser->=1.1.0:misc/py-yum-metadata-parser \
-                   :rpm->=4.7.2:misc/rpm \
-                   ::net/py-urlgrabber \
-                   ::security/py-gpgme \
-                   ::x11/dbus-python
+BUILD_DEPENDS +=   textproc/intltool
+RUN_DEPENDS +=     py-gobject->=2.20.0:devel/py-gobject \
+                   devel/py-iniparse \
+                   py-yum-metadata-parser->=1.1.0:misc/py-yum-metadata-parser \
+                   rpm->=4.7.2:misc/rpm \
+                   net/py-urlgrabber \
+                   security/py-gpgme \
+                   x11/dbus-python
 
 MODPY_SETUPTOOLS = No
 CONFIGURE_STYLE =  simple
