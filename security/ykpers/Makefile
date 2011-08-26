@@ -1,16 +1,19 @@
 COMMENT =         Yubikey personalization program
 
 DISTNAME =        ykpers-1.5.2
+REVISION =        0
 CATEGORIES =      security
-HOMEPAGE =        http://code.google.com/p/yubikey-personalization/
+HOMEPAGE =        https://github.com/Yubico/yubikey-personalization/
 MAINTAINER =      David Cantrell <david.l.cantrell@gmail.com>
 
-MASTER_SITES =    http://yubikey-personalization.googlecode.com/files/
+MASTER_SITES =    https://github.com/Yubico/yubikey-personalization/tarball/v1.5.2
 
 WANTLIB +=        c pthread
 
 BUILD_DEPENDS =   devel/libusb \
                   devel/libyubikey
+
+CHECK_LIB_DEPENDS = Yes
 
 SEPARATE_BUILD =  simple
 CONFIGURE_STYLE = gnu
