@@ -2,7 +2,7 @@ COMMENT =           Python module for working with OpenPGP messages
 
 MODPY_EGG_VERSION = 0.1
 DISTNAME =          pygpgme-${MODPY_EGG_VERSION}
-REVISION =          0
+REVISION =          1
 PKGNAME =           py-gpgme-${MODPY_EGG_VERSION}
 CATEGORIES =        security
 HOMEPAGE =          http://pypi.python.org/pypi/pygpgme/0.1/
@@ -10,8 +10,12 @@ MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
 
 MASTER_SITES =      http://pypi.python.org/packages/source/p/pygpgme/
 
+WANTLIB +=          gpgme>=17
+
 MODULES =           lang/python
 BUILD_DEPENDS +=    security/gpgme
+
+CHECK_LIB_DEPENDS = Yes
 
 CONFIGURE_ENV +=    CFLAGS=-I/usr/local/include
 
