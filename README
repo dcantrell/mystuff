@@ -11,6 +11,8 @@ source here:
     http://www.burdell.org/openbsd/mystuff
 
 Policies I'm trying to follow:
+------------------------------
+
 1) Ports should be compatible with the latest stable release of OpenBSD.
 2) Python ports should favor the preferred Python package as installed
    with the latest stable release's ports collection (e.g., in the case
@@ -29,6 +31,31 @@ Policies I'm trying to follow:
 9) When I update a port but the version remains the same, I increment
    the REVISION number.  I leave old builds on the download site (for no
    particular reason other than for historical purposes).
+
+Branches:
+---------
+
+The master branch is intended for the latest stable release of OpenBSD.
+I do not follow -current on any of my systems, so my ports are built to
+work with the latest stable release.  That means my ports may lag behind
+the official releases a bit as I take some time to clean them up when a
+new release comes out.
+
+When a new stable release is made, I take that opportunity to go through
+and update any ports that have newer versions, remove any that are now
+part of the official tree, and make other changes.  Throughout the 6
+month period a stable release is out, I usually just do bug fixes to my
+ports.
+
+Ports for previous OpenBSD releases are on their own branch in my git
+repository.  The branch names match the CVS branch names that OpenBSD
+uses.  If you want ports for, say, OpenBSD 4.8, checkout the OPENBSD_4_8
+branch of this project.  Once a new release is made, I will create a
+new branch from master to match the previous release.
+
+I may change things one day to have master follow -current and branch at
+the same time as OpenBSD does, but really it's just me and the software
+I use on my own systems.
 
 -- 
 David Cantrell <david.l.cantrell@gmail.com>
