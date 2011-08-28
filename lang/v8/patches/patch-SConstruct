@@ -1,6 +1,6 @@
 $OpenBSD$
---- SConstruct.orig	Tue Aug 23 10:16:52 2011
-+++ SConstruct	Sat Aug 27 19:04:05 2011
+--- SConstruct.orig	Sat Aug 27 19:58:39 2011
++++ SConstruct	Sun Aug 28 12:02:37 2011
 @@ -30,6 +30,7 @@ import re
  import subprocess
  import sys
@@ -28,22 +28,21 @@ $OpenBSD$
      },
      'os:solaris': {
        # On Solaris, to get isinf, INFINITY, fpclassify and other macros one
-@@ -304,6 +308,14 @@ V8_EXTRA_FLAGS = {
+@@ -304,6 +308,13 @@ V8_EXTRA_FLAGS = {
          }
        }
      },
 +    'os:openbsd': {
 +      'library:shared': {
 +        'soname:on': {
-+          'LINKFLAGS': ['-Wl,-soname,${SONAME}',
-+                        '-Wl,-rpath,' + os.environ.get('PREFIX') + '/lib']
++          'LINKFLAGS': ['-Wl,-soname,${SONAME}'],
 +        }
 +      }
 +    },
      'os:macos': {
        'WARNINGFLAGS': ['-pedantic']
      },
-@@ -342,6 +354,7 @@ V8_EXTRA_FLAGS = {
+@@ -342,6 +353,7 @@ V8_EXTRA_FLAGS = {
    }
  }
  
@@ -51,7 +50,7 @@ $OpenBSD$
  
  MKSNAPSHOT_EXTRA_FLAGS = {
    'gcc': {
-@@ -359,7 +372,7 @@ MKSNAPSHOT_EXTRA_FLAGS = {
+@@ -359,7 +371,7 @@ MKSNAPSHOT_EXTRA_FLAGS = {
        'LINKFLAGS': ['-mt']
      },
      'os:openbsd': {
@@ -60,7 +59,7 @@ $OpenBSD$
      },
      'os:win32': {
        'LIBS': ['winmm', 'ws2_32'],
-@@ -423,7 +436,7 @@ CCTEST_EXTRA_FLAGS = {
+@@ -423,7 +435,7 @@ CCTEST_EXTRA_FLAGS = {
        'LINKFLAGS':    ['-mt']
      },
      'os:openbsd': {
@@ -69,7 +68,7 @@ $OpenBSD$
      },
      'os:win32': {
        'LIBS': ['winmm', 'ws2_32']
-@@ -482,7 +495,7 @@ SAMPLE_FLAGS = {
+@@ -482,7 +494,7 @@ SAMPLE_FLAGS = {
      },
      'os:openbsd': {
        'LIBPATH' :     ['/usr/local/lib'],
@@ -78,7 +77,7 @@ $OpenBSD$
      },
      'os:win32': {
        'LIBS':         ['winmm', 'ws2_32']
-@@ -797,7 +810,7 @@ D8_FLAGS = {
+@@ -797,7 +809,7 @@ D8_FLAGS = {
        'LINKFLAGS': ['$CCFLAGS'],
      },
      'console:readline': {
@@ -87,17 +86,16 @@ $OpenBSD$
      },
      'os:linux': {
        'LIBS': ['pthread'],
-@@ -813,7 +826,8 @@ D8_FLAGS = {
+@@ -813,7 +825,7 @@ D8_FLAGS = {
        'LINKFLAGS': ['-mt']
      },
      'os:openbsd': {
 -      'LIBS': ['pthread'],
 +      'LIBS': ['pthread'] + iculibs,
-+      'LINKFLAGS': ['-Wl,-rpath,' + os.environ.get('PREFIX') + '/lib'],
      },
      'os:win32': {
        'LIBS': ['winmm', 'ws2_32'],
-@@ -1397,15 +1411,12 @@ def BuildSpecific(env, mode, env_overrides, tools):
+@@ -1397,15 +1409,12 @@ def BuildSpecific(env, mode, env_overrides, tools):
    library_name = 'v8' + suffix
    preparser_library_name = 'v8preparser' + suffix
    version = GetVersion()
@@ -114,7 +112,7 @@ $OpenBSD$
      env['SONAME'] = soname
  
    # Build the object files by invoking SCons recursively.
-@@ -1429,17 +1440,27 @@ def BuildSpecific(env, mode, env_overrides, tools):
+@@ -1429,17 +1438,27 @@ def BuildSpecific(env, mode, env_overrides, tools):
      preparser_library = env.StaticLibrary(preparser_library_name,
                                            preparser_files)
    else:
