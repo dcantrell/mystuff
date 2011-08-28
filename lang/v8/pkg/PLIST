@@ -1,0 +1,32 @@
+@comment $OpenBSD$
+%%SHARED%%
+@bin bin/d8
+include/v8/
+include/v8/extensions/
+include/v8/extensions/experimental/
+include/v8/extensions/experimental/break-iterator.h
+include/v8/extensions/experimental/collator.h
+include/v8/extensions/experimental/datetime-format.h
+include/v8/extensions/experimental/i18n-extension.h
+include/v8/extensions/experimental/i18n-locale.h
+include/v8/extensions/experimental/i18n-natives.h
+include/v8/extensions/experimental/i18n-utils.h
+include/v8/extensions/experimental/language-matcher.h
+include/v8/extensions/experimental/number-format.h
+include/v8/extensions/externalize-string-extension.h
+include/v8/extensions/gc-extension.h
+include/v8/v8-debug.h
+include/v8/v8-preparser.h
+include/v8/v8-profiler.h
+include/v8/v8-testing.h
+include/v8/v8.h
+include/v8/v8stdint.h
+@bin lib/libv8.so.3.5.8
+@bin lib/libv8preparser.so.3.5.8
+share/doc/v8/
+share/doc/v8/AUTHORS
+share/doc/v8/ChangeLog
+share/doc/v8/LICENSE
+share/doc/v8/LICENSE.strongtalk
+share/doc/v8/LICENSE.v8
+share/doc/v8/LICENSE.valgrind

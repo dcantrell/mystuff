@@ -1,8 +1,8 @@
 # Snapshot values used to check out the source from svn.
 # Run ./files/checkout-v8.sh without any options to get the latest tag
 # and latest svn revision (useful if updating the port).
-V8_VERSION =        3.5.7
-V8_SVNREV =         9003
+V8_VERSION =        3.5.8
+V8_SVNREV =         9030
 
 COMMENT =           JavaScript engine
 
@@ -12,7 +12,9 @@ CATEGORIES =        lang
 HOMEPAGE =          http://code.google.com/p/v8
 MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
 
-WANTLIB +=          c curses m pthread stdc++
+WANTLIB +=          execinfo m stdc++
+
+LIB_DEPENDS =       devel/libexecinfo
 
 MODULES =           devel/scons \
                     lang/python
@@ -20,16 +22,15 @@ MODULES =           devel/scons \
 BUILD_DEPENDS =     devel/readline \
                     textproc/icu4c
 
-CHECK_LIB_DEPENDS = Yes
 ONLY_FOR_ARCHS =    i386 amd64
 NO_REGRESS =        Yes
 CHECK_LIB_DEPENDS = Yes
 
 CXXFLAGS +=         -fPIC
 
-.if ${PKG_ARCH:L} == "i386"
+.if ${MACHINE} == "i386"
 MODSCONS_ENV +=     arch=ia32
-.elif ${PKG_ARCH:L} == "amd64"
+.elif ${MACHINE} == "amd64"
 MODSCONS_ENV +=     arch=x64
 .endif
 
@@ -38,6 +39,9 @@ MODSCONS_ENV +=     library=shared \
                     snapshot=on \
                     visibility=default \
                     console=readline
+
+# We can actually list multiple scons targets here
+ALL_TARGET =        library d8
 
 # We have to checkout the source from svn
 NO_CHECKSUM =       Yes
@@ -56,31 +60,23 @@ pre-fetch:
 		${INSTALL_DATA} ${DISTNAME}.tar.gz ${DISTDIR}/${DISTNAME}.tar.gz ; \
 	fi
 
+# The forced symlinks for libv8.so and libv8preparser.so make the build
+# go a little more easily when d8 is linked with the libraries.
 pre-build:
 	cd ${WRKSRC}/src/extensions/experimental ; \
 	${MODPY_BIN} ./i18n-js2c.py i18n-libraries.cc i18n-js2c.py
+	cd ${WRKSRC} ; \
+	ln -sf libv8.so.${V8_VERSION} libv8.so ; \
+	ln -sf libv8preparser.so.${V8_VERSION} libv8preparser.so
 
-#do-build:
-#	@cd ${WRKSRC} ; \
-#	scons \
-#		arch=$$platform library=shared soname=on \
-#		snapshot=on visibility=default ; \
-#	ln -sf libv8.so.${V8_VERSION} libv8.so ; \
-#	ln -sf libv8preparser.so.${V8_VERSION} libv8preparser.so ; \
-#	scons d8 \
-#		arch=$$platform library=shared soname=on \
-#		console=readline visibility=default
-
-# There are no installation targets provided in the v8 build tools.  You
+# There are no installation targets provided in the v8 build scripts.  You
 # must install it by hand, but that's not a problem because there isn't
 # a lot to install.
 do-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/include/v8/extensions/experimental
 	${INSTALL_PROGRAM} ${WRKSRC}/d8 ${PREFIX}/bin/d8
-	echo "LIBTOOL: |${LIBTOOL}"
-	exit 1
-	${LIBTOOL} --mode=install ${INSTALL_PROGRAM} -g wheel ${WRKSRC}/libv8.so.${V8_VERSION} ${PREFIX}/lib/libv8.so.${V8_VERSION}
-	${LIBTOOL} --mode=install ${INSTALL_PROGRAM} -g wheel ${WRKSRC}/libv8preparser.so.${V8_VERSION} ${PREFIX}/lib/libv8preparser.so.${V8_VERSION}
+	${INSTALL_PROGRAM} ${WRKSRC}/libv8.so.${V8_VERSION} ${PREFIX}/lib/libv8.so.${V8_VERSION}
+	${INSTALL_PROGRAM} ${WRKSRC}/libv8preparser.so.${V8_VERSION} ${PREFIX}/lib/libv8preparser.so.${V8_VERSION}
 	for h in ${WRKSRC}/include/*.h ; do \
 		${INSTALL_DATA} $$h ${PREFIX}/include/v8/$$(basename $$h) ; \
 	done
