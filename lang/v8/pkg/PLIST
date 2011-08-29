@@ -1,5 +1,4 @@
 @comment $OpenBSD$
-%%SHARED%%
 @bin bin/d8
 include/v8/
 include/v8/extensions/
@@ -21,8 +20,8 @@ include/v8/v8-profiler.h
 include/v8/v8-testing.h
 include/v8/v8.h
 include/v8/v8stdint.h
-@bin lib/libv8.so.3.5.8
-@bin lib/libv8preparser.so.3.5.8
+@lib lib/libv8.so.${LIBv8_VERSION}
+@lib lib/libv8preparser.so.${LIBv8preparser_VERSION}
 share/doc/v8/
 share/doc/v8/AUTHORS
 share/doc/v8/ChangeLog
