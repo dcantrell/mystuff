@@ -1,6 +1,7 @@
 COMMENT =           tools that operate on patch files
 
 DISTNAME =          patchutils-0.3.2
+REVISION =          0
 EXTRACT_SUFX =      .tar.bz2
 CATEGORIES =        devel
 HOMEPAGE =          http://cyberelk.net/tim/software/patchutils/
@@ -12,8 +13,7 @@ WANTLIB +=          c
 
 RUN_DEPENDS =       misc/rpm
 
-REGRESS_DEPENDS =   misc/rpm
-
+NO_REGRESS =        Yes
 SEPARATE_BUILD =    simple
 USE_GMAKE =         Yes
 
