@@ -1,0 +1,4 @@
+This is a collection of programs that can manipulate patch files in
+useful ways such as interpolating between two pre-patches, combining
+two incremental patches, fixing line numbers in hand-edited patches,
+and simply listing the files modified by a patch.

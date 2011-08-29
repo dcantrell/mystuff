@@ -1,0 +1,9 @@
+$OpenBSD$
+--- tests/combine2/run-test.orig	Wed Jul  2 07:11:08 2008
++++ tests/combine2/run-test	Mon Aug 29 11:47:59 2011
+@@ -1,4 +1,4 @@
+-#!/bin/bash
++#!/bin/ksh
+ 
+ # This is a combinediff(1) testcase.
+ 

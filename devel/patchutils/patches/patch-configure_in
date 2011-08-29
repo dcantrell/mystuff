@@ -1,0 +1,20 @@
+$OpenBSD$
+--- configure.in.orig	Thu Feb 10 10:41:01 2011
++++ configure.in	Mon Aug 29 11:44:08 2011
+@@ -64,13 +64,14 @@ AC_ARG_WITH(patch, [  --with-patch=PATCH      name of 
+ AC_MSG_RESULT($PATCH)
+ 
+ AC_MSG_CHECKING(whether patch works)
+-pver=`$PATCH -v 2>&1`
+-if echo "$pver" | grep -q "version 2.0" > /dev/null 2>&1; then
++if ! uname 2>/dev/null | grep -q "OpenBSD" >/dev/null 2>&1 ; then
++if $PATCH -v 2>&1 | grep -q "version 2.0" >/dev/null 2>&1 ; then
+    AC_MSG_ERROR([no
+ 
+ Sorry, you have version 2.0 of the patch program, which
+ is not supported by interdiff.  Please upgrade.
+ ])
++fi
+ fi
+ AC_MSG_RESULT(yes)
+ 
