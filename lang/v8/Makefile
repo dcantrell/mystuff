@@ -1,20 +1,23 @@
 # Snapshot values used to check out the source from svn.
 # Run ./files/checkout-v8.sh without any options to get the latest tag
 # and latest svn revision (useful if updating the port).
-V8_VERSION =        3.5.8
-V8_SVNREV =         9030
+V =                 3.5.8   # v8 version
+R =                 9030    # svn revision
 
 COMMENT =           JavaScript engine
 
-PKGNAME =           v8-${V8_VERSION}
-DISTNAME =          v8-${V8_VERSION}-svn${V8_SVNREV}
+PKGNAME =           v8-${V}
+DISTNAME =          v8-${V}-svn${R}
 CATEGORIES =        lang
 HOMEPAGE =          http://code.google.com/p/v8
 MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
 
-WANTLIB +=          execinfo m stdc++
+WANTLIB +=          c curses ereadline execinfo icudata icui18n icuuc \
+                    m pthread stdc++
 
-LIB_DEPENDS =       devel/libexecinfo
+LIB_DEPENDS =       devel/libexecinfo \
+                    devel/readline \
+                    textproc/icu4c
 
 MODULES =           devel/scons \
                     lang/python
@@ -24,9 +27,7 @@ BUILD_DEPENDS =     devel/readline \
 
 ONLY_FOR_ARCHS =    i386 amd64
 NO_REGRESS =        Yes
-CHECK_LIB_DEPENDS = Yes
-
-CXXFLAGS +=         -fPIC
+SHARED_ONLY =       Yes
 
 .if ${MACHINE} == "i386"
 MODSCONS_ENV +=     arch=ia32
@@ -46,6 +47,9 @@ ALL_TARGET =        library d8
 # We have to checkout the source from svn
 NO_CHECKSUM =       Yes
 
+SHARED_LIBS =       v8                        ${V} \
+                    v8preparser               ${V}
+
 # BSD
 PERMIT_PACKAGE_CDROM = Yes
 PERMIT_PACKAGE_FTP = Yes
@@ -56,7 +60,7 @@ pre-fetch:
 	@if [ ! -f ${DISTDIR}/${DISTNAME}.tar.gz ]; then \
 		tmpdir=$$(mktemp -d -p ${WRKDIR}) ; \
 		cd $$tmpdir ; \
-		${FILESDIR}/checkout-v8.sh ${V8_VERSION} ${V8_SVNREV} ; \
+		${FILESDIR}/checkout-v8.sh ${V} ${R} ; \
 		${INSTALL_DATA} ${DISTNAME}.tar.gz ${DISTDIR}/${DISTNAME}.tar.gz ; \
 	fi
 
@@ -66,17 +70,17 @@ pre-build:
 	cd ${WRKSRC}/src/extensions/experimental ; \
 	${MODPY_BIN} ./i18n-js2c.py i18n-libraries.cc i18n-js2c.py
 	cd ${WRKSRC} ; \
-	ln -sf libv8.so.${V8_VERSION} libv8.so ; \
-	ln -sf libv8preparser.so.${V8_VERSION} libv8preparser.so
+	ln -sf libv8.so.${V} libv8.so ; \
+	ln -sf libv8preparser.so.${V} libv8preparser.so
 
 # There are no installation targets provided in the v8 build scripts.  You
 # must install it by hand, but that's not a problem because there isn't
 # a lot to install.
 do-install:
-	${INSTALL_DATA_DIR} ${PREFIX}/include/v8/extensions/experimental
 	${INSTALL_PROGRAM} ${WRKSRC}/d8 ${PREFIX}/bin/d8
-	${INSTALL_PROGRAM} ${WRKSRC}/libv8.so.${V8_VERSION} ${PREFIX}/lib/libv8.so.${V8_VERSION}
-	${INSTALL_PROGRAM} ${WRKSRC}/libv8preparser.so.${V8_VERSION} ${PREFIX}/lib/libv8preparser.so.${V8_VERSION}
+	${INSTALL_PROGRAM} ${WRKSRC}/libv8.so.${V} ${PREFIX}/lib/libv8.so.${V}
+	${INSTALL_PROGRAM} ${WRKSRC}/libv8preparser.so.${V} ${PREFIX}/lib/libv8preparser.so.${V}
+	${INSTALL_DATA_DIR} ${PREFIX}/include/v8/extensions/experimental
 	for h in ${WRKSRC}/include/*.h ; do \
 		${INSTALL_DATA} $$h ${PREFIX}/include/v8/$$(basename $$h) ; \
 	done
