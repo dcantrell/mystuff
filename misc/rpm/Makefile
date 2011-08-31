@@ -1,3 +1,5 @@
+# $OpenBSD$
+
 COMMENT =           Red Hat package manager
 
 DISTNAME =          rpm-4.9.1.1
@@ -5,6 +7,17 @@ EXTRACT_SUFX =      .tar.bz2
 CATEGORIES =        misc archivers emulators
 HOMEPAGE =          http://www.rpm.org/
 MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
+
+SHARED_LIBS +=      rpm                       1.0 \
+                    rpmbuild                  1.0 \
+                    rpmio                     0.0 \
+                    rpmsign                   0.0
+
+# GPLv2+
+PERMIT_PACKAGE_CDROM = Yes
+PERMIT_PACKAGE_FTP = Yes
+PERMIT_DISTFILES_CDROM = Yes
+PERMIT_DISTFILES_FTP = Yes
 
 MASTER_SITES =      http://rpm.org/releases/rpm-4.9.x/
 
@@ -28,7 +41,8 @@ SEPARATE_BUILD =    simple
 USE_GMAKE =         Yes
 USE_LIBTOOL =       Yes
 AUTOCONF_VERSION =  2.68
-CONFIGURE_STYLE =   autoconf gnu
+AUTOMAKE_VERSION =  1.11
+CONFIGURE_STYLE =   automake autoconf gnu
 CONFIGURE_ARGS +=   --localstatedir=/var \
                     --enable-static=yes \
                     --with-external-db \
@@ -48,21 +62,10 @@ CONFIGURE_ENV +=    varprefix=/usr \
                     CPPFLAGS="${RPM_CPPFLAGS}" \
                     LDFLAGS="${RPM_LDFLAGS}"
 
-SHARED_LIBS +=      rpm                       1.0 \
-                    rpmbuild                  1.0 \
-                    rpmio                     0.0 \
-                    rpmsign                   0.0
-
-# GPLv2+
-PERMIT_PACKAGE_CDROM = Yes
-PERMIT_PACKAGE_FTP = Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP = Yes
-
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/rpm
-	@for d in CHANGES COPYING CREDITS ChangeLog GROUPS README ; do \
-		${INSTALL_DATA} ${WRKSRC}/$$d ${PREFIX}/share/doc/rpm/$$d ; \
-	done
+.for d in CHANGES COPYING CREDITS ChangeLog GROUPS README
+		${INSTALL_DATA} ${WRKSRC}/$d ${PREFIX}/share/doc/rpm/$d
+.endfor
 
 .include <bsd.port.mk>
