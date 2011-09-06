@@ -1,5 +1,6 @@
 @comment $OpenBSD$
 %%SHARED%%
+@conflict rpm2cpio-*
 bin/gendiff
 @bin bin/rpm
 @bin bin/rpm2cpio
@@ -128,7 +129,7 @@ lib/rpm/rpm.log
 lib/rpm/rpm2cpio.sh
 lib/rpm/rpmdb_loadcvt
 @bin lib/rpm/rpmdeps
-lib/rpm/rpmpopt-4.9.0
+lib/rpm/rpmpopt-4.9.1.1
 lib/rpm/rpmrc
 lib/rpm/script.req
 lib/rpm/tcl.req
@@ -208,3 +209,4 @@ share/locale/sr@latin/LC_MESSAGES/rpm.mo
 share/locale/sv/LC_MESSAGES/rpm.mo
 share/locale/tr/LC_MESSAGES/rpm.mo
 share/locale/zh_TW/LC_MESSAGES/rpm.mo
+@sample var/db/rpm

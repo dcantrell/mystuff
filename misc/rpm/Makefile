@@ -1,20 +1,31 @@
-COMMENT =           linux package manager
+# $OpenBSD$
 
-DISTNAME =          rpm-4.9.0
+COMMENT =           Red Hat package manager
+
+DISTNAME =          rpm-4.9.1.1
 EXTRACT_SUFX =      .tar.bz2
-CATEGORIES =        misc
+CATEGORIES =        misc archivers emulators
 HOMEPAGE =          http://www.rpm.org/
 MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
+
+SHARED_LIBS +=      rpm                       1.0 \
+                    rpmbuild                  1.0 \
+                    rpmio                     0.0 \
+                    rpmsign                   0.0
+
+# GPLv2+
+PERMIT_PACKAGE_CDROM = Yes
+PERMIT_PACKAGE_FTP = Yes
+PERMIT_DISTFILES_CDROM = Yes
+PERMIT_DISTFILES_FTP = Yes
 
 MASTER_SITES =      http://rpm.org/releases/rpm-4.9.x/
 
 WANTLIB +=          bz2 c db lua lzma m magic nspr4 nss3 nssutil3 plc4 \
-                    plds4 popt pthread python2.6 util z
+                    plds4 popt pthread util z ${MODPY_WANTLIB}
 
 MODULES =           devel/gettext \
                     lang/python
-BUILD_DEPENDS =     devel/autoconf/2.61 \
-                    devel/automake/1.10
 RUN_DEPENDS =       security/gnupg
 LIB_DEPENDS =       ${MODPY_LIB_DEPENDS} \
                     archivers/xz \
@@ -24,19 +35,20 @@ LIB_DEPENDS =       ${MODPY_LIB_DEPENDS} \
                     lang/lua \
                     security/nss
 
-MAKE_ENV +=         AUTOCONF_VERSION=2.61 \
-                    AUTOMAKE_VERSION=1.10
-
-CHECK_LIB_DEPENDS = Yes
+MODPY_SETUPTOOLS =  No
 
 SEPARATE_BUILD =    simple
+USE_GMAKE =         Yes
 USE_LIBTOOL =       Yes
-CONFIGURE_STYLE =   gnu
+AUTOCONF_VERSION =  2.68
+AUTOMAKE_VERSION =  1.11
+CONFIGURE_STYLE =   automake autoconf gnu
 CONFIGURE_ARGS +=   --localstatedir=/var \
+                    --enable-static=yes \
                     --with-external-db \
                     --enable-python \
                     --with-lua \
-                    --enable-static=no
+                    --without-hackingdocs
 
 RPM_CPPFLAGS =      -I${LOCALBASE}/include \
                     -I${LOCALBASE}/include/db4 \
@@ -51,27 +63,10 @@ CONFIGURE_ENV +=    varprefix=/usr \
                     CPPFLAGS="${RPM_CPPFLAGS}" \
                     LDFLAGS="${RPM_LDFLAGS}"
 
-# See pkg/PFRAG.list
-SHARED_LIBS += rpm                       0.0 # 0.0
-SHARED_LIBS += rpmbuild                  0.0 # 0.0
-SHARED_LIBS += rpmio                     0.0 # 0.0
-SHARED_LIBS += rpmsign                   0.0 # 0.0
-
-# GPLv2+
-PERMIT_PACKAGE_CDROM = Yes
-PERMIT_PACKAGE_FTP = Yes
-PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP = Yes
-
-pre-configure:
-	cd ${WRKSRC} ; \
-	env AUTOCONF_VERSION=2.61 AUTOMAKE_VERSION=1.10 \
-	${WRKSRC}/autogen.sh --noconfigure
-
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/rpm
-	@for d in CHANGES COPYING CREDITS ChangeLog GROUPS README ; do \
-		${INSTALL_DATA} ${WRKSRC}/$$d ${PREFIX}/share/doc/rpm/$$d ; \
-	done
+.for d in CHANGES COPYING CREDITS ChangeLog GROUPS README
+		${INSTALL_DATA} ${WRKSRC}/$d ${PREFIX}/share/doc/rpm/$d
+.endfor
 
 .include <bsd.port.mk>
