@@ -47,7 +47,8 @@ CONFIGURE_ARGS +=   --localstatedir=/var \
                     --enable-static=yes \
                     --with-external-db \
                     --enable-python \
-                    --with-lua
+                    --with-lua \
+                    --without-hackingdocs
 
 RPM_CPPFLAGS =      -I${LOCALBASE}/include \
                     -I${LOCALBASE}/include/db4 \
