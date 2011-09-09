@@ -1,134 +1,125 @@
-# security/py-gpgme
-# security/ykpers
-# misc/yum
-# devel/fedora-packager
-# devel/koji
-# devel/py-fedora
-# www/bodhi
+# List of all ports in this project
+PORTS !=       find . -type d -maxdepth 2 | grep -E "\/.+\/" | grep -v "\.git" | while read f ; do echo $${f} | cut -c3- ; done
 
-PORTS = devel/libyubikey \
-        devel/py-argparse \
-        devel/py-async \
-        devel/py-bugzilla \
-        devel/py-git \
-        devel/py-gitdb \
-        devel/py-iniparse \
-        devel/py-kitchen \
-        devel/py-offtrac \
-        devel/py-paver \
-        devel/py-turbomail \
-        misc/py-yum-metadata-parser \
-        misc/rpm \
-        net/py-urlgrabber \
-        security/py-krbV \
-        textproc/transifex-client
+# Any target can use PORTSTMP, but it's removed after each target is run
+PORTSTMP !=    mktemp -d -p ${PWD}
 
-PORTSROOT = /usr/ports/mystuff
-PKGSROOT  = /usr/ports/packages
+# System and release specific information
+RELEASE !=     uname -r
+MACHINE !=     machine -a
 
-SITEHOST  = site5
-SITEROOT  = public_html/openbsd/mystuff
+# Use the first port to collect ports system settings
+_FIRSTPORT !=  echo ${PORTS} | cut -d ' ' -f 1
+FULLDISTDIR != ( cd ${PWD}/${_FIRSTPORT} && ${MAKE} show=FULLDISTDIR )
+PORTSDIR !=    ( cd ${PWD}/${_FIRSTPORT} && ${MAKE} show=PORTSDIR )
+PKGREPO !=     ( cd ${PWD}/${_FIRSTPORT} && ${MAKE} show=PACKAGE_REPOSITORY )
+MYSTUFFROOT =  ${PORTSDIR}/mystuff
 
-RSYNC     = rsync -avz --progress
+# Publishing location
+SITEHOST =     site5
+SITEROOT =     public_html/openbsd/mystuff
+
+# Commands
+RSYNC =        rsync -avz --progress
 
 all:
 	@echo "Specify a target:"
 	@echo "    publish           Publish source and packages."
 	@echo "    publish-source    Publish port sources as .tar.gz files per port."
 	@echo "    publish-packages  Publish built packages per port."
+	@echo "    list              Show list of all ports in this tree."
 	@echo "    SHA1              Generate new SHA1 files on ${SITEHOST}."
 
 publish: publish-source publish-distfiles publish-packages
 	@${RSYNC} README ${SITEHOST}:${SITEROOT}
 
 publish-source:
-	@tmpdir="$$(mktemp -d -p $$(pwd))" ; \
-	sitedir="${SITEROOT}/$$(uname -r)/src" ; \
-	ssh ${SITEHOST} mkdir -p $$sitedir ; \
-	for port in ${PORTS} ; do \
-		if [ ! -d "$$port" ]; then \
-			echo "*** Missing $$port" ; \
-			exit 1 ; \
-		fi ; \
-		src_archive="$$tmpdir/$$(basename $$port).tar.gz" ; \
-		tar -cvpf - $$port | gzip -9c > $$src_archive ; \
-		${RSYNC} $$src_archive ${SITEHOST}:$$sitedir ; \
-	done ; \
-	rm -rf $$tmpdir
+	@ssh ${SITEHOST} mkdir -p ${SITEROOT}/${RELEASE}/src
+.for port in ${PORTS}
+	@env PORT="SOURCE: ${port}" ${MAKE} _show-header
+	@env PORT=${port} ${MAKE} _src-archive
+	@env PORT=${port} ${MAKE} _upload-src-archive
+.endfor
 
 publish-distfiles:
-	@cwd="$$(pwd)" ; \
-	sitedir="${SITEROOT}/$$(uname -r)/distfiles" ; \
-	ssh ${SITEHOST} mkdir -p $$sitedir ; \
-	for port in ${PORTS} ; do \
-		if [ ! -d "${PORTSROOT}/$$port" ]; then \
-			echo "*** Missing ${PORTSROOT}/$$port" ; \
-			exit 1 ; \
-		fi ; \
-		cd ${PORTSROOT}/$$port ; \
-		fulldistdir="$$(make show=FULLDISTDIR)" ; \
-		for distfile in $$(make show=DISTFILES) ; do \
-			if [ -f $$fulldistdir/$$distfile ]; then \
-				${RSYNC} $$fulldistdir/$$distfile ${SITEHOST}:$$sitedir ; \
-			else \
-				echo "*** Missing $$fulldistdir/$$distfile" ; \
-			fi ; \
-		done ; \
-		cd $$cwd ; \
-	done
+	@ssh ${SITEHOST} mkdir -p ${SITEROOT}/${RELEASE}/distfiles
+.for port in ${PORTS}
+	@env PORT="DISTFILES: ${port}" ${MAKE} _show-header
+	@env DISTFILES="$$(cd ${MYSTUFFROOT}/${port} && ${MAKE} show=DISTFILES)" ${MAKE} _publish-port-distfiles
+.endfor
 
 publish-packages:
 	@cwd="$$(pwd)" ; \
-	sitedir="${SITEROOT}/$$(uname -r)/packages/$$(machine -a)" ; \
-	ssh ${SITEHOST} mkdir -p $$sitedir ; \
+	ssh ${SITEHOST} mkdir -p ${SITEROOT}/${RELEASE}/packages/${MACHINE} ; \
 	for port in ${PORTS} ; do \
-		if [ ! -d "${PORTSROOT}/$$port" ]; then \
-			echo "*** Missing ${PORTSROOT}/$$port" ; \
-			exit 1 ; \
+		if [ ! -d "${MYSTUFFROOT}/$$port" ]; then \
+			echo "*** Missing ${MYSTUFFROOT}/$$port" ; \
 		fi ; \
-		cd ${PORTSROOT}/$$port ; \
+		cd ${MYSTUFFROOT}/$$port ; \
 		pkglist="$$(make show=FULLPKGNAME)" ; \
 		for flavor in $$(make show=FLAVORS) ; do \
 			pkglist="$${pkglist} $$(env FLAVOR=$${flavor} make show=FULLPKGNAME)" ; \
 		done ; \
 		for pkg in $${pkglist} ; do \
-			pkgfile="${PKGSROOT}/$$(machine -a)/ftp/$$pkg.tgz" ; \
+			pkgfile="${PKGREPO}/${MACHINE}/ftp/$$pkg.tgz" ; \
 			if [ -f "$$pkgfile" ]; then \
-				${RSYNC} $$pkgfile ${SITEHOST}:$$sitedir ; \
+				${RSYNC} $$pkgfile ${SITEHOST}:${SITEROOT}/${RELEASE}/packages/${MACHINE} ; \
 			else \
 				echo "*** Missing $$pkgfile" ; \
-				exit 1 ; \
 			fi ; \
 		done ; \
 		cd $$cwd ; \
 	done
 
+SHA1:
+	@env SUBDIR="src" DESC="source archives" MASK="*.tar.gz" ${MAKE} _digest_file
+	@env SUBDIR="distfiles" DESC="distfiles" MASK="*" ${MAKE} _digest_file
+	@env SUBDIR="packages/${MACHINE}" DESC="packages" MASK="*.tgz" ${MAKE} _digest_file
+
+list:
+.for port in ${PORTS}
+	@echo ${port}
+.endfor
+
+_show-header:
+	@echo -n "+-"
+	@echo -n "${PORT}" | sed -e 's/./-/g'
+	@echo "-+"
+	@echo "| ${PORT} |"
+	@echo -n "+-"
+	@echo -n "${PORT}" | sed -e 's/./-/g'
+	@echo "-+"
+
 _digest_file:
-	@tmpdir="$$(mktemp -d -p $$(pwd))" ; \
-	ssh ${SITEHOST} mkdir -p ${SITEDIR} ; \
+	@ssh ${SITEHOST} mkdir -p ${SITEROOT}/${RELEASE}/${SUBDIR} ; \
 	echo "Generating SHA-1 digests for ${DESC}..." ; \
-	fns="$$(ssh ${SITEHOST} ls -1 ${SITEDIR}/${MASK} | grep -v SHA1)" ; \
+	fns="$$(ssh ${SITEHOST} ls -1 ${SITEROOT}/${RELEASE}/${SUBDIR}/${MASK} | grep -v SHA1)" ; \
 	for fn in $$fns ; do \
 		base="$$(basename $$fn)" ; \
 		echo "    $$base" ; \
-		ssh ${SITEHOST} "( cd ${SITEDIR} ; openssl dgst -sha1 $$base )" >> $$tmpdir/SHA1 ; \
+		ssh ${SITEHOST} "( cd ${SITEROOT}/${RELEASE}/${SUBDIR} ; openssl dgst -sha1 $$base )" >> ${PORTSTMP}/SHA1 ; \
 	done ; \
-	sort $$tmpdir/SHA1 > $$tmpdir/SHA1.new ; \
-	mv $$tmpdir/SHA1.new $$tmpdir/SHA1 ; \
-	${RSYNC} $$tmpdir/SHA1 ${SITEHOST}:${SITEDIR} ; \
-	rm -rf $$tmpdir
+	sort ${PORTSTMP}/SHA1 > ${PORTSTMP}/SHA1.new ; \
+	mv ${PORTSTMP}/SHA1.new ${PORTSTMP}/SHA1 ; \
+	${RSYNC} ${PORTSTMP}/SHA1 ${SITEHOST}:${SITEROOT}/${RELEASE}/${SUBDIR}
 
-SHA1:
-	@SITEPATH="${SITEROOT}/$$(uname -r)" ; \
-	env SITEDIR="$$SITEPATH/src" \
-	     DESC="source archives" \
-	     MASK="*.tar.gz" \
-	${MAKE} _digest_file ; \
-	env SITEDIR="$$SITEPATH/distfiles" \
-	    DESC="distfiles" \
-	    MASK="*" \
-	${MAKE} _digest_file ; \
-	env SITEDIR="$$SITEPATH/packages/$$(machine -a)" \
-	    DESC="packages" \
-	    MASK="*.tgz" \
-	${MAKE} _digest_file
+_src-archive:
+	@cd ${PWD} ; \
+	tar -cvpf - ${PORT} | gzip -9c > ${PORTSTMP}/${PORT:T}.tar.gz
+	@mv ${PORTSTMP}/${PORT:T}.tar.gz ${PWD}
+
+_upload-src-archive:
+	@${RSYNC} ${PWD}/${PORT:T}.tar.gz ${SITEHOST}:${SITEROOT}/${RELEASE}/src/${PORT:T}.tar.gz
+	@rm -f ${PWD}/${PORT:T}.tar.gz
+
+_publish-port-distfiles:
+.for distfile in ${DISTFILES}
+.if exists(${FULLDISTDIR}/${distfile})
+	@${RSYNC} ${FULLDISTDIR}/${distfile} ${SITEHOST}:${SITEROOT}/${RELEASE}/distfiles/${distfile}
+.else
+	@echo "*** Missing ${FULLDISTDIR}/${distfile}"
+.endif
+.endfor
+
+.END:
+	@rm -rf ${PORTSTMP}
