@@ -1,0 +1,11 @@
+$OpenBSD$
+--- gitdb/_delta_apply.c.orig	Wed Jun  8 03:40:27 2011
++++ gitdb/_delta_apply.c	Fri Sep  9 11:14:29 2011
+@@ -834,7 +834,6 @@ DeltaChunkList* DCL_new_instance(void)
+ // the previous call of next_delta_info, which implies it should remain the 
+ // same instance between the calls.
+ // Return the altered uchar pointer, reassign it to the input data
+-inline
+ const uchar* next_delta_info(const uchar* data, DeltaChunk* dc)
+ {
+ 	const char cmd = *data++;
