@@ -1,31 +1,31 @@
-COMMENT =           Python module to process interdependent tasks
+# $OpenBSD$
 
-MODPY_EGG_VERSION = 0.6.1
-REVISION =          0
-DISTNAME =          async-${MODPY_EGG_VERSION}
-PKGNAME =           py-async-${MODPY_EGG_VERSION}
-CATEGORIES =        devel
-HOMEPAGE =          http://pypi.python.org/pypi/async
-MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
+COMMENT =                Python module to process interdependent tasks
 
-MASTER_SITES =      http://pypi.python.org/packages/source/a/async/
-
-WANTLIB +=          z
-
-MODULES =           lang/python
-
-CHECK_LIB_DEPENDS = Yes
+MODPY_EGG_VERSION =      0.6.1
+REVISION =               1
+DISTNAME =               async-${MODPY_EGG_VERSION}
+PKGNAME =                py-async-${MODPY_EGG_VERSION}
+CATEGORIES =             devel
+HOMEPAGE =               http://pypi.python.org/pypi/async
+MAINTAINER =             David Cantrell <david.l.cantrell@gmail.com>
 
 # BSD
-PERMIT_PACKAGE_CDROM = Yes
-PERMIT_PACKAGE_FTP = Yes
+PERMIT_PACKAGE_CDROM =   Yes
+PERMIT_PACKAGE_FTP =     Yes
 PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP = Yes
+PERMIT_DISTFILES_FTP =   Yes
+
+MASTER_SITES =           http://pypi.python.org/packages/source/a/async/
+
+WANTLIB +=               z
+
+MODULES =                lang/python
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/py-async
-	for f in AUTHORS README ; do \
-		${INSTALL_DATA} ${WRKSRC}/$$f ${PREFIX}/share/doc/py-async/$$f ; \
-	done
+.for d in AUTHORS README
+	${INSTALL_DATA} ${WRKSRC}/${d} ${PREFIX}/share/doc/py-async/${d}
+.endfor
 
 .include <bsd.port.mk>
