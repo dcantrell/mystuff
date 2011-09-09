@@ -1,37 +1,37 @@
 # $OpenBSD$
 
-COMMENT =           Tools for a Fedora maintainer environment
+COMMENT =                Tools for a Fedora maintainer environment
 
-MODPY_EGG_VERSION = 0.5.9.2
-DISTNAME =          fedora-packager-${MODPY_EGG_VERSION}
-EXTRACT_SUFX =      .tar.bz2
-CATEGORIES =        devel
+MODPY_EGG_VERSION =      0.5.9.2
+DISTNAME =               fedora-packager-${MODPY_EGG_VERSION}
+EXTRACT_SUFX =           .tar.bz2
+CATEGORIES =             devel
 
-HOMEPAGE =          https://fedorahosted.org/fedora-packager/
+HOMEPAGE =               https://fedorahosted.org/fedora-packager/
 
-MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
+MAINTAINER =             David Cantrell <david.l.cantrell@gmail.com>
 
 # LGPLv2.1+
-PERMIT_PACKAGE_CDROM = Yes
-PERMIT_PACKAGE_FTP = Yes
+PERMIT_PACKAGE_CDROM =   Yes
+PERMIT_PACKAGE_FTP =     Yes
 PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP = Yes
+PERMIT_DISTFILES_FTP =   Yes
 
-MASTER_SITES =      https://fedorahosted.org/releases/f/e/fedora-packager/
+MASTER_SITES =           https://fedorahosted.org/releases/f/e/fedora-packager/
 
-MODULES =           lang/python
-RUN_DEPENDS +=      devel/koji \
-                    devel/py-argparse \
-                    devel/py-fedora \
-                    devel/py-gitdb \
-                    devel/py-offtrac \
-                    misc/rpm \
-                    net/py-urlgrabber \
-                    security/py-openssl
+MODULES =                lang/python
+RUN_DEPENDS +=           devel/koji \
+                         devel/py-argparse \
+                         devel/py-fedora \
+                         devel/py-gitdb \
+                         devel/py-offtrac \
+                         misc/rpm \
+                         net/py-urlgrabber \
+                         security/py-openssl
 
-PKG_ARCH =          *
+PKG_ARCH =               *
 
-NO_REGRESS =        Yes
+NO_REGRESS =             Yes
 
 pre-build:
 .for a in sparc arm s390 ppc
