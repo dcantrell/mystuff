@@ -11,3 +11,5 @@ Do security audits of each with C code.
     ykpers
 
 Figure out how to security-audit the Python code and do it.
+
+Rewrite Makefile to follow more BSD make syntax.
