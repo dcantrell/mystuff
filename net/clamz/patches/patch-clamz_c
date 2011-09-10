@@ -1,0 +1,12 @@
+$OpenBSD$
+--- clamz.c.orig	Fri Apr 30 22:15:01 2010
++++ clamz.c	Sat Sep 10 16:57:22 2011
+@@ -341,7 +341,7 @@ int main(int argc, char **argv)
+ 
+   for (i = 1; i < argc; i++) {
+     if (!strcmp(argv[i], "-")) {
+-      sprintf(buf, "clamz-stdin-%d", getpid());
++      snprintf(buf, sizeof(buf), "clamz-stdin-%d", getpid());
+       err = run_amz_file(dl, &cfg, stdin, buf);
+     }
+     else {

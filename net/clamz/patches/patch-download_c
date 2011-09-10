@@ -1,0 +1,21 @@
+$OpenBSD$
+--- download.c.orig	Thu Apr 22 13:20:40 2010
++++ download.c	Sat Sep 10 16:59:46 2011
+@@ -71,7 +71,7 @@ clamz_downloader *new_downloader(const clamz_config *c
+     curl_easy_setopt(dl->curl, CURLOPT_FOLLOWLOCATION, 1L);
+     curl_easy_setopt(dl->curl, CURLOPT_COOKIEFILE, "");
+ 
+-    sprintf(useragent, "Amazon MP3 Downloader (%s)", PACKAGE_STRING);
++    snprintf(useragent, sizeof(useragent), "Amazon MP3 Downloader (%s)", PACKAGE_STRING);
+     curl_easy_setopt(dl->curl, CURLOPT_USERAGENT, useragent);
+ 
+     cookiejar = get_config_file_name(NULL, "cookies", NULL);
+@@ -265,7 +265,7 @@ int download_track(clamz_downloader *dl, clamz_track *
+ 
+     i = 1;
+     do {
+-      sprintf(s, "%s.%d", dl->filename, i);
++      snprintf(s, sizeof(s), "%s.%d", dl->filename, i);
+       i++;
+     } while (!access(s, F_OK));
+ 

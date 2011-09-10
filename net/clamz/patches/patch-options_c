@@ -1,0 +1,81 @@
+$OpenBSD$
+--- options.c.orig	Sun Apr 18 19:28:51 2010
++++ options.c	Sat Sep 10 17:39:18 2011
+@@ -32,7 +32,7 @@ char *get_config_file_name(const char *subdir, const c
+ 			   const char *suffix)
+ {
+   char *home = getenv("HOME");
+-  char *s;
++  char *s = NULL;
+   int n;
+ 
+   if (!home) {
+@@ -40,33 +40,43 @@ char *get_config_file_name(const char *subdir, const c
+     return NULL;
+   }
+ 
+-  n = strlen(home) + strlen("/.clamz/") + strlen(base) + 1;
+-  if (subdir)
+-    n += strlen(subdir) + 1;
+-  if (suffix)
+-    n += strlen(suffix);
+-
+-  s = malloc(n * sizeof(char));
+-  if (!s) {
++  n = asprintf(&s, "%s/.clamz", home);
++  if (n == -1 || !s) {
+     print_error("Out of memory");
+     return NULL;
+   }
+ 
+-  strcpy(s, home);
+-  strcat(s, "/.clamz");
+   mkdir(s, 0775);
++  free(s);
++  s = NULL;
+ 
+   if (subdir) {
+-    strcat(s, "/");
+-    strcat(s, subdir);
++    n = asprintf(&s, "%s/.clamz/%s", home, subdir);
++    if (n == -1 || !s) {
++      print_error("Out of memory");
++      return NULL;
++    }
++
+     mkdir(s, 0775);
++    free(s);
++    s = NULL;
+   }
+ 
+-  strcat(s, "/");
+-  strcat(s, base);
+-  if (suffix)
+-    strcat(s, suffix);
++  if (subdir && suffix) {
++    n = asprintf(&s, "%s/.clamz/%s/%s%s", home, subdir, base, suffix);
++  } else if (subdir) {
++    n = asprintf(&s, "%s/.clamz/%s/%s", home, subdir, base);
++  } else if (suffix) {
++    n = asprintf(&s, "%s/.clamz/%s%s", home, base, suffix);
++  } else {
++    n = asprintf(&s, "%s/.clamz/%s", home, base);
++  }
+ 
++  if (n == -1 || !s) {
++    print_error("Out of memory");
++    return NULL;
++  }
++
+   return s;
+ }
+ 
+@@ -85,7 +95,7 @@ static int add_forbidden_chars(clamz_config *cfg, cons
+ 	  return 1;
+ 	}
+ 
+-	strcpy(s, cfg->forbid_chars);
++	strlcpy(s, cfg->forbid_chars, n);
+ 	s[n] = *addset;
+ 	s[n + 1] = 0;
+ 	free(cfg->forbid_chars);
