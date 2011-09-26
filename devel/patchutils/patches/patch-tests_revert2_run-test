@@ -1,0 +1,25 @@
+$OpenBSD$
+--- tests/revert2/run-test.orig	Sun Sep 25 18:31:05 2011
++++ tests/revert2/run-test	Sun Sep 25 18:31:18 2011
+@@ -3,7 +3,7 @@
+ . ${top_srcdir-.}/tests/common.sh
+ 
+ mkdir dir
+-cat << EOF > dir/file.orig
++cat << EOF > dir/file.original
+ a
+ b
+ c
+@@ -35,10 +35,10 @@ EOF
+ cat << EOF > patch2
+ EOF
+ 
+-${DIFF} -u dir/file.orig dir/file > patch1
++${DIFF} -u dir/file.original dir/file > patch1
+ ${INTERDIFF} patch1 patch2 2>errors > patch1-2 || exit 1
+ [ -s errors ] && exit 1
+ cd dir
+ ${PATCH} < ../patch1-2 || exit 1
+ cd ..
+-cmp dir/file.orig dir/file || exit 1
++cmp dir/file.original dir/file || exit 1

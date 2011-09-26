@@ -1,0 +1,186 @@
+gmake  check-TESTS
+gmake[1]: Entering directory `/usr/ports/pobj/patchutils-0.3.2/build-amd64'
+ln -sf interdiff src/combinediff
+ln -sf interdiff src/flipdiff
+ln -sf filterdiff src/lsdiff
+ln -sf filterdiff src/grepdiff
+for script in fixcvsdiff splitdiff editdiff recountdiff unwrapdiff dehtmldiff espdiff; do \
+		if [ -f ./$script ]; then \
+			chmod a+x ./$script; \
+		else \
+			chmod a+x /usr/ports/pobj/patchutils-0.3.2/patchutils-0.3.2/$script; \
+		fi \
+	done
+for test in tests/newline1/run-test tests/newline2/run-test tests/newline3/run-test tests/newline4/run-test tests/newline5/run-test tests/create1/run-test tests/broken1/run-test tests/revert1/run-test tests/revert2/run-test tests/dashes/run-test tests/dashes1/run-test tests/dashes2/run-test tests/dashes3/run-test tests/dashes4/run-test tests/linux-2.4.0-test-pre-style/run-test tests/linux-2.2.17-pre4-5/run-test tests/linux-2.4.13-ac6-7/run-test tests/apply1/run-test tests/copy1/run-test tests/edit1/run-test tests/edit2/run-test tests/edit3/run-test tests/edit4/run-test tests/edit5/run-test tests/edit6/run-test tests/edit7/run-test tests/edit8/run-test tests/edit9/run-test tests/edit10/run-test tests/combine1/run-test tests/combine2/run-test tests/combine3/run-test tests/gendiff1/run-test tests/gendiff2/run-test tests/comma/run-test tests/addhunk1/run-test tests/addhunk2/run-test tests/addhunk3/run-test tests/delhunk1/run-test tests/delhunk2/run-test tests/delhunk3/run-test tests/delhunk4/run-test tests/delhunk5/run-test tests/trimcontext1/run-test tests/nodate/run-test tests/lsdiff1/run-test tests/lsdiff2/run-test tests/lsdiff3/run-test tests/lsdiff4/run-test tests/lsdiff5/run-test tests/lsdiff6/run-test tests/lsdiff7/run-test tests/lsdiff8/run-test tests/lsdiff9/run-test tests/lsdiff10/run-test tests/lsdiff11/run-test tests/lsdiff12/run-test tests/lsdiff13/run-test tests/lsdiff14/run-test tests/lsdiff15/run-test tests/fuzz1/run-test tests/U0/run-test tests/U3/run-test tests/grepdiff1/run-test tests/grepdiff2/run-test tests/grepdiff3/run-test tests/grepdiff4/run-test tests/grepdiff5/run-test tests/grepdiff6/run-test tests/grepdiff7/run-test tests/number1/run-test tests/number2/run-test tests/nondiff/run-test tests/nondiff1/run-test tests/lscontext1/run-test tests/lscontext2/run-test tests/filterp/run-test tests/select1/run-test tests/select2/run-test tests/select3/run-test tests/select4/run-test tests/select5/run-test tests/select6/run-test tests/select7/run-test tests/select8/run-test tests/select9/run-test tests/select10/run-test tests/select11/run-test tests/preserve1/run-test tests/rediff1/run-test tests/rediff2/run-test tests/recount1/run-test tests/recount2/run-test tests/recount3/run-test tests/recount4/run-test tests/recount5/run-test tests/recount6/run-test tests/unwrapdiff1/run-test tests/overstrip/run-test tests/context1/run-test tests/flip1/run-test tests/flip2/run-test tests/flip3/run-test tests/flip4/run-test tests/flip5/run-test tests/flip6/run-test tests/flip7/run-test tests/flip8/run-test tests/flip9/run-test tests/flip10/run-test tests/flip11/run-test tests/flip12/run-test tests/flip13/run-test tests/flip14/run-test tests/flip15/run-test tests/flip16/run-test tests/flip17/run-test tests/flip18/run-test tests/flip19/run-test tests/unline1/run-test tests/nul0/run-test tests/nul1/run-test tests/nul2/run-test tests/nul3/run-test tests/convert1/run-test tests/convert2/run-test tests/clean1/run-test; do \
+		chmod a+x /usr/ports/pobj/patchutils-0.3.2/patchutils-0.3.2/$test; \
+	done
+new1 start differ: char 3, line 2
+FAIL: tests/newline1/run-test
+PASS: tests/newline2/run-test
+diff -urN dir/file.orig modified/file.orig
+--- dir/file.orig	Wed Dec 31 19:00:00 1969
++++ modified/file.orig	Sun Sep 25 18:57:07 2011
+@@ -0,0 +1,3 @@
++a
++b
++c
+\ No newline at end of file
+FAIL: tests/newline3/run-test
+FAIL: tests/newline4/run-test
+PASS: tests/newline5/run-test
+diff -urN new1.dir/file.orig new2.dir/file.orig
+--- new1.dir/file.orig	Sun Sep 25 18:57:08 2011
++++ new2.dir/file.orig	Wed Dec 31 19:00:00 1969
+@@ -1 +0,0 @@
+-b
+FAIL: tests/create1/run-test
+PASS: tests/broken1/run-test
+PASS: tests/revert1/run-test
+PASS: tests/revert2/run-test
+PASS: tests/dashes/run-test
+PASS: tests/dashes1/run-test
+PASS: tests/dashes2/run-test
+diff -urN dir/file.orig dir.modified/file.orig
+--- dir/file.orig	Sun Sep 25 18:57:08 2011
++++ dir.modified/file.orig	Wed Dec 31 19:00:00 1969
+@@ -1 +0,0 @@
+--- 
+FAIL: tests/dashes3/run-test
+PASS: tests/dashes4/run-test
+PASS: tests/linux-2.4.0-test-pre-style/run-test
+Only in new1: pmac_support.c.orig
+PASS: tests/linux-2.2.17-pre4-5/run-test
+PASS: tests/linux-2.4.13-ac6-7/run-test
+PASS: tests/apply1/run-test
+PASS: tests/copy1/run-test
+PASS: tests/edit1/run-test
+PASS: tests/edit2/run-test
+PASS: tests/edit3/run-test
+PASS: tests/edit4/run-test
+PASS: tests/edit5/run-test
+PASS: tests/edit6/run-test
+PASS: tests/edit7/run-test
+PASS: tests/edit8/run-test
+PASS: tests/edit9/run-test
+PASS: tests/edit10/run-test
+PASS: tests/combine1/run-test
+PASS: tests/combine2/run-test
+PASS: tests/combine3/run-test
+PASS: tests/gendiff1/run-test
+PASS: tests/gendiff2/run-test
+PASS: tests/comma/run-test
+PASS: tests/addhunk1/run-test
+PASS: tests/addhunk2/run-test
+PASS: tests/addhunk3/run-test
+PASS: tests/delhunk1/run-test
+PASS: tests/delhunk2/run-test
+PASS: tests/delhunk3/run-test
+PASS: tests/delhunk4/run-test
+XFAIL: tests/delhunk5/run-test
+PASS: tests/trimcontext1/run-test
+PASS: tests/nodate/run-test
+PASS: tests/lsdiff1/run-test
+PASS: tests/lsdiff2/run-test
+PASS: tests/lsdiff3/run-test
+PASS: tests/lsdiff4/run-test
+PASS: tests/lsdiff5/run-test
+PASS: tests/lsdiff6/run-test
+PASS: tests/lsdiff7/run-test
+PASS: tests/lsdiff8/run-test
+PASS: tests/lsdiff9/run-test
+PASS: tests/lsdiff10/run-test
+PASS: tests/lsdiff11/run-test
+PASS: tests/lsdiff12/run-test
+PASS: tests/lsdiff13/run-test
+PASS: tests/lsdiff14/run-test
+PASS: tests/lsdiff15/run-test
+PASS: tests/fuzz1/run-test
+PASS: tests/U0/run-test
+PASS: tests/U3/run-test
+PASS: tests/grepdiff1/run-test
+PASS: tests/grepdiff2/run-test
+PASS: tests/grepdiff3/run-test
+PASS: tests/grepdiff4/run-test
+PASS: tests/grepdiff5/run-test
+PASS: tests/grepdiff6/run-test
+PASS: tests/grepdiff7/run-test
+PASS: tests/number1/run-test
+PASS: tests/number2/run-test
+PASS: tests/nondiff/run-test
+PASS: tests/nondiff1/run-test
+PASS: tests/lscontext1/run-test
+PASS: tests/lscontext2/run-test
+PASS: tests/filterp/run-test
+PASS: tests/select1/run-test
+PASS: tests/select2/run-test
+PASS: tests/select3/run-test
+PASS: tests/select4/run-test
+PASS: tests/select5/run-test
+PASS: tests/select6/run-test
+PASS: tests/select7/run-test
+PASS: tests/select8/run-test
+PASS: tests/select9/run-test
+PASS: tests/select10/run-test
+PASS: tests/select11/run-test
+PASS: tests/preserve1/run-test
+PASS: tests/rediff1/run-test
+PASS: tests/rediff2/run-test
+PASS: tests/recount1/run-test
+PASS: tests/recount2/run-test
+PASS: tests/recount3/run-test
+PASS: tests/recount4/run-test
+PASS: tests/recount5/run-test
+PASS: tests/recount6/run-test
+PASS: tests/unwrapdiff1/run-test
+PASS: tests/overstrip/run-test
+PASS: tests/context1/run-test
+stdin patch-cmp differ: char 14, line 1
+FAIL: tests/flip1/run-test
+stdin patch-cmp differ: char 14, line 1
+FAIL: tests/flip2/run-test
+stdin patch-cmp differ: char 14, line 1
+FAIL: tests/flip3/run-test
+stdin patch-cmp differ: char 14, line 1
+FAIL: tests/flip4/run-test
+stdin patch-cmp differ: char 14, line 1
+FAIL: tests/flip5/run-test
+stdin patch-cmp differ: char 14, line 1
+FAIL: tests/flip6/run-test
+stdin patch-cmp differ: char 14, line 1
+FAIL: tests/flip7/run-test
+stdin patch-cmp differ: char 14, line 1
+FAIL: tests/flip8/run-test
+stdin patch-cmp differ: char 15, line 1
+FAIL: tests/flip9/run-test
+PASS: tests/flip10/run-test
+PASS: tests/flip11/run-test
+stdin patch-cmp differ: char 14, line 1
+FAIL: tests/flip12/run-test
+stdin patch-cmp differ: char 14, line 1
+FAIL: tests/flip13/run-test
+stdin patch-cmp differ: char 14, line 1
+FAIL: tests/flip14/run-test
+stdin patch-cmp differ: char 14, line 1
+FAIL: tests/flip15/run-test
+stdin patch-cmp differ: char 14, line 1
+FAIL: tests/flip16/run-test
+PASS: tests/flip17/run-test
+PASS: tests/flip18/run-test
+PASS: tests/flip19/run-test
+PASS: tests/unline1/run-test
+diff filtered differ: char 87, line 4
+FAIL: tests/nul0/run-test
+diff newdiff differ: char 87, line 4
+FAIL: tests/nul1/run-test
+diff filtered differ: char 103, line 5
+FAIL: tests/nul2/run-test
+FAIL: tests/nul3/run-test
+PASS: tests/convert1/run-test
+PASS: tests/convert2/run-test
+PASS: tests/clean1/run-test
+======================
+23 of 127 tests failed
+======================
+gmake[1]: *** [check-TESTS] Error 1
+gmake[1]: Leaving directory `/usr/ports/pobj/patchutils-0.3.2/build-amd64'
+gmake: *** [check-am] Error 2

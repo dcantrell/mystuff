@@ -1,0 +1,30 @@
+$OpenBSD$
+--- src/filterdiff.c.orig	Fri Jan 23 12:15:49 2009
++++ src/filterdiff.c	Sun Sep 25 14:01:06 2011
+@@ -32,6 +32,7 @@
+ #ifdef HAVE_SYS_TYPES_H
+ # include <sys/types.h> // for ssize_t
+ #endif /* HAVE_SYS_TYPES_H */
++#include <fcntl.h>
+ #include <fnmatch.h>
+ #include <getopt.h>
+ #include <locale.h>
+@@ -1226,11 +1227,17 @@ static FILE *convert_format (FILE *f, char format)
+ static int
+ read_regex_file (const char *file)
+ {
+-	FILE *f = fopen (file, "r");
++	int fd = open (file, O_RDONLY, NULL);
++	FILE *f = NULL;
+ 	char *line = NULL;
+ 	size_t linelen = 0;
+ 	ssize_t got;
+ 	int err;
++
++	if (fd == -1)
++		error (EXIT_FAILURE, errno, "cannot open %s", file);
++
++	f = fdopen(fd, NULL);
+ 
+ 	if (!f)
+ 		error (EXIT_FAILURE, errno, "cannot open %s", file);

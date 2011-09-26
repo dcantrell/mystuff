@@ -1,0 +1,12 @@
+$OpenBSD$
+--- src/diff.c.orig	Thu Jan 22 08:18:48 2009
++++ src/diff.c	Sun Sep 25 14:08:03 2011
+@@ -706,7 +706,7 @@ static void convert_context_hunks_to_unified (char **l
+ 		at[0] = at[1] = 0;
+ 		while (at[0] < n_lines[0] || at[1] < n_lines[1]) {
+ 			char *l[2] = { NULL, NULL };
+-			size_t llen[2];
++			size_t llen[2] = { 0, 0 };
+ 			if (lines[0] && at[0] < n_lines[0]) {
+ 				l[0] = lines[0][at[0]];
+ 				llen[0] = linelengths[0][at[0]];

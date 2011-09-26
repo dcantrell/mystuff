@@ -1,0 +1,39 @@
+$OpenBSD$
+--- src/util.c.orig	Tue Jan  4 07:38:03 2011
++++ src/util.c	Sun Sep 25 14:00:39 2011
+@@ -29,6 +29,7 @@
+ #ifdef HAVE_ERROR_H
+ # include <error.h>
+ #endif /* HAVE_ERROR_H */
++#include <fcntl.h>
+ #include <fnmatch.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+@@ -105,8 +106,8 @@ FILE *xtmpfile (void)
+ 
+ 	tmpdirlen = strlen (tmpdir);
+ 	tmpfname = xmalloc (tmpdirlen + 8);
+-	strcpy (tmpfname, tmpdir);
+-	strcpy (tmpfname + tmpdirlen, "/XXXXXX");
++	strlcpy (tmpfname, tmpdir, sizeof(tmpfname));
++	strlcpy (tmpfname + tmpdirlen, "/XXXXXX", sizeof(tmpfname) - tmpdirlen);
+ 	fd = mkstemp (tmpfname);
+ 	ret = fdopen (fd, "w+b");
+ 	if (ret == NULL)
+@@ -136,12 +137,14 @@ void patlist_add(struct patlist **dst, const char *s)
+ 
+ void patlist_add_file(struct patlist **dst, const char *fn)
+ {
++	int tmpfd;
+ 	FILE *fd;
+ 	char buf[PATH_MAX];
+ 	size_t len;
+ 	
+-	fd = fopen (fn, "r");
+-	if (NULL == fd)
++	if ((tmpfd = open(fn, O_RDONLY, NULL)) == -1)
++		return;
++	if ((fd = fdopen(tmpfd, "r")) == NULL)
+ 		return;
+ 
+ 	while (fgets (buf, sizeof(buf), fd)) {

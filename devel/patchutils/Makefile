@@ -1,33 +1,31 @@
-COMMENT =           tools that operate on patch files
+# $OpenBSD$
 
-DISTNAME =          patchutils-0.3.2
-REVISION =          0
-EXTRACT_SUFX =      .tar.bz2
-CATEGORIES =        devel
-HOMEPAGE =          http://cyberelk.net/tim/software/patchutils/
-MAINTAINER =        David Cantrell <david.l.cantrell@gmail.com>
+COMMENT =                tools that operate on patch files
 
-MASTER_SITES =      http://cyberelk.net/tim/data/patchutils/stable/
-
-WANTLIB +=          c
-
-RUN_DEPENDS =       misc/rpm
-
-NO_REGRESS =        Yes
-SEPARATE_BUILD =    simple
-USE_GMAKE =         Yes
-
-AUTOCONF_VERSION =  2.64
-
-CONFIGURE_STYLE =   autoconf gnu
-CONFIGURE_ARGS +=   --with-patch=/usr/bin/patch \
-                    --with-diff=/usr/bin/diff
+DISTNAME =               patchutils-0.3.2
+EXTRACT_SUFX =           .tar.bz2
+CATEGORIES =             devel
+HOMEPAGE =               http://cyberelk.net/tim/software/patchutils/
+MAINTAINER =             David Cantrell <david.l.cantrell@gmail.com>
 
 # GPLv2+
-PERMIT_PACKAGE_CDROM = Yes
-PERMIT_PACKAGE_FTP = Yes
+PERMIT_PACKAGE_CDROM =   Yes
+PERMIT_PACKAGE_FTP =     Yes
 PERMIT_DISTFILES_CDROM = Yes
-PERMIT_DISTFILES_FTP = Yes
+PERMIT_DISTFILES_FTP =   Yes
+
+MASTER_SITES =           http://cyberelk.net/tim/data/patchutils/stable/
+
+WANTLIB +=               c
+
+RUN_DEPENDS =            misc/rpm
+
+SEPARATE_BUILD =         simple
+USE_GMAKE =              Yes
+AUTOCONF_VERSION =       2.64
+CONFIGURE_STYLE =        autoconf gnu
+CONFIGURE_ARGS +=        --with-patch=/usr/bin/patch \
+                         --with-diff=/usr/bin/diff
 
 pre-regress:
 	ln -sf ${WRKBUILD}/src/combinediff ${WRKSRC}/src/combinediff
@@ -40,8 +38,8 @@ pre-regress:
 
 post-install:
 	${INSTALL_DATA_DIR} ${PREFIX}/share/doc/patchutils
-	@for d in AUTHORS BUGS COPYING ChangeLog NEWS README TODO ; do \
-		${INSTALL_DATA} ${WRKSRC}/$$d ${PREFIX}/share/doc/patchutils/$$d ; \
-	done
+.for d in AUTHORS BUGS COPYING ChangeLog NEWS README TODO
+	${INSTALL_DATA} ${WRKSRC}/${d} ${PREFIX}/share/doc/patchutils/${d}
+.endfor
 
 .include <bsd.port.mk>

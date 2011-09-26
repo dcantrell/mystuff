@@ -1,0 +1,27 @@
+$OpenBSD$
+--- tests/nodate/run-test.orig	Wed Jul  2 07:11:08 2008
++++ tests/nodate/run-test	Sun Sep 25 18:55:19 2011
+@@ -17,10 +17,21 @@ cat << EOF > patch2
+ +betterline
+ EOF
+ 
+-${INTERDIFF} -U0 patch1 patch2 2>errors > patch1-2 || exit 1
++${INTERDIFF} -U0 patch1 patch2 2>errors > patch1-2.orig || exit 1
+ [ -s errors ] && exit 1
++
++# Trim the first line from the patch, it's just the diff command
++# that was run.  BSD diff and GNU diff print mostly similar lines,
++# but BSD diff prints argv[0] exactly as is and GNU diff appears to
++# reduce it to a basename(3) value before printing it.  With GNU
++# diff, the first line would be:
++#     diff -U0 file file
++# And with BSD diff it could be:
++#     /usr/bin/diff -U0 file file
++# Just ignore it for the purposes of this test.
++tail -n $(($(wc -l < patch1-2.orig) - 1)) patch1-2.orig > patch1-2
++
+ cat << EOF | cmp - patch1-2 || exit 1
+-diff -U0 file file
+ --- file
+ +++ file	Nov 27 2001
+ @@ -36 +36 @@

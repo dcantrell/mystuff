@@ -1,0 +1,93 @@
+$OpenBSD$
+--- src/interdiff.c.orig	Thu Feb 10 07:43:59 2011
++++ src/interdiff.c	Sun Sep 25 13:59:36 2011
+@@ -33,6 +33,7 @@
+ #endif /* HAVE_ERROR_H */
+ #include <ctype.h>
+ #include <errno.h>
++#include <fcntl.h>
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
+@@ -58,6 +59,8 @@
+ #define PATCH "patch"
+ #endif
+ 
++#define OPTIONS_BUFSIZ 100
++
+ /* This can be invoked as interdiff, combinediff, or flipdiff. */
+ static enum {
+ 	mode_inter,
+@@ -674,7 +677,7 @@ output_patch1_only (FILE *p1, FILE *out, int not_rever
+ 	const char tail1[] = "/interdiff-1.XXXXXX";
+ 	const char tail2[] = "/interdiff-2.XXXXXX";
+ 	char *tmpp1, *tmpp2;
+-	char options[100];
++	char options[OPTIONS_BUFSIZ];
+ 	int tmpp1fd, tmpp2fd;
+ 	long pos;
+ 	long start;
+@@ -737,9 +740,9 @@ output_patch1_only (FILE *p1, FILE *out, int not_rever
+ 		use_context = file_orig.min_context;
+ 
+ 	if (use_context == 3)
+-		sprintf(options, "-%su", diff_opts);
++		snprintf(options, OPTIONS_BUFSIZ, "-%su", diff_opts);
+ 	else
+-		sprintf (options, "-%sU%d", diff_opts, use_context);
++		snprintf(options, OPTIONS_BUFSIZ, "-%sU%d", diff_opts, use_context);
+ 
+ 	/* Write it out. */
+ 	write_file (&file_orig, tmpp1fd);
+@@ -995,7 +998,7 @@ output_delta (FILE *p1, FILE *p2, FILE *out)
+ 	long pos1 = ftell (p1), pos2 = ftell (p2);
+ 	long pristine1, pristine2;
+ 	long start1, start2;
+-	char options[100];
++	char options[OPTIONS_BUFSIZ];
+ 	int diff_is_empty = 1;
+ 
+ 	pristine1 = ftell (p1);
+@@ -1013,9 +1016,9 @@ output_delta (FILE *p1, FILE *p2, FILE *out)
+ 	memcpy (tmpp2 + tmplen, tail2, sizeof (tail2));
+ 
+ 	if (max_context == 3)
+-		sprintf(options, "-%su", diff_opts);
++		snprintf(options, OPTIONS_BUFSIZ, "-%su", diff_opts);
+ 	else
+-		sprintf (options, "-%sU%d", diff_opts, max_context);
++		snprintf (options, OPTIONS_BUFSIZ, "-%sU%d", diff_opts, max_context);
+ 
+ 	tmpp1fd = xmkstemp (tmpp1);
+ 	tmpp2fd = xmkstemp (tmpp2);
+@@ -1458,15 +1461,15 @@ static int
+ take_diff (const char *f1, const char *f2, char *headers[2],
+ 	   const char *unline, FILE *out)
+ {
+-	char options[100];
++	char options[OPTIONS_BUFSIZ];
+ 	pid_t child;
+ 	int diff_is_empty = 1;
+ 	FILE *in;
+ 
+ 	if (max_context == 3)
+-		sprintf (options, "-%su", diff_opts);
++		snprintf (options, OPTIONS_BUFSIZ, "-%su", diff_opts);
+ 	else
+-		sprintf (options, "-%sU%d", diff_opts, max_context);
++		snprintf (options, OPTIONS_BUFSIZ, "-%sU%d", diff_opts, max_context);
+ 
+ 	if (debug)
+ 		printf ("+ " DIFF " %s %s %s\n", options, f1, f2);
+@@ -1692,7 +1695,10 @@ flipdiff (FILE *p1, FILE *p2, FILE *flip1, FILE *flip2
+ 	 * modify it (ourselves!) using patch1. */
+ 	free_lines (intermediate.head);
+ 	intermediate.head = intermediate.tail = NULL;
+-	f = fopen (tmpp3, "r");
++	if ((tmpfd = open(tmpp3, O_RDONLY, NULL)) == -1)
++		error(EXIT_FAILURE, errno, "unable to open %s", tmpp3);
++	if ((f = fdopen(tmpfd, "r")) == NULL)
++		error(EXIT_FAILURE, errno, "unable to open %s", tmpp3);
+ 	linenum = 0;
+ 	saw_first_offset = 0;
+ 	while (!feof (f)) {
