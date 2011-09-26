@@ -1,3 +1,19 @@
+# /usr/ports/mystuff Makefile
+#
+# Copyright (C) 2011 David Cantrell <david.l.cantrell@gmail.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 # List of all ports in this project
 PORTS !=       find . -type d -maxdepth 2 | grep -E "\/.+\/" | grep -v "\.git" | while read f ; do echo $${f} | cut -c3- ; done
 
@@ -49,27 +65,25 @@ publish-distfiles:
 .endfor
 
 publish-packages:
-	@cwd="$$(pwd)" ; \
-	ssh ${SITEHOST} mkdir -p ${SITEROOT}/${RELEASE}/packages/${MACHINE} ; \
-	for port in ${PORTS} ; do \
-		if [ ! -d "${MYSTUFFROOT}/$$port" ]; then \
-			echo "*** Missing ${MYSTUFFROOT}/$$port" ; \
+	@ssh ${SITEHOST} mkdir -p ${SITEROOT}/${RELEASE}/packages/${MACHINE}
+.for port in ${PORTS}
+.if !exists(${MYSTUFFROOT}/${port})
+	@echo "*** Missing ${MYSTUFFROOT}/${port}"
+.endif
+	cd ${MYSTUFFROOT}/$$port ; \
+	pkglist="$$(make show=FULLPKGNAME)" ; \
+	for flavor in $$(make show=FLAVORS) ; do \
+		pkglist="$${pkglist} $$(env FLAVOR=$${flavor} make show=FULLPKGNAME)" ; \
+	done ; \
+	for pkg in $${pkglist} ; do \
+		pkgfile="${PKGREPO}/${MACHINE}/ftp/$$pkg.tgz" ; \
+		if [ -f "$$pkgfile" ]; then \
+			${RSYNC} $$pkgfile ${SITEHOST}:${SITEROOT}/${RELEASE}/packages/${MACHINE} ; \
+		else \
+			echo "*** Missing $$pkgfile" ; \
 		fi ; \
-		cd ${MYSTUFFROOT}/$$port ; \
-		pkglist="$$(make show=FULLPKGNAME)" ; \
-		for flavor in $$(make show=FLAVORS) ; do \
-			pkglist="$${pkglist} $$(env FLAVOR=$${flavor} make show=FULLPKGNAME)" ; \
-		done ; \
-		for pkg in $${pkglist} ; do \
-			pkgfile="${PKGREPO}/${MACHINE}/ftp/$$pkg.tgz" ; \
-			if [ -f "$$pkgfile" ]; then \
-				${RSYNC} $$pkgfile ${SITEHOST}:${SITEROOT}/${RELEASE}/packages/${MACHINE} ; \
-			else \
-				echo "*** Missing $$pkgfile" ; \
-			fi ; \
-		done ; \
-		cd $$cwd ; \
 	done
+.endfor
 
 SHA1:
 	@env SUBDIR="src" DESC="source archives" MASK="*.tar.gz" ${MAKE} _digest_file
