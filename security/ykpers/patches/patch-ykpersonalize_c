@@ -1,0 +1,12 @@
+$OpenBSD$
+--- ykpersonalize.c.orig	Mon Apr 11 08:36:38 2011
++++ ykpersonalize.c	Mon Sep 26 20:22:33 2011
+@@ -201,7 +201,7 @@ int main(int argc, char **argv)
+ 		ykp_write_config(cfg, writer, stderr);
+ 		fprintf(stderr, "\nCommit? (y/n) [n]: ");
+ 		if (autocommit) {
+-			strcpy(commitbuf, "yes");
++			strlcpy(commitbuf, "yes", sizeof(commitbuf));
+ 			puts(commitbuf);
+ 		} else {
+ 			fgets(commitbuf, sizeof(commitbuf), stdin);

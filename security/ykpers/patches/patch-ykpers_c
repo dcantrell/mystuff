@@ -1,0 +1,54 @@
+$OpenBSD$
+--- ykpers.c.orig	Wed Jul 20 06:19:41 2011
++++ ykpers.c	Mon Sep 26 20:25:10 2011
+@@ -612,7 +612,7 @@ int ykp_write_config(const YKP_CONFIG *cfg,
+ 			writer(str_hex_prefix,
+ 				strlen(str_hex_prefix),
+ 				userdata);
+-			sprintf(buffer, "%lx", ykp_get_oath_imf(cfg));
++			snprintf(buffer, sizeof(buffer), "%lx", ykp_get_oath_imf(cfg));
+ 			writer(buffer, strlen(buffer), userdata);
+ 			writer("\n", 1, userdata);
+ 		}
+@@ -623,10 +623,10 @@ int ykp_write_config(const YKP_CONFIG *cfg,
+ 			if ((cfg->ykcore_config.tktFlags & p->flag) == p->flag
+ 			    && p->vcheck(cfg)) {
+ 				if (*buffer) {
+-					strcat(buffer, str_flags_separator);
+-					strcat(buffer, p->flag_text);
++					strlcat(buffer, str_flags_separator, sizeof(buffer));
++					strlcat(buffer, p->flag_text, sizeof(buffer));
+ 				} else {
+-					strcpy(buffer, p->flag_text);
++					strlcpy(buffer, p->flag_text, sizeof(buffer));
+ 				}
+ 			}
+ 		}
+@@ -645,10 +645,10 @@ int ykp_write_config(const YKP_CONFIG *cfg,
+ 			    && p->vcheck(cfg)
+ 			    && (cfg->ykcore_config.tktFlags & p->tkt_context) == p->tkt_context) {
+ 				if (*buffer) {
+-					strcat(buffer, str_flags_separator);
+-					strcat(buffer, p->flag_text);
++					strlcat(buffer, str_flags_separator, sizeof(buffer));
++					strlcat(buffer, p->flag_text, sizeof(buffer));
+ 				} else {
+-					strcpy(buffer, p->flag_text);
++					strlcpy(buffer, p->flag_text, sizeof(buffer));
+ 				}
+ 				/* make sure we don't show more than one cfgFlag per value -
+ 				   some cfgflags share value in different contexts
+@@ -669,10 +669,10 @@ int ykp_write_config(const YKP_CONFIG *cfg,
+ 			if ((cfg->ykcore_config.extFlags & p->flag) == p->flag
+ 			    && p->vcheck(cfg)) {
+ 				if (*buffer) {
+-					strcat(buffer, str_flags_separator);
+-					strcat(buffer, p->flag_text);
++					strlcat(buffer, str_flags_separator, sizeof(buffer));
++					strlcat(buffer, p->flag_text, sizeof(buffer));
+ 				} else {
+-					strcpy(buffer, p->flag_text);
++					strlcpy(buffer, p->flag_text, sizeof(buffer));
+ 				}
+ 			}
+ 		}

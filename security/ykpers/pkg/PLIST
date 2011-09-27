@@ -16,6 +16,5 @@ lib/pkgconfig/ykpers-1.pc
 share/doc/ykpers/
 share/doc/ykpers/AUTHORS
 share/doc/ykpers/COPYING
-share/doc/ykpers/ChangeLog
 share/doc/ykpers/NEWS
 share/doc/ykpers/README
