@@ -1,0 +1,10 @@
+$OpenBSD$
+--- tests/newline3/run-test.orig	Wed Jul  2 07:11:08 2008
++++ tests/newline3/run-test	Mon Sep 26 08:35:37 2011
+@@ -16,5 +16,6 @@ ${INTERDIFF} patch1 patch2 2>errors > patch1-2 || exit
+ [ -s errors ] && exit 1
+ cd modified
+ ${PATCH} < ../patch1-2 || exit 1
++[ -r file.orig ] && rm file.orig
+ cd ..
+ ${DIFF} -urN dir modified || exit 1

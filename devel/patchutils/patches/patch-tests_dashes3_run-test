@@ -1,11 +1,11 @@
 $OpenBSD$
---- tests/dashes3/run-test.orig	Sun Sep 25 18:40:39 2011
-+++ tests/dashes3/run-test	Sun Sep 25 18:46:19 2011
+--- tests/dashes3/run-test.orig	Wed Jul  2 07:11:08 2008
++++ tests/dashes3/run-test	Mon Sep 26 08:33:51 2011
 @@ -24,5 +24,7 @@ ${INTERDIFF} patch1 patch2 2>errors > patch1-2 || exit
  [ -s errors ] && exit 1
  cd dir
  ${PATCH} < ../patch1-2 || exit 1
-+[ -r dir/file.orig ] && rm dir/file.orig
-+[ -r dir/xxx.orig ] && rm dir/xxx.orig
++[ -r file.orig ] && rm file.orig
++[ -r xxx.orig ] && rm xxx.orig
  cd ..
  ${DIFF} -urN dir dir.modified || exit 1

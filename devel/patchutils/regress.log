@@ -17,19 +17,11 @@ for test in tests/newline1/run-test tests/newline2/run-test tests/newline3/run-t
 new1 start differ: char 3, line 2
 FAIL: tests/newline1/run-test
 PASS: tests/newline2/run-test
-diff -urN dir/file.orig modified/file.orig
---- dir/file.orig	Wed Dec 31 19:00:00 1969
-+++ modified/file.orig	Sun Sep 25 18:57:07 2011
-@@ -0,0 +1,3 @@
-+a
-+b
-+c
-\ No newline at end of file
-FAIL: tests/newline3/run-test
+PASS: tests/newline3/run-test
 FAIL: tests/newline4/run-test
 PASS: tests/newline5/run-test
 diff -urN new1.dir/file.orig new2.dir/file.orig
---- new1.dir/file.orig	Sun Sep 25 18:57:08 2011
+--- new1.dir/file.orig	Mon Sep 26 20:41:59 2011
 +++ new2.dir/file.orig	Wed Dec 31 19:00:00 1969
 @@ -1 +0,0 @@
 -b
@@ -40,12 +32,7 @@ PASS: tests/revert2/run-test
 PASS: tests/dashes/run-test
 PASS: tests/dashes1/run-test
 PASS: tests/dashes2/run-test
-diff -urN dir/file.orig dir.modified/file.orig
---- dir/file.orig	Sun Sep 25 18:57:08 2011
-+++ dir.modified/file.orig	Wed Dec 31 19:00:00 1969
-@@ -1 +0,0 @@
---- 
-FAIL: tests/dashes3/run-test
+PASS: tests/dashes3/run-test
 PASS: tests/dashes4/run-test
 PASS: tests/linux-2.4.0-test-pre-style/run-test
 Only in new1: pmac_support.c.orig
@@ -134,8 +121,7 @@ PASS: tests/recount6/run-test
 PASS: tests/unwrapdiff1/run-test
 PASS: tests/overstrip/run-test
 PASS: tests/context1/run-test
-stdin patch-cmp differ: char 14, line 1
-FAIL: tests/flip1/run-test
+PASS: tests/flip1/run-test
 stdin patch-cmp differ: char 14, line 1
 FAIL: tests/flip2/run-test
 stdin patch-cmp differ: char 14, line 1
@@ -179,7 +165,7 @@ PASS: tests/convert1/run-test
 PASS: tests/convert2/run-test
 PASS: tests/clean1/run-test
 ======================
-23 of 127 tests failed
+20 of 127 tests failed
 ======================
 gmake[1]: *** [check-TESTS] Error 1
 gmake[1]: Leaving directory `/usr/ports/pobj/patchutils-0.3.2/build-amd64'
