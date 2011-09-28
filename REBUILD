@@ -1,10 +1,5 @@
-security/py-krbV
-security/py-gpgme
-security/ykpers
-
 misc/yum
 
-devel/py-offtrac
 devel/patchutils
 
 lang/v8
