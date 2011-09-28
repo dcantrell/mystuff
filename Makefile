@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Commands
+# Commands (prevent /usr/local/bin or ~/bin overrides)
 BASENAME =     /usr/bin/basename
 CUT =          /usr/bin/cut
 ECHO =         /bin/echo
@@ -138,8 +138,7 @@ _digest_per_file:
 	@${RSYNC} ${PORTSTMP}/SHA1 ${SITEHOST}:${SITEROOT}/${RELEASE}/${SUBDIR}
 
 _src-archive:
-	@cd ${PWD} ; \
-	${TAR} -cvpf - ${PORT} | ${GZIP} -9c > ${PORTSTMP}/${PORT:T}.tar.gz
+	@${TAR} -cvpf - ${PORT} | ${GZIP} -9c > ${PORTSTMP}/${PORT:T}.tar.gz
 	@${MV} ${PORTSTMP}/${PORT:T}.tar.gz ${PWD}
 
 _upload-src-archive:
