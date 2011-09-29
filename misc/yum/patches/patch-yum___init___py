@@ -1,6 +1,6 @@
 $OpenBSD$
---- yum/__init__.py.orig	Wed Jan 12 19:28:12 2011
-+++ yum/__init__.py	Sat Mar 19 13:22:53 2011
+--- yum/__init__.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/__init__.py	Wed Sep 28 14:11:48 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python -tt
 +#!/usr/bin/env python -tt

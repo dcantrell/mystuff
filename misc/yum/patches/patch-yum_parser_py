@@ -1,6 +1,6 @@
 $OpenBSD$
---- yum/parser.py.orig	Mon Sep 20 04:37:36 2010
-+++ yum/parser.py	Sat Mar 19 13:23:44 2011
+--- yum/parser.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/parser.py	Wed Sep 28 14:11:31 2011
 @@ -1,4 +1,4 @@
 -#! /usr/bin/python -tt
 +#! /usr/bin/env python -tt

@@ -1,6 +1,6 @@
 $OpenBSD$
---- docs/yum.conf.5.orig	Fri Jan  7 10:42:36 2011
-+++ docs/yum.conf.5	Tue Mar 22 08:44:47 2011
+--- docs/yum.conf.5.orig	Tue Jun 28 16:27:22 2011
++++ docs/yum.conf.5	Thu Sep 29 11:14:04 2011
 @@ -30,7 +30,7 @@ Directory where yum should store its cache and db file
  .IP
  \fBpersistdir\fR
@@ -10,7 +10,7 @@ $OpenBSD$
  
  .IP
  \fBkeepcache\fR
-@@ -850,7 +850,7 @@ your $arch is i686 your $basearch will be i386.
+@@ -872,7 +872,7 @@ your $arch is i686 your $basearch will be i386.
  .IP
  \fB$uuid\fR
  This will be replaced with a unique but persistent uuid for this machine. 

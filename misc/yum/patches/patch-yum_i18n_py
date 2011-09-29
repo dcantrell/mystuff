@@ -1,6 +1,6 @@
 $OpenBSD$
---- yum/i18n.py.orig	Thu May  6 04:54:46 2010
-+++ yum/i18n.py	Sat Mar 19 13:26:24 2011
+--- yum/i18n.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/i18n.py	Wed Sep 28 13:59:54 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python -tt
 +#!/usr/bin/env python -tt

@@ -1,6 +1,6 @@
 $OpenBSD$
---- rpmUtils/oldUtils.py.orig	Thu May  6 04:54:46 2010
-+++ rpmUtils/oldUtils.py	Sat Mar 19 13:33:18 2011
+--- rpmUtils/oldUtils.py.orig	Tue Jun 28 16:27:22 2011
++++ rpmUtils/oldUtils.py	Wed Sep 28 14:17:35 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python -tt
 +#!/usr/bin/env python -tt

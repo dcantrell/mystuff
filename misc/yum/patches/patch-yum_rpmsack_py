@@ -1,13 +1,13 @@
 $OpenBSD$
---- yum/rpmsack.py.orig	Thu Dec 23 09:47:23 2010
-+++ yum/rpmsack.py	Tue Mar 22 08:43:28 2011
+--- yum/rpmsack.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/rpmsack.py	Thu Sep 29 10:39:20 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python -tt
 +#!/usr/bin/env python -tt
  # This program is free software; you can redistribute it and/or modify
  # it under the terms of the GNU General Public License as published by
  # the Free Software Foundation; either version 2 of the License, or
-@@ -180,7 +180,7 @@ class RPMDBPackageSack(PackageSackBase):
+@@ -201,7 +201,7 @@ class RPMDBPackageSack(PackageSackBase):
      __cache_rpmdb__ = True
  
      def __init__(self, root='/', releasever=None, cachedir=None,
@@ -16,7 +16,43 @@ $OpenBSD$
          self.root = root
          self._idx2pkg = {}
          self._name2pkg = {}
-@@ -1573,12 +1573,12 @@ def _sanitize(path):
+@@ -325,7 +325,7 @@ class RPMDBPackageSack(PackageSackBase):
+ 
+         #  We are keeping some data from before, and sometimes (Eg. remove only)
+         # we never open the rpmdb again ... so get the mtime now.
+-        rpmdbfname  = self.root + "/var/lib/rpm/Packages"
++        rpmdbfname  = self.root + "/var/db/rpm/Packages"
+         self._cached_rpmdb_mtime = os.path.getmtime(rpmdbfname)
+ 
+         def _safe_del(x, y):
+@@ -1049,7 +1049,7 @@ class RPMDBPackageSack(PackageSackBase):
+         # http://lists.rpm.org/pipermail/rpm-maint/2007-November/001719.html
+         # ...if anything gets implemented, we should change.
+         rpmdbvfname = self._cachedir + "/version"
+-        rpmdbfname  = self.root + "/var/lib/rpm/Packages"
++        rpmdbfname  = self.root + "/var/db/rpm/Packages"
+ 
+         if os.path.exists(rpmdbvfname) and os.path.exists(rpmdbfname):
+             # See if rpmdb has "changed" ...
+@@ -1072,7 +1072,7 @@ class RPMDBPackageSack(PackageSackBase):
+         if self._cached_rpmdb_mtime is None:
+             return # We haven't loaded any packages!!!
+ 
+-        rpmdbfname  = self.root + "/var/lib/rpm/Packages"
++        rpmdbfname  = self.root + "/var/db/rpm/Packages"
+         if not os.path.exists(rpmdbfname):
+             return # haha
+ 
+@@ -1268,7 +1268,7 @@ class RPMDBPackageSack(PackageSackBase):
+         self._name2pkg.setdefault(po.name, []).append(po)
+         self._tup2pkg[po.pkgtup] = po
+         if self.__cache_rpmdb__ and self._cached_rpmdb_mtime is None:
+-            rpmdbfname  = self.root + "/var/lib/rpm/Packages"
++            rpmdbfname  = self.root + "/var/db/rpm/Packages"
+             self._cached_rpmdb_mtime = os.path.getmtime(rpmdbfname)
+ 
+         return po
+@@ -1548,12 +1548,12 @@ def _sanitize(path):
  class RPMDBAdditionalData(object):
      """class for access to the additional data not able to be stored in the
         rpmdb"""

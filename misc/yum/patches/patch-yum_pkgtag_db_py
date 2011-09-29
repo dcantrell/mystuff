@@ -1,6 +1,6 @@
 $OpenBSD$
---- yum/pkgtag_db.py.orig	Tue Jan 11 06:05:35 2011
-+++ yum/pkgtag_db.py	Sat Mar 19 13:22:47 2011
+--- yum/pkgtag_db.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/pkgtag_db.py	Wed Sep 28 14:13:19 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python -tt
 +#!/usr/bin/env python -tt

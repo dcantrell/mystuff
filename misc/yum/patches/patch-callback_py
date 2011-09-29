@@ -1,6 +1,6 @@
 $OpenBSD$
---- callback.py.orig	Thu May  6 04:54:35 2010
-+++ callback.py	Sat Mar 19 13:19:12 2011
+--- callback.py.orig	Tue Jun 28 16:27:22 2011
++++ callback.py	Wed Sep 28 14:14:53 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python -t
 +#!/usr/bin/env python -t

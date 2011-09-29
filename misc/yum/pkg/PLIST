@@ -72,6 +72,7 @@ lib/python${MODPY_VERSION}/site-packages/yum/update_md.py
 lib/python${MODPY_VERSION}/site-packages/yum/update_md.pyc
 lib/python${MODPY_VERSION}/site-packages/yum/yumRepo.py
 lib/python${MODPY_VERSION}/site-packages/yum/yumRepo.pyc
+sbin/yum-updatesd
 share/doc/yum/
 share/doc/yum/AUTHORS
 share/doc/yum/COPYING
@@ -82,20 +83,68 @@ share/doc/yum/README
 share/doc/yum/TODO
 share/examples/yum/
 @sample ${SYSCONFDIR}/yum/
+share/examples/yum/cron.daily/
+@sample ${SYSCONFDIR}/cron.daily/
+share/examples/yum/cron.daily/0yum.cron
+@sample ${SYSCONFDIR}/cron.daily/0yum.cron
+share/examples/yum/dbus-1/
+share/examples/yum/dbus-1/system.d/
+share/examples/yum/dbus-1/system.d/yum-updatesd.conf
+@sample ${SYSCONFDIR}/dbus-1/system.d/yum-updatesd.conf
+share/examples/yum/logrotate.d/
+@sample ${SYSCONFDIR}/logrotate.d/
+share/examples/yum/logrotate.d/yum
+@sample ${SYSCONFDIR}/logrotate.d/yum
+share/examples/yum/protected.d/
+@sample ${SYSCONFDIR}/yum/protected.d/
+share/examples/yum/rc.d/
+@sample ${SYSCONFDIR}/rc.d/
+share/examples/yum/rc.d/yum-cron
+@sample ${SYSCONFDIR}/rc.d/yum-cron
+share/examples/yum/rc.d/yum-updatesd
+@sample ${SYSCONFDIR}/rc.d/yum-updatesd
+share/examples/yum/repos.d/
+@sample ${SYSCONFDIR}/yum/repos.d/
+share/examples/yum/sysconfig/
+@sample ${SYSCONFDIR}/sysconfig/
+share/examples/yum/sysconfig/yum-cron
+@sample ${SYSCONFDIR}/sysconfig/yum-cron
+share/examples/yum/vars/
+@sample ${SYSCONFDIR}/yum/vars/
 share/examples/yum/version-groups.conf
 @sample ${SYSCONFDIR}/yum/version-groups.conf
+share/examples/yum/yum-daily.yum
+@sample ${SYSCONFDIR}/yum/yum-daily.yum
+share/examples/yum/yum-updatesd.conf
+@sample ${SYSCONFDIR}/yum/yum-updatesd.conf
+share/examples/yum/yum-weekly.yum
+@sample ${SYSCONFDIR}/yum/yum-weekly.yum
 share/examples/yum/yum.conf
 @sample ${SYSCONFDIR}/yum/yum.conf
+share/locale/bn_IN/LC_MESSAGES/yum.mo
 share/locale/ca/LC_MESSAGES/yum.mo
 share/locale/cs/LC_MESSAGES/yum.mo
 share/locale/da/LC_MESSAGES/yum.mo
 share/locale/de/LC_MESSAGES/yum.mo
+share/locale/el/LC_MESSAGES/yum.mo
 share/locale/en_GB/LC_MESSAGES/yum.mo
 share/locale/es/LC_MESSAGES/yum.mo
+share/locale/eu/LC_MESSAGES/yum.mo
 share/locale/fi/LC_MESSAGES/yum.mo
 share/locale/fr/LC_MESSAGES/yum.mo
+share/locale/gu/LC_MESSAGES/yum.mo
+share/locale/hi/LC_MESSAGES/yum.mo
+share/locale/hu/LC_MESSAGES/yum.mo
+share/locale/id/LC_MESSAGES/yum.mo
+share/locale/id_ID/
+share/locale/id_ID/LC_MESSAGES/
+share/locale/id_ID/LC_MESSAGES/yum.mo
 share/locale/it/LC_MESSAGES/yum.mo
 share/locale/ja/LC_MESSAGES/yum.mo
+share/locale/lt_LT/
+share/locale/lt_LT/LC_MESSAGES/
+share/locale/lt_LT/LC_MESSAGES/yum.mo
+share/locale/mr/LC_MESSAGES/yum.mo
 share/locale/ms/LC_MESSAGES/yum.mo
 share/locale/nb/LC_MESSAGES/yum.mo
 share/locale/pa/LC_MESSAGES/yum.mo
@@ -107,12 +156,18 @@ share/locale/sr/LC_MESSAGES/yum.mo
 share/locale/sr@latin/LC_MESSAGES/yum.mo
 share/locale/sv/LC_MESSAGES/yum.mo
 share/locale/uk/LC_MESSAGES/yum.mo
+share/locale/ur/
+share/locale/ur/LC_MESSAGES/
+share/locale/ur/LC_MESSAGES/yum.mo
 share/locale/zh_CN/LC_MESSAGES/yum.mo
+share/locale/zh_TW/LC_MESSAGES/yum.mo
 share/man/
 share/man/man5/
+@man share/man/man5/yum-updatesd.conf.5
 @man share/man/man5/yum.conf.5
 share/man/man8/
 @man share/man/man8/yum-shell.8
+@man share/man/man8/yum-updatesd.8
 @man share/man/man8/yum.8
 share/yum-cli/
 share/yum-cli/callback.py
@@ -125,11 +180,11 @@ share/yum-cli/shell.py
 share/yum-cli/shell.pyc
 share/yum-cli/utils.py
 share/yum-cli/utils.pyc
-share/yum-cli/yum-updatesd.py
-share/yum-cli/yum-updatesd.pyc
 share/yum-cli/yumcommands.py
 share/yum-cli/yumcommands.pyc
 share/yum-cli/yummain.py
 share/yum-cli/yummain.pyc
 @sample /var/db/yum/
 @sample /var/cache/yum/
+share/yum-cli/yumupd.py
+share/yum-cli/yumupd.pyc

@@ -1,6 +1,6 @@
 $OpenBSD$
---- yum/failover.py.orig	Thu May  6 04:54:35 2010
-+++ yum/failover.py	Sat Mar 19 13:26:13 2011
+--- yum/failover.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/failover.py	Wed Sep 28 13:59:34 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python
 +#!/usr/bin/env python

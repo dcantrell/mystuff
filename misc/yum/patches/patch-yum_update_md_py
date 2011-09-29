@@ -1,6 +1,6 @@
 $OpenBSD$
---- yum/update_md.py.orig	Tue Nov  9 10:38:48 2010
-+++ yum/update_md.py	Sat Mar 19 13:24:16 2011
+--- yum/update_md.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/update_md.py	Wed Sep 28 14:12:37 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python -t
 +#!/usr/bin/env python -t

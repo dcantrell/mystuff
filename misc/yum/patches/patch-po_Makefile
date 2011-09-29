@@ -1,12 +1,12 @@
 $OpenBSD$
---- po/Makefile.orig	Thu May  6 04:54:46 2010
-+++ po/Makefile	Tue Mar 22 08:06:22 2011
+--- po/Makefile.orig	Tue Jun 28 16:27:22 2011
++++ po/Makefile	Thu Sep 29 11:47:54 2011
 @@ -1,7 +1,7 @@
  INSTALL= /usr/bin/install -c
  INSTALL_PROGRAM= ${INSTALL}
  INSTALL_DATA= ${INSTALL} -m 644
 -INSTALLNLSDIR=$(DESTDIR)/usr/share/locale
-+INSTALLNLSDIR=$(DESTDIR)/usr/local/share/locale
++INSTALLNLSDIR=$(DESTDIR)$(LOCALBASE)/share/locale
  top_srcdir = "."
  
  
@@ -30,10 +30,10 @@ $OpenBSD$
  	done
  
  %.mo: %.po
-@@ -77,4 +77,4 @@ test:
+@@ -76,5 +76,3 @@ test:
+ 	for n in $(CATALOGS); do \
  	msgfmt -c $$n; \
  	done
- 
+-
 - 
 \ No newline at end of file
-+ 

@@ -1,6 +1,6 @@
 $OpenBSD$
---- test/yum-leak-test.py.orig	Thu May  6 04:54:46 2010
-+++ test/yum-leak-test.py	Sat Mar 19 13:34:28 2011
+--- test/yum-leak-test.py.orig	Tue Jun 28 16:27:22 2011
++++ test/yum-leak-test.py	Wed Sep 28 14:16:40 2011
 @@ -1,4 +1,4 @@
 -#! /usr/bin/python -tt
 +#! /usr/bin/env python -tt

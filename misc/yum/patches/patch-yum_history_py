@@ -1,6 +1,6 @@
 $OpenBSD$
---- yum/history.py.orig	Wed Oct 20 06:26:30 2010
-+++ yum/history.py	Tue Mar 22 08:43:03 2011
+--- yum/history.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/history.py	Thu Sep 29 10:39:41 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python -t
 +#!/usr/bin/env python -t

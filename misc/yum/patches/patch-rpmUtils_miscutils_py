@@ -1,6 +1,6 @@
 $OpenBSD$
---- rpmUtils/miscutils.py.orig	Tue Jun 15 08:51:38 2010
-+++ rpmUtils/miscutils.py	Sat Mar 19 13:32:59 2011
+--- rpmUtils/miscutils.py.orig	Tue Jun 28 16:27:22 2011
++++ rpmUtils/miscutils.py	Wed Sep 28 14:17:25 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python -tt
 +#!/usr/bin/env python -tt

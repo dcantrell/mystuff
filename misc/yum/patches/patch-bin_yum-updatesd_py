@@ -1,6 +1,6 @@
 $OpenBSD$
---- bin/yum-updatesd.py.orig	Thu May  6 04:54:35 2010
-+++ bin/yum-updatesd.py	Sat Mar 19 13:35:23 2011
+--- bin/yum-updatesd.py.orig	Tue Jun 28 16:27:22 2011
++++ bin/yum-updatesd.py	Thu Sep 29 10:37:02 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python
 +#!/usr/bin/env python

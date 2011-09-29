@@ -1,13 +1,20 @@
 $OpenBSD$
---- yum/config.py.orig	Thu Dec  9 05:48:01 2010
-+++ yum/config.py	Tue Mar 22 08:42:44 2011
+--- yum/config.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/config.py	Thu Sep 29 10:38:17 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python -t
 +#!/usr/bin/env python -t
  
  # This program is free software; you can redistribute it and/or modify
  # it under the terms of the GNU General Public License as published by
-@@ -622,7 +622,7 @@ class StartupConf(BaseConfig):
+@@ -616,13 +616,13 @@ class StartupConf(BaseConfig):
+     installroot = Option('/')
+     config_file_path = Option('/etc/yum/yum.conf')
+     plugins = BoolOption(False)
+-    pluginpath = ListOption(['/usr/share/yum-plugins', '/usr/lib/yum-plugins'])
++    pluginpath = ListOption(['/usr/local/share/yum-plugins', '/usr/local/lib/yum-plugins'])
+     pluginconfpath = ListOption(['/etc/yum/pluginconf.d'])
+     gaftonmode = BoolOption(False)
      syslog_ident = Option()
      syslog_facility = Option('LOG_USER')
      syslog_device = Option('/dev/log')

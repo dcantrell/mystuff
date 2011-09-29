@@ -1,6 +1,6 @@
 $OpenBSD$
---- rpmUtils/arch.py.orig	Wed Sep  8 05:54:29 2010
-+++ rpmUtils/arch.py	Sat Mar 19 13:33:10 2011
+--- rpmUtils/arch.py.orig	Tue Jun 28 16:27:22 2011
++++ rpmUtils/arch.py	Wed Sep 28 14:17:30 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python
 +#!/usr/bin/env python

@@ -1,6 +1,6 @@
 $OpenBSD$
---- yum/constants.py.orig	Mon Sep 20 04:37:36 2010
-+++ yum/constants.py	Sat Mar 19 13:22:59 2011
+--- yum/constants.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/constants.py	Wed Sep 28 14:11:53 2011
 @@ -1,4 +1,4 @@
 -#! /usr/bin/python -tt
 +#! /usr/bin/env python -tt

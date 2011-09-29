@@ -1,6 +1,6 @@
 $OpenBSD$
---- yum/depsolve.py.orig	Tue Dec  7 11:57:47 2010
-+++ yum/depsolve.py	Sat Mar 19 13:25:41 2011
+--- yum/depsolve.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/depsolve.py	Wed Sep 28 14:13:00 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python -t
 +#!/usr/bin/env python -t

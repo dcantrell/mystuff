@@ -1,6 +1,6 @@
 $OpenBSD$
---- yum/packageSack.py.orig	Fri Sep 24 11:25:48 2010
-+++ yum/packageSack.py	Sat Mar 19 13:23:55 2011
+--- yum/packageSack.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/packageSack.py	Wed Sep 28 14:13:08 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python -tt
 +#!/usr/bin/env python -tt

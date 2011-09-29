@@ -1,6 +1,6 @@
 $OpenBSD$
---- shell.py.orig	Mon Sep 20 04:37:36 2010
-+++ shell.py	Sat Mar 19 13:26:59 2011
+--- shell.py.orig	Tue Jun 28 16:27:22 2011
++++ shell.py	Wed Sep 28 14:15:02 2011
 @@ -1,4 +1,4 @@
 -#! /usr/bin/python -tt
 +#! /usr/bin/env python -tt

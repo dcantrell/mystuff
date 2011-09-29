@@ -1,6 +1,6 @@
 $OpenBSD$
---- yum/transactioninfo.py.orig	Wed Nov  3 08:08:27 2010
-+++ yum/transactioninfo.py	Sat Mar 19 13:26:19 2011
+--- yum/transactioninfo.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/transactioninfo.py	Wed Sep 28 14:09:47 2011
 @@ -1,4 +1,4 @@
 -#! /usr/bin/python -tt
 +#! /usr/bin/env python -tt

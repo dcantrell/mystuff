@@ -1,6 +1,6 @@
 $OpenBSD$
---- yum/comps.py.orig	Fri Dec 10 19:16:00 2010
-+++ yum/comps.py	Sat Mar 19 13:24:21 2011
+--- yum/comps.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/comps.py	Wed Sep 28 14:12:25 2011
 @@ -1,4 +1,4 @@
 -#! /usr/bin/python -tt
 +#! /usr/bin/env python -tt

@@ -1,6 +1,6 @@
 $OpenBSD$
---- yum/sqlitesack.py.orig	Thu Dec 23 09:47:23 2010
-+++ yum/sqlitesack.py	Sat Mar 19 13:24:51 2011
+--- yum/sqlitesack.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/sqlitesack.py	Wed Sep 28 14:00:05 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python -tt
 +#!/usr/bin/env python -tt

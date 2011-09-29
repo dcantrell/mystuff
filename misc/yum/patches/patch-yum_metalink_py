@@ -1,6 +1,6 @@
 $OpenBSD$
---- yum/metalink.py.orig	Thu Jun 17 05:25:50 2010
-+++ yum/metalink.py	Sat Mar 19 13:25:30 2011
+--- yum/metalink.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/metalink.py	Wed Sep 28 13:59:43 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python -t
 +#!/usr/bin/env python -t

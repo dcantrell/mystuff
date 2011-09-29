@@ -1,6 +1,6 @@
 $OpenBSD$
---- yum/plugins.py.orig	Mon Sep 20 04:37:36 2010
-+++ yum/plugins.py	Sat Mar 19 13:26:29 2011
+--- yum/plugins.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/plugins.py	Wed Sep 28 14:13:14 2011
 @@ -1,4 +1,4 @@
 -#! /usr/bin/python -tt
 +#! /usr/bin/env python -tt

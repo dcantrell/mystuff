@@ -1,6 +1,6 @@
 $OpenBSD$
---- yumcommands.py.orig	Wed Nov  3 11:28:36 2010
-+++ yumcommands.py	Sat Mar 19 13:26:49 2011
+--- yumcommands.py.orig	Tue Jun 28 16:27:22 2011
++++ yumcommands.py	Wed Sep 28 14:15:29 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python -t
 +#!/usr/bin/env python -t

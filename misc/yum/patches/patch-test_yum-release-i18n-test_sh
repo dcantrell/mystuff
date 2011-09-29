@@ -1,0 +1,9 @@
+$OpenBSD$
+--- test/yum-release-i18n-test.sh.orig	Tue Jun 28 16:27:22 2011
++++ test/yum-release-i18n-test.sh	Thu Sep 29 11:12:56 2011
+@@ -1,4 +1,4 @@
+-#!/bin/bash -e
++#!/bin/sh -e
+ 
+ #######################################################
+ ### Settings ##########################################

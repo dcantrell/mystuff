@@ -1,6 +1,6 @@
 $OpenBSD$
---- yummain.py.orig	Fri Dec 10 19:16:00 2010
-+++ yummain.py	Sat Mar 19 13:27:11 2011
+--- yummain.py.orig	Tue Jun 28 16:27:22 2011
++++ yummain.py	Wed Sep 28 14:14:43 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python -t
 +#!/usr/bin/env python -t

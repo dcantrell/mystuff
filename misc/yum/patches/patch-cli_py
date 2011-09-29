@@ -1,6 +1,6 @@
 $OpenBSD$
---- cli.py.orig	Tue Jan 11 06:05:35 2011
-+++ cli.py	Sat Mar 19 13:18:59 2011
+--- cli.py.orig	Tue Jun 28 16:27:22 2011
++++ cli.py	Wed Sep 28 14:15:19 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python -t
 +#!/usr/bin/env python -t

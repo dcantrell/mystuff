@@ -1,6 +1,6 @@
 $OpenBSD$
---- yum/yumRepo.py.orig	Tue Jan 11 06:06:39 2011
-+++ yum/yumRepo.py	Sat Mar 19 13:23:50 2011
+--- yum/yumRepo.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/yumRepo.py	Wed Sep 28 14:11:37 2011
 @@ -1,4 +1,4 @@
 -#! /usr/bin/python -tt
 +#! /usr/bin/env python -tt

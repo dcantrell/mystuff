@@ -1,6 +1,6 @@
 $OpenBSD$
---- yum/repoMDObject.py.orig	Fri Oct  8 05:25:22 2010
-+++ yum/repoMDObject.py	Sat Mar 19 13:25:20 2011
+--- yum/repoMDObject.py.orig	Tue Jun 28 16:27:22 2011
++++ yum/repoMDObject.py	Wed Sep 28 14:12:49 2011
 @@ -1,4 +1,4 @@
 -#!/usr/bin/python -tt
 +#!/usr/bin/env python -tt
